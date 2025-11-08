@@ -201,13 +201,13 @@ const Header = () => {
           {/* Center: Logo (Mobile) */}
           <div className="lg:hidden flex justify-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
              <Link to="/">
-                <h1 className="font-serif text-2xl font-medium text-gray-800 tracking-wider">
+                <h1 className="font-serif text-[15px] font-medium text-gray-800 tracking-wider">
                   THE QALEENKAAR
                 </h1>
              </Link>
           </div>
 
-          {/* ✅ MOVED: Right Icons (Desktop) */}
+          {/* --- Right Icons (Desktop) --- */}
           <div className="hidden lg:flex items-center space-x-5">
             {isAuthenticated ? (
               <DropdownMenu>
@@ -263,14 +263,46 @@ const Header = () => {
             </button>
           </div>
 
-           {/* Right: Mobile Icons (Cart) */}
+           {/* --- Right Icons (Mobile) --- */}
            <div className="lg:hidden">
-             <Link to="/cart" className="relative text-gray-700 hover:text-gray-900 p-2">
-                <ShoppingCart className="w-5 h-5" />
-                <span className="absolute -top-1 -right-1 flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-red-600 rounded-full">
-                  0
-                </span>
-              </Link>
+             {isAuthenticated ? (
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button
+                      variant="ghost"
+                      className="text-gray-700 hover:text-gray-900 p-2 focus-visible:ring-0 focus-visible:ring-offset-0"
+                      aria-label="My Account"
+                    >
+                      <User className="w-5 h-5" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" className="w-48">
+                    <DropdownMenuItem asChild>
+                      <Link
+                        to="/admin/dashboard"
+                        className="cursor-pointer font-serif text-sm"
+                      >
+                        Dashboard
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem
+                      onClick={handleLogout}
+                      className="cursor-pointer font-serif text-sm text-destructive focus:text-destructive"
+                    >
+                      <LogOut className="w-4 h-4 mr-2" /> Logout
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              ) : (
+                <Button
+                  variant="ghost"
+                  className="text-gray-700 hover:text-gray-900 p-2 focus-visible:ring-0 focus-visible:ring-offset-0"
+                  aria-label="Login"
+                  onClick={() => setIsLoginDialogOpen(true)}
+                >
+                  <User className="w-5 h-5" />
+                </Button>
+              )}
           </div>
         </div>
       </div>
@@ -302,39 +334,20 @@ const Header = () => {
             ))}
             {/* Mobile menu icons */}
             <div className="flex justify-around pt-4 border-t border-gray-200 mt-2">
-              {isAuthenticated ? (
-                <>
-                  <Link
-                    to="/admin/dashboard"
-                    onClick={() => setIsOpen(false)}
-                    className="flex flex-col items-center text-gray-700 hover:text-gray-900"
-                  >
-                    <User className="w-5 h-5" />
-                    <span className="text-xs mt-1 capitalize">{user}</span>
-                  </Link>
-                  <button
-                    onClick={() => {
-                      handleLogout();
-                      setIsOpen(false);
-                    }}
-                    className="flex flex-col items-center text-destructive hover:text-destructive/80"
-                  >
-                    <LogOut className="w-5 h-5" />
-                    <span className="text-xs mt-1">Logout</span>
-                  </button>
-                </>
-              ) : (
-                <button
-                  onClick={() => {
-                    setIsLoginDialogOpen(true);
-                    setIsOpen(false);
-                  }}
-                  className="flex flex-col items-center text-gray-700 hover:text-gray-900"
-                >
-                  <User className="w-5 h-5" />
-                  <span className="text-xs mt-1">Login</span>
-                </button>
-              )}
+              
+              {/* Cart Icon (moved from top right) */}
+              <Link
+                to="/cart"
+                onClick={() => setIsOpen(false)}
+                className="relative flex flex-col items-center text-gray-700 hover:text-gray-900"
+              >
+                <ShoppingCart className="w-5 h-5" />
+                <span className="text-xs mt-1">Cart</span>
+                <span className="absolute top-0 right-0 flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-red-600 rounded-full">
+                  0
+                </span>
+              </Link>
+
               <button className="flex flex-col items-center text-gray-700 hover:text-gray-900">
                 <Search className="w-5 h-5" />
                 <span className="text-xs mt-1">Search</span>
