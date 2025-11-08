@@ -1,5 +1,12 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, CheckCircle, MessageCircle, Sparkles } from "lucide-react";
+import {
+  ArrowRight,
+  CheckCircle,
+  MessageCircle,
+  Sparkles,
+  ChevronLeft,
+  ChevronRight,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Header from "@/components/Header"; // This will now import your new header
 import Footer from "@/components/Footer";
@@ -16,24 +23,15 @@ import collection3 from "@/assets/collection-3.jpg";
 import Slider from "react-slick";
 import { InView } from "react-intersection-observer";
 import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css"
+import "slick-carousel/slick/slick-theme.css";
 // ✅ 1. Import Embla Carousel hooks
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
+import CustomerReviews from "@/components/customerReview";
+import { useState } from "react"; // ✅ Added missing import
 
-import ReactBeforeSliderComponent from 'react-before-after-slider-component';
-import 'react-before-after-slider-component/dist/build.css';
-const rugImage = {
-  before: 'https://picsum.photos/id/1063/800/600?grayscale', // carpet
-  after: 'https://picsum.photos/id/1063/800/600'
-};
+// --- Helper Components (Moved outside Index for efficiency) ---
 
-const colorImage = {
-  before: 'https://picsum.photos/id/163/800/600?grayscale', // fabric
-  after: 'https://picsum.photos/id/163/800/600'
-};
-// This is the SVG you provided, turned into a reusable component
-// Custom arrow components (react-slick requires components, not just divs)
 const NextArrow = (props: any) => {
   const { className, onClick } = props;
   return (
@@ -41,7 +39,7 @@ const NextArrow = (props: any) => {
       className={`${className} !flex !items-center !justify-center !right-3 !z-20 bg-[#c5aad4] hover:bg-[#e9e2ec] text-white w-7 h-7 rounded-full shadow-lg transition-all duration-300`}
       onClick={onClick}
     >
-      <span className="text-lg font-bold">{'›'}</span>
+      <span className="text-lg font-bold">{"›"}</span>
     </div>
   );
 };
@@ -53,139 +51,45 @@ const PrevArrow = (props: any) => {
       className={`${className} !flex !items-center !justify-center !left-3 !z-20 bg-[#ac92bb] hover:bg-[#ceb4dd] text-white w-7 h-7 rounded-full shadow-lg transition-all duration-300`}
       onClick={onClick}
     >
-      <span className="text-lg font-bold">{'‹'}</span>
+      <span className="text-lg font-bold">{"‹"}</span>
     </div>
   );
 };
 
-const SectionIcon = () => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 100 100"
-    // Classes for sizing and layout are kept
-    className="w-16 h-16 mx-auto mb-4"
-  >
-    <defs>
-      {/* Gradients for the petals */}
-      <radialGradient
-        id="frontPetalGradient"
-        cx="50%"
-        cy="50%"
-        r="50%"
-        fx="50%"
-        fy="50%"
-      >
-        <stop offset="0%" style={{ stopColor: "#C39BD3" }} />
-        <stop offset="100%" style={{ stopColor: "#8E44AD" }} />
-      </radialGradient>
-      <radialGradient
-        id="backPetalGradient"
-        cx="50%"
-        cy="50%"
-        r="50%"
-        fx="50%"
-        fy="50%"
-      >
-        <stop offset="0%" style={{ stopColor: "#8E44AD" }} />
-        <stop offset="100%" style={{ stopColor: "#512E5F" }} />
-      </radialGradient>
-
-      {/* Filter for a subtle drop shadow effect */}
-      <filter id="dropShadow" x="-20%" y="-20%" width="140%" height="140%">
-        <feGaussianBlur in="SourceAlpha" stdDeviation="1" />
-        <feOffset dx="1" dy="1" result="offsetblur" />
-        {/* NOTE: 'flood-color' is changed to 'floodColor' for JSX */}
-        <feFlood floodColor="rgba(0,0,0,0.2)" />
-        <feComposite in2="offsetblur" operator="in" />
-        <feMerge>
-          <feMergeNode />
-          <feMergeNode in="SourceGraphic" />
-        </feMerge>
-      </filter>
-
-      {/* Reusable petal shape */}
-      <path id="petal" d="M50 5 C 38 22, 35 40, 50 50 C 65 40, 62 22, 50 5 Z" />
-    </defs>
-
-    {/* Back petals with shadow */}
-    {/* NOTE: The 'style' attribute is converted to a JSX style object */}
-    <g
-      fill="url(#backPetalGradient)"
-      transform="rotate(45 50 50)"
-      style={{ filter: "url(#dropShadow)" }}
-    >
-      <use href="#petal" transform="scale(1.05)" />
-      <use href="#petal" transform="scale(1.05) rotate(90 50 50)" />
-      <use href="#petal" transform="scale(1.05) rotate(180 50 50)" />
-      <use href="#petal" transform="scale(1.05) rotate(270 50 50)" />
-    </g>
-
-    {/* Front petals */}
-    <g fill="url(#frontPetalGradient)">
-      <use href="#petal" />
-      <use href="#petal" transform="rotate(90 50 50)" />
-      <use href="#petal" transform="rotate(180 50 50)" />
-      <use href="#petal" transform="rotate(270 50 50)" />
-    </g>
-
-    {/* Detailed center design */}
-    <g>
-      <circle
-        cx="50"
-        cy="50"
-        r="12"
-        fill="white"
-        style={{ filter: "url(#dropShadow)" }}
-      />
-      <circle cx="50" cy="50" r="8" fill="#512E5F" />
-      <circle cx="50" cy="50" r="3" fill="white" />
-    </g>
-  </svg>
-);
+// --- Main Page Component ---
 
 const Index = () => {
   const whatsappNumber = "+911234567890";
 
   // ✅ 2. Setup Embla Carousel
-  // This will autoplay, loop, and not stop when you hover/click it
   const [emblaRef] = useEmblaCarousel({ loop: true }, [
     Autoplay({ delay: 3000, stopOnInteraction: false, stopOnMouseEnter: false }),
   ]);
 
-  // ✅ 3. Define slides (using your imported images + a video example)
+  // ✅ 3. Define slides
   const carouselSlides = [
     {
       type: "image",
-      src: heroImage, // From your imports
+      src: heroImage,
       alt: "Handcrafted masterpieces",
     },
     {
       type: "image",
-      src: collection1, // From your imports
+      src: collection1,
       alt: "Traditional Persian Carpets",
     },
     {
       type: "image",
-      src: collection2, // From your imports
+      src: collection2,
       alt: "Vintage Kashmiri Shawls",
     },
-    // As you requested, here is how you would add a video:
     {
       type: "video",
-      // You must provide your own video file URL here
       src: "https://videos.pexels.com/video-files/3840810/3840810-hd_1920_1080_25fps.mp4",
       alt: "Carpet weaving process",
     },
   ];
 
-  // const features = [
-  //   "Expert Artisan Care",
-  //   "Heritage Preservation",
-  //   "Premium Quality Service",
-  //   "Trusted by Generations",
-  // ];
-
-  // --- MODIFIED: Added 'type' and 'linkTo' ---
   const carpetServices = [
     {
       title: "Professional Washing",
@@ -221,7 +125,6 @@ const Index = () => {
     },
   ];
 
-  // --- MODIFIED: Added 'type' ---
   const shawlServices = [
     {
       title: "Delicate Shawl Washing",
@@ -291,14 +194,50 @@ const Index = () => {
     { image: restorationImg, title: "Luxury Silk Shawls", type: "Shawl" },
   ];
 
+  // State logic for "OUR WORK" carousel
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const workItems = [
+    {
+      id: 1,
+      before:
+        "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=400&fit=crop",
+      after:
+        "https://images.unsplash.com/photo-1578722374513-b83ab0e8ad33?w=600&h=400&fit=crop",
+    },
+    {
+      id: 2,
+      before:
+        "https://images.unsplash.com/photo-1566195992552-5f80fcbb0e4d?w=600&h=400&fit=crop",
+      after:
+        "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&h=400&fit=crop",
+    },
+    {
+      id: 3,
+      before:
+        "https://images.unsplash.com/photo-1578723988236-6d80cc773253?w=600&h=400&fit=crop",
+      after:
+        "https://images.unsplash.com/photo-1594736797933-d0501ba2fe65?w=600&h=400&fit=crop",
+    },
+  ];
+
+  const handlePrev = () => {
+    setCurrentIndex((prevIndex) =>
+      prevIndex === 0 ? workItems.length - 1 : prevIndex - 1
+    );
+  };
+
+  const handleNext = () => {
+    setCurrentIndex((prevIndex) =>
+      prevIndex === workItems.length - 1 ? 0 : prevIndex + 1
+    );
+  };
+
   return (
     <div className="min-h-screen">
-      <Header /> {/* ✅ This now renders your new header */}
+      <Header />
       <WhatsAppFloat />
-
-      {/* --- ✅ REPLACED: Hero Section (now a Carousel) --- */}
-      {/* --- ✅ REPLACED: Hero Section (Carousel size decreased) --- */}
-      <section className="relative h-[75vh] min-h-[550px] flex items-center overflow-hidden">
+      {/* --- Hero Section --- */}
+      <section className="relative h-[50vh] min-h-[350px] flex items-center overflow-hidden">
         {/* Embla Carousel Viewport */}
         <div className="absolute inset-0" ref={emblaRef}>
           <div className="flex h-full">
@@ -326,26 +265,21 @@ const Index = () => {
                     Your browser does not support the video tag.
                   </video>
                 )}
-                {/* Dark overlay for text readability on all slides */}
                 <div className="absolute inset-0 bg-black/40" />
               </div>
             ))}
           </div>
         </div>
 
-        {/* Static Content Overlay (Text + Button) - as seen in screenshot */}
+        {/* Static Content Overlay (Text + Button) */}
         <div className="relative z-10 container mx-auto px-4">
           <div className="max-w-xl animate-fade-in">
-            {/* Text from the screenshot */}
             <h1 className="font-serif text-white text-5xl md:text-6xl lg:text-5xl font-normal mb-8 leading-tight">
               Handcrafted masterpieces from the world's finest looms
             </h1>
-
-            {/* Button from the screenshot */}
             <Button
               asChild
               size="lg"
-              // Simple white button styling from screenshot
               className="
                 bg-white text-gray-900 font-serif text-lg h-14 px-10 rounded-none
                 hover:bg-gray-200 transition-colors
@@ -357,384 +291,298 @@ const Index = () => {
         </div>
       </section>
       {/* --- END: Hero Section --- */}
-      {/* --- END: Hero Section --- */}
 
-      {/* Features Bar */}
-      {/* <section className="py-8 bg-secondary border-y border-border">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
-            {features.map((feature, index) => (
-              <div
-                key={index}
-                className="flex items-center gap-3 animate-fade-in"
-                style={{ animationDelay: `${index * 0.1}s` }}
-              >
-                <CheckCircle className="w-5 h-5 text-[#794299] flex-shrink-0" />
-                <span className="font-body font-medium text-foreground">
-                  {feature}
-                </span>
+      {/* --- Dual Care Services Section --- */}
+      <section className="py-6 bg-secondary/30">
+        {/* ✅ Container padding changed to allow cards to be closer to edge on mobile */}
+        <div className="container mx-auto px-2 sm:px-4 ">
+          {/* 1. Main "SERVICES" Title */}
+          <div className="text-center mx-auto mb-8 w-full">
+            <div className="inline-block  px-6 py-2  shadow-[0_8px_20px_rgba(0,0,0,0.15)] border border-none rounded-sm">
+              <h2 className="font-serif text-4xl md:text-5xl font-bold text-[#3f5066] uppercase tracking-wider 
+   drop-shadow-[2px_2px_0px_#e8d2ff]">
+                Services
+              </h2>
+            </div>
+          </div>
+
+          {/* 2. Main 2-column grid (Carpet vs Shawl) */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-x-12 gap-y-16">
+            {/* --- 3. CARPETS COLUMN (Left) --- */}
+            <div>
+              <h3 className="font-serif text-3xl text-center font-medium text-gray-700 uppercase tracking-widest mb-4">
+                Carpet
+              </h3>
+              {/* ✅ CHANGED: grid-cols-1 to grid-cols-2, gap-8 to gap-4, and added lg: breakpoints */}
+              <div className="grid grid-cols-2 gap-4 lg:grid-cols-1 lg:gap-8">
+                {carpetServices.map((service, index) => (
+                  <InView
+                    key={index}
+                    triggerOnce
+                    threshold={0.1}
+                    rootMargin="0px 0px -50px 0px"
+                  >
+                    {({ ref, inView }) => (
+                      <div
+                        ref={ref}
+                        className={`
+                          group relative h-96 w-full overflow-hidden rounded-2xl shadow-lg cursor-pointer
+                          transition-all duration-1000 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]
+                          ${
+                            inView
+                              ? "opacity-100 translate-y-0"
+                              : "opacity-0 translate-y-12"
+                          }
+                        `}
+                        style={{ transitionDelay: `${index * 100}ms` }}
+                      >
+                        <img
+                          src={service.image}
+                          alt={service.title}
+                          className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-110"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/20 to-transparent" />
+                        <div className="relative z-10 flex flex-col justify-between h-full p-4 md:p-6">
+                          {service.type && (
+                            <div>
+                              {/* ✅ CHANGED: Font size and padding on badge for mobile */}
+                              <span className="inline-block bg-[#794299] text-white px-3 py-1 md:px-4 md:py-1.5 rounded-full font-serif text-xs md:text-sm font-medium">
+                                {service.type}
+                              </span>
+                            </div>
+                          )}
+                          <div className="transition-transform duration-500 group-hover:-translate-y-1">
+                            {/* ✅ CHANGED: Font size classes for mobile */}
+                            <h3 className="font-serif text-2xl md:text-4xl lg:text-5xl font-bold text-white mb-2 drop-shadow-md leading-tight">
+                              {service.title}
+                            </h3>
+                            <Link
+                              to={service.linkTo}
+                              className="inline-flex items-center text-accent hover:text-white font-medium transition-all duration-300 text-base group-hover:gap-1 mt-0 opacity-0 group-hover:opacity-100"
+                            >
+                              View Details
+                              <ArrowRight className="w-5 h-5 ml-1 group-hover:translate-x-1 transition-transform duration-300" />
+                            </Link>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </InView>
+                ))}
               </div>
-            ))}
+            </div>{" "}
+            {/* End carpet column */}
+            {/* --- 4. SHAWLS COLUMN (Right) --- */}
+            <div>
+              <h3 className="font-serif text-3xl text-center font-medium text-gray-700 uppercase tracking-widest mb-4">
+                Shawl
+              </h3>
+              {/* ✅ CHANGED: grid-cols-1 to grid-cols-2, gap-8 to gap-4, and added lg: breakpoints */}
+              <div className="grid grid-cols-2 gap-4 lg:grid-cols-1 lg:gap-8">
+                {shawlServices.map((service, index) => (
+                  <InView
+                    key={index}
+                    triggerOnce
+                    threshold={0.1}
+                    rootMargin="0px 0px -50px 0px"
+                  >
+                    {({ ref, inView }) => (
+                      <div
+                        ref={ref}
+                        className={`
+                          group relative h-96 w-full overflow-hidden rounded-2xl shadow-lg cursor-pointer
+                          transition-all duration-1000 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]
+                          ${
+                            inView
+                              ? "opacity-100 translate-y-0"
+                              : "opacity-0 translate-y-12"
+                          }
+                        `}
+                        style={{
+                          transitionDelay: `${
+                            (carpetServices.length + index) * 100
+                          }ms`,
+                        }}
+                      >
+                        <img
+                          src={service.image}
+                          alt={service.title}
+                          className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-110"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+                        <div className="relative z-10 flex flex-col justify-between h-full p-4 md:p-6">
+                          {service.type && (
+                            <div>
+                              {/* ✅ CHANGED: Font size and padding on badge for mobile */}
+                              <span className="inline-block bg-[#794299] text-white px-3 py-1 md:px-4 md:py-1.5 rounded-full font-serif text-xs md:text-sm font-medium">
+                                {service.type}
+                              </span>
+                            </div>
+                          )}
+                          <div className="transition-transform duration-500 group-hover:-translate-y-1">
+                            {/* ✅ CHANGED: Font size classes for mobile */}
+                            <h3 className="font-serif text-2xl md:text-4xl lg:text-5xl font-bold text-white mb-2 drop-shadow-md leading-tight">
+                              {service.title}
+                            </h3>
+                            <Link
+                              to={service.linkTo}
+                              className="inline-flex items-center text-accent hover:text-white font-medium transition-all duration-300 text-base group-hover:gap-1 mt-0 opacity-0 group-hover:opacity-100"
+                            >
+                              View Details
+                              <ArrowRight className="w-5 h-5 ml-1 group-hover:translate-x-1 transition-transform duration-300" />
+                            </Link>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </InView>
+                ))}
+              </div>
+            </div>{" "}
+            {/* End shawl column */}
+          </div>{" "}
+          {/* End 2-column grid */}
+          {/* 5. "View All" Button */}
+          <div className="text-center mt-20 animate-fade-in">
+            <Button
+              asChild
+              size="lg"
+              className="bg-[#5A386D] hover:bg-[#62009b] text-lg px-8 mb-9 transition-all duration-200 ease-out transform hover:scale-[1.02]"
+            >
+              <Link to="/services">
+                View All Services
+                <ArrowRight className="ml-2 w-5 h-5" />
+              </Link>
+            </Button>
+          </div>
+        </div>{" "}
+        {/* End container */}
+      </section>
+      {/* --- END: Dual Care Services Section --- */}
+
+      {/* --- YOUTUBE VIDEO SECTION --- */}
+      <section className="relative w-full h-[60vh] md:h-[70vh] overflow-hidden">
+        <iframe
+          className="absolute top-1/2 left-1/2 w-full h-full min-w-full min-h-full -translate-x-1/2 -translate-y-1/2 z-0"
+          src="https://www.youtube.com/embed/SNIHII7Pjb8?si=odObuwsWpnBfRyiu&autoplay=1&mute=1&loop=1&playlist=SNIHII7Pjb8&controls=0&showinfo=0"
+          frameBorder="0"
+          allow="autoplay; encrypted-media"
+          allowFullScreen
+          title="YouTube Background Video"
+        ></iframe>
+
+        <div className="absolute inset-0 bg-black/60 z-10" />
+
+        {/* 3. Content */}
+        <div className="relative z-20 h-full flex items-center justify-center">
+          <div className="container mx-auto px-4 text-center">
+            <h2 className="font-sans text-2xl md:text-3xl font-light text-white uppercase tracking-widest animate-fade-in">
+              Because you deserve to shine!
+            </h2>
           </div>
         </div>
-      </section> */}
+      </section>
+      
+      {/* --- Collections Section --- */}
+      <section className="py-8 bg-gradient-to-b from-background to-secondary/30 overflow-hidden">
+        <div className="container mx-auto px-2 sm:px-4 overflow-hidden">
+          {/* === Section Header === */}
+          <div className="text-center max-w-3xl mx-auto mb-16 animate-fade-in">
+            <h2 className="font-display text-4xl md:text-6xl font-bold mb-6 text-[#5A386D]">
+              Collections
+            </h2>
+          </div>
 
-     {/* --- ✅ MODIFIED: Dual Care Services Section --- */}
-{/* --- ✅ MODIFIED: Dual Care Services Section --- */}
-     <section className="py-6 bg-secondary/30">
-  <div className="container mx-auto px-[0px] ">
-    {/* 1. Main "SERVICES" Title */}
-    <div className="text-center mx-auto mb-8 w-full">
-  <div className="inline-block bg-white px-6 py-2  shadow-[0_8px_20px_rgba(0,0,0,0.15)] border border-[#c6bec9]">
-    <h2 className="font-serif text-4xl md:text-5xl font-bold text-[#794299] uppercase tracking-wider 
-  drop-shadow-[2px_2px_0px_#e8d2ff]">
-  Services
-</h2>
-  </div>
-</div>
-
-
-    {/* 2. Main 2-column grid (Carpet vs Shawl) */}
-    <div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-x-12 gap-y-16">
-      {/* --- 3. CARPETS COLUMN (Left) --- */}
-      <div>
-        {/* Carpet Column Title */}
-        <h3 className="font-serif text-3xl text-center font-medium text-gray-700 uppercase tracking-widest mb-4">
-          Carpet
-        </h3>
-
-        {/* Carpet Main Image (h-96) */}
-       
-
-        {/* ✅ UPDATED: Carpet Services Grid (Stacked) */}
-        <div className="grid grid-cols-1 gap-8">
-          {carpetServices.map((service, index) => (
-            <InView
-              key={index}
-              triggerOnce
-              threshold={0.1}
-              rootMargin="0px 0px -50px 0px"
+          {/* === Carousel === */}
+          <div className="relative overflow-hidden">
+            <Slider
+              dots={false}
+              infinite
+              speed={800}
+              slidesToShow={2}
+              slidesToScroll={1}
+              autoplay
+              autoplaySpeed={3500}
+              nextArrow={<NextArrow />}
+              prevArrow={<PrevArrow />}
+              responsive={[
+                { breakpoint: 1024, settings: { slidesToShow: 2 } },
+                { breakpoint: 768, settings: { slidesToShow: 2 } }, 
+              ]}
             >
-              {({ ref, inView }) => (
-                <div
-                  ref={ref}
-                  className={`
-                    {/* ✅ UPDATED: Height changed from h-80 to h-96 */}
-                    group relative h-96 w-full overflow-hidden rounded-2xl shadow-lg cursor-pointer
-                    transition-all duration-1000 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]
-                    ${
-                      inView
-                        ? "opacity-100 translate-y-0"
-                        : "opacity-0 translate-y-12"
-                    }
-                  `}
-                  style={{ transitionDelay: `${index * 100}ms` }}
+              {collections.map((item, index) => (
+                <InView
+                  key={index}
+                  triggerOnce
+                  threshold={0.1}
+                  rootMargin="0px 0px -50px 0px"
                 >
-                  {/* 1. Image (as background) */}
-                  <img
-                    src={service.image}
-                    alt={service.title}
-                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-110"
-                  />
-
-                  {/* 2. Dark Overlay (for text readability) */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-
-                  {/* 3. Content (relative to position elements) */}
-                  <div className="relative z-10 flex flex-col justify-between h-full p-6">
-                    {/* Badge (Top-left) - Styled like screenshot */}
-                    {service.type && (
-                      <div>
-                        <span className="inline-block bg-[#794299] text-white px-4 py-1.5 rounded-full font-serif text-sm font-medium">
-                          {service.type}
-                        </span>
-                      </div>
-                    )}
-
-                    {/* Title & Link (Bottom-left) - Matches main card style */}
-                    <div className="transition-transform duration-500 group-hover:-translate-y-1">
-                      <h3 className="font-serif text-4xl md:text-5xl font-bold text-white mb-2 drop-shadow-md leading-tight">
-                        {service.title}
-                      </h3>
-                      <Link
-                        to={service.linkTo}
-                        className="inline-flex items-center text-accent hover:text-white font-medium transition-all duration-300 text-base group-hover:gap-1 mt-0 opacity-0 group-hover:opacity-100"
+                  {({ ref, inView }) => (
+                    <div ref={ref} className="px-2 sm:px-4"> 
+                      <div
+                        className={`group relative overflow-hidden cursor-pointer bg-card shadow-soft hover:shadow-hover transition-all duration-1000 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] ${
+                          inView
+                            ? "opacity-100 translate-y-0"
+                            : "opacity-0 translate-y-12"
+                        }`}
+                        style={{ transitionDelay: `${index * 100}ms` }}
                       >
-                        View Details
-                        <ArrowRight className="w-5 h-5 ml-1 group-hover:translate-x-1 transition-transform duration-300" />
-                      </Link>
+                        {/* === Image === */}
+                        <div className="relative h-[400px] overflow-hidden">
+                          <img
+                            src={item.image}
+                            alt={item.title}
+                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent pointer-events-none" />
+                          <div className="absolute bottom-0 left-0 p-5 text-white w-full transition-transform duration-500 group-hover:-translate-y-1">
+                            {item.type && (
+                              <span className="inline-block px-3 py-1 bg-[#62009b]/80 backdrop-blur-sm rounded-full text-xs mb-2">
+                                {item.type}
+                              </span>
+                            )}
+                            <h3 className="font-display text-2xl font-bold drop-shadow-md">
+                              {item.title}
+                            </h3>
+                          </div>
+                        </div>
+
+                        {/* === Fixed Text Below Image === */}
+                        <div className="text-center py-4 bg-white">
+                          {index % 2 === 0 ? (
+                            <h4 className="text-xl font-serif text-[#5A386D] uppercase tracking-wide">
+                              Carpet
+                            </h4>
+                          ) : (
+                            <h4 className="text-xl font-serif text-[#5A386D] uppercase tracking-wide">
+                              Shawl
+                            </h4>
+                          )}
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </div>
-              )}
-            </InView>
-          ))}
-        </div>
-      </div>{" "}
-      {/* End carpet column */}
-      {/* --- 4. SHAWLS COLUMN (Right) --- */}
-      <div>
-        {/* Shawl Column Title */}
-        <h3 className="font-serif text-3xl text-center font-medium text-gray-700 uppercase tracking-widest mb-4">
-          Shawl
-        </h3>
+                  )}
+                </InView>
+              ))}
+            </Slider>
+          </div>
 
-        {/* Shawl Main Image (h-96) */}
-       
-
-        {/* ✅ UPDATED: Shawl Services Grid (Stacked) */}
-        <div className="grid grid-cols-1 gap-8">
-          {shawlServices.map((service, index) => (
-            <InView
-              key={index}
-              triggerOnce
-              threshold={0.1}
-              rootMargin="0px 0px -50px 0px"
+          {/* === Button === */}
+          <div className="text-center mt-16 animate-fade-in">
+            <Button
+              asChild
+              size="lg"
+              className="bg-[#5A386D] hover:bg-[#62009b] text-lg px-8 transition-all duration-200 ease-out transform hover:scale-[1.02]"
             >
-              {({ ref, inView }) => (
-                <div
-                  ref={ref}
-                  className={`
-                    {/* ✅ UPDATED: Height changed from h-80 to h-96 */}
-                    group relative h-96 w-full overflow-hidden rounded-2xl shadow-lg cursor-pointer
-                    transition-all duration-1000 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]
-                    ${
-                      inView
-                        ? "opacity-100 translate-y-0"
-                        : "opacity-0 translate-y-12"
-                    }
-                  `}
-                  style={{
-                    transitionDelay: `${
-                      (carpetServices.length + index) * 100
-                    }ms`,
-                  }}
-                >
-                  {/* 1. Image (as background) */}
-                  <img
-                    src={service.image}
-                    alt={service.title}
-                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-110"
-                  />
-
-                  {/* 2. Dark Overlay (for text readability) */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-
-                  {/* 3. Content (relative to position elements) */}
-                  <div className="relative z-10 flex flex-col justify-between h-full p-6">
-                    {/* Badge (Top-left) - Styled like screenshot */}
-                    {service.type && (
-                      <div>
-                        <span className="inline-block bg-[#794299] text-white px-4 py-1.5 rounded-full font-serif text-sm font-medium">
-                          {service.type}
-                        </span>
-                      </div>
-                    )}
-
-                    {/* Title & Link (Bottom-left) - Matches main card style */}
-                    <div className="transition-transform duration-500 group-hover:-translate-y-1">
-                      <h3 className="font-serif text-4xl md:text-5xl font-bold text-white mb-2 drop-shadow-md leading-tight">
-                        {service.title}
-                      </h3>
-                      <Link
-                        to={service.linkTo}
-                        className="inline-flex items-center text-accent hover:text-white font-medium transition-all duration-300 text-base group-hover:gap-1 mt-0 opacity-0 group-hover:opacity-100"
-                      >
-                        View Details
-                        <ArrowRight className="w-5 h-5 ml-1 group-hover:translate-x-1 transition-transform duration-300" />
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </InView>
-          ))}
+              <Link to="/collection">
+                Explore Collection
+                <ArrowRight className="ml-2 w-5 h-5" />
+              </Link>
+            </Button>
+          </div>
         </div>
-      </div>{" "}
-      {/* End shawl column */}
-    </div>{" "}
-    {/* End 2-column grid */}
-    {/* 5. "View All" Button */}
-    <div className="text-center mt-20 animate-fade-in">
-      <Button
-        asChild
-        size="lg"
-        className="bg-[#5A386D] hover:bg-[#62009b] text-lg px-8 mb-9 transition-all duration-200 ease-out transform hover:scale-[1.02]"
-      >
-        <Link to="/services">
-          View All Services
-          <ArrowRight className="ml-2 w-5 h-5" />
-        </Link>
-      </Button>
-    </div>
-  </div>{" "}
-  {/* End container */}
-</section>
-      {/* --- END: Dual Care Services Section --- */}
-      {/* --- END: Dual Care Services Section --- */}
-{/* --- VIDEO SECTION --- */}
-{/* Place this section after your 'services' section */}
-{/* --- VIDEO SECTION --- */}
-
-<section className="relative w-full h-[60vh] md:h-[70vh] overflow-hidden">
- 
-  <video
-    autoPlay
-    loop
-    muted
-    playsInline
-    className="absolute inset-0 w-full h-full object-cover z-0"
-    // ✅ UPDATED: Video src is now related to rugs
-    src="https://www.youtube.com/watch?v=SNIHII7Pjb8&list=RDoasP8clIHI0&index=4"
-    // 👇 You can still use one of your images as a poster
-    poster={repairImg} 
-  >
-    Your browser does not support the video tag.
-  </video>
-
-  {/* 2. Dark Overlay */}
-  <div className="absolute inset-0 bg-black/60 z-10" />
-
-  {/* 3. Content */}
-  <div className="relative z-20 h-full flex items-center justify-center">
-    <div className="container mx-auto px-4 text-center">
-      <h2 className="font-sans text-2xl md:text-3xl font-light text-white uppercase tracking-widest animate-fade-in">
-        Because you deserve to shine!
-      </h2>
-    </div>
-  </div>
-</section>
-
-{/* --- YOUTUBE VIDEO SECTION --- */}
-
-{/* <section className="relative w-full h-[60vh] md:h-[70vh] overflow-hidden">
-  
- 
-  <iframe
-    className="absolute top-1/2 left-1/2 w-full h-full min-w-full min-h-full -translate-x-1/2 -translate-y-1/2 z-0"
-    src="https://www.youtube.com/embed/SNIHII7Pjb8?si=odObuwsWpnBfRyiu&autoplay=1&mute=1&loop=1&playlist=SNIHII7Pjb8&controls=0&showinfo=0"
-    frameBorder="0"
-    allow="autoplay; encrypted-media"
-    allowFullScreen
-    title="YouTube Background Video"
-  ></iframe>
-
-  <div className="absolute inset-0 bg-black/60 z-10" />
-
-  {/* 3. Content (This stays the same) */}
-  {/* <div className="relative z-20 h-full flex items-center justify-center">
-    <div className="container mx-auto px-4 text-center">
-      <h2 className="font-sans text-2xl md:text-3xl font-light text-white uppercase tracking-widest animate-fade-in">
-        Because you deserve to shine!
-      </h2>
-    </div>
-  </div>
-</section>  */}
-
-      {/* Collections Section */}
- <section className="py-8 bg-gradient-to-b from-background to-secondary/30 overflow-hidden">
-  <div className="container mx-auto px-2 sm:px-4 overflow-hidden">
-    {/* === Section Header === */}
-    <div className="text-center max-w-3xl mx-auto mb-16 animate-fade-in">
-      <h2 className="font-display text-4xl md:text-6xl font-bold mb-6 text-[#5A386D]">
-        Collections
-      </h2>
-      {/* <p className="font-body text-lg text-muted-foreground leading-relaxed">
-        Beautifully crafted and ethically sourced, our handmade area rugs
-        bring warmth, style, and authenticity to any space.
-      </p> */}
-    </div>
-
-    {/* === Carousel === */}
-    <div className="relative overflow-hidden">
-      <Slider
-        dots={false}
-        infinite
-        speed={800}
-        slidesToShow={2}
-        slidesToScroll={1}
-        autoplay
-        autoplaySpeed={3500}
-        nextArrow={<NextArrow />}
-        prevArrow={<PrevArrow />}
-        responsive={[
-          { breakpoint: 1024, settings: { slidesToShow: 2 } },
-          { breakpoint: 768, settings: { slidesToShow: 1 } },
-        ]}
-      >
-        {collections.map((item, index) => (
-          <InView
-            key={index}
-            triggerOnce
-            threshold={0.1}
-            rootMargin="0px 0px -50px 0px"
-          >
-            {({ ref, inView }) => (
-              <div ref={ref} className="px-4">
-                <div
-                  className={`group relative overflow-hidden cursor-pointer bg-card shadow-soft hover:shadow-hover transition-all duration-1000 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] ${
-                    inView
-                      ? "opacity-100 translate-y-0"
-                      : "opacity-0 translate-y-12"
-                  }`}
-                  style={{ transitionDelay: `${index * 100}ms` }}
-                >
-                  {/* === Image === */}
-                  <div className="relative h-[400px] overflow-hidden">
-                    <img
-                      src={item.image}
-                      alt={item.title}
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent pointer-events-none" />
-                    <div className="absolute bottom-0 left-0 p-5 text-white w-full transition-transform duration-500 group-hover:-translate-y-1">
-                      {item.type && (
-                        <span className="inline-block px-3 py-1 bg-[#62009b]/80 backdrop-blur-sm rounded-full text-xs mb-2">
-                          {item.type}
-                        </span>
-                      )}
-                      <h3 className="font-display text-2xl font-bold drop-shadow-md">
-                        {item.title}
-                      </h3>
-                    </div>
-                  </div>
-
-                  {/* === Fixed Text Below Image === */}
-                  <div className="text-center py-4 bg-white">
-                    {index % 2 === 0 ? (
-                      <h4 className="text-xl font-serif text-[#5A386D] uppercase tracking-wide">
-                        Carpet
-                      </h4>
-                    ) : (
-                      <h4 className="text-xl font-serif text-[#5A386D] uppercase tracking-wide">
-                        Shawl
-                      </h4>
-                    )}
-                  </div>
-                </div>
-              </div>
-            )}
-          </InView>
-        ))}
-      </Slider>
-    </div>
-
-    {/* === Button === */}
-    <div className="text-center mt-16 animate-fade-in">
-      <Button
-        asChild
-        size="lg"
-        className="bg-[#5A386D] hover:bg-[#62009b] text-lg px-8 transition-all duration-200 ease-out transform hover:scale-[1.02]"
-      >
-        <Link to="/collection">
-          Explore Collection
-          <ArrowRight className="ml-2 w-5 h-5" />
-        </Link>
-      </Button>
-    </div>
-  </div>
-</section>;
-
+      </section>
+      ;
       {/* Testimonials Section */}
       <section className="py-8 bg-gradient-to-b from-secondary/30 to-background">
         <div className="container mx-auto px-4">
@@ -749,7 +597,6 @@ const Index = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-            {/* 2. Update Testimonials Section Card Mapping */}
             {testimonials.map((testimonial, index) => (
               <InView
                 key={index}
@@ -763,14 +610,14 @@ const Index = () => {
                     className={`
                       bg-card p-8 rounded-lg 
                       shadow-[var(--shadow-soft)] hover:shadow-[var(--shadow-hover)]
-                      transition-all duration-1000 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] // Animation
+                      transition-all duration-1000 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]
                       ${
                         inView
                           ? "opacity-100 translate-y-0"
                           : "opacity-0 translate-y-12"
-                      } // Conditional animation styles
+                      }
                     `}
-                    style={{ transitionDelay: `${index * 100}ms` }} // Optional staggered delay
+                    style={{ transitionDelay: `${index * 100}ms` }}
                   >
                     <div className="flex gap-1 mb-4">
                       {[...Array(testimonial.rating)].map((_, i) => (
@@ -811,100 +658,102 @@ const Index = () => {
           </div>
         </div>
       </section>
-    {/* for befor after work */}
- <section className="py-12 bg-gray-50">
-      <div className="max-w-6xl mx-auto px-4">
+      <CustomerReviews />
+      {/* for befor after work */}
+      <section className="w-full bg-gray-50 py-16">
+  <div className="max-w-7xl mx-auto px-4 sm:px-6">
+    {/* Section Heading */}
+    <h2 className="text-center font-serif text-3xl md:text-5xl font-semibold text-gray-800 tracking-wide mb-12">
+      OUR WORK
+    </h2>
 
-        {/* Section Heading */}
-        <h2 className="text-center font-serif text-2xl md:text-4xl font-medium text-gray-800 tracking-wider mb-10">
-          OUR WORK
-        </h2>
+    {/* Carousel Container */}
+    <div className="relative flex flex-col items-center">
+      <div className="flex items-center justify-center w-full max-w-4xl gap-4 sm:gap-8">
+        {/* Left Arrow */}
+        <button
+          onClick={handlePrev}
+          className="hidden sm:flex flex-shrink-0 p-3 bg-white rounded-full shadow-md hover:shadow-lg hover:bg-gray-100 transition-all duration-300 z-10"
+          aria-label="Previous"
+        >
+          <ChevronLeft className="w-6 h-6 text-gray-800" />
+        </button>
 
-        {/* Here is the single slider.
-          The layouts are now placed directly inside the 'firstImage' and 'secondImage' props.
-        */}
-        <div className="shadow-xl rounded-xl overflow-hidden border">
-          <ReactBeforeSliderComponent
-            delimiterColor="#ffffff"
-            delimiterWidth={3}
-            
-            // --- 1. THE "BEFORE" VIEW (INLINE) ---
-            firstImage={
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 p-8 bg-white">
-  
-                {/* Card 1: Rug BEFORE */}
-                <div className="border rounded-lg overflow-hidden shadow-lg">
-                  <div className="relative">
-                    <img src={rugImage.before} alt="Rug Before" className="h-64 w-full object-cover" />
-                    <span className="absolute bottom-2 left-2 bg-black text-white text-xs font-bold px-2 py-1 rounded">
-                      BEFORE
-                    </span>
-                  </div>
-                  <div className="p-4 text-center font-serif">
-                    <h3 className="text-lg font-bold tracking-wide">Rug Restoration</h3>
-                    <p className="text-gray-600 text-sm mt-1">Faded and damaged condition</p>
-                  </div>
-                </div>
-                
-                {/* Card 2: Color BEFORE */}
-                <div className="border rounded-lg overflow-hidden shadow-lg">
-                  <div className="relative">
-                    <img src={colorImage.before} alt="Color Before" className="h-64 w-full object-cover" />
-                    <span className="absolute bottom-2 left-2 bg-black text-white text-xs font-bold px-2 py-1 rounded">
-                      BEFORE
-                    </span>
-                  </div>
-                  <div className="p-4 text-center font-serif">
-                    <h3 className="text-lg font-bold tracking-wide">Color Restoration</h3>
-                    <p className="text-gray-600 text-sm mt-1">Dull and faded wool</p>
-                  </div>
-                </div>
+        {/* Images Container */}
+        <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-6 items-center justify-center">
+          {/* Before Image */}
+          <div className="rounded-2xl overflow-hidden shadow-xl border border-gray-200">
+            <img
+              src={workItems[currentIndex].before}
+              alt="Before"
+              className="w-full h-60 sm:h-80 object-cover"
+            />
+            <p className="text-center text-gray-600 text-sm py-2 font-serif">
+              Before
+            </p>
+          </div>
 
-              </div>
-            }
-            
-            // --- 2. THE "AFTER" VIEW (INLINE) ---
-            secondImage={
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 p-8 bg-white">
-  
-                {/* Card 1: Rug AFTER */}
-                <div className="border rounded-lg overflow-hidden shadow-lg">
-                  <div className="relative">
-                    <img src={rugImage.after} alt="Rug After" className="h-64 w-full object-cover" />
-                    <span className="absolute bottom-2 right-2 bg-green-700 text-white text-xs font-bold px-2 py-1 rounded">
-                      AFTER
-                    </span>
-                  </div>
-                  <div className="p-4 text-center font-serif">
-                    <h3 className="text-lg font-bold tracking-wide">Rug Restoration</h3>
-                    <p className="text-gray-600 text-sm mt-1">Handmade repair & deep cleaning</p>
-                  </div>
-                </div>
-                
-                {/* Card 2: Color AFTER */}
-                <div className="border rounded-lg overflow-hidden shadow-lg">
-                  <div className="relative">
-                    <img src={colorImage.after} alt="Color After" className="h-64 w-full object-cover" />
-                    <span className="absolute bottom-2 right-2 bg-green-700 text-white text-xs font-bold px-2 py-1 rounded">
-                      AFTER
-                    </span>
-                  </div>
-                  <div className="p-4 text-center font-serif">
-                    <h3 className="text-lg font-bold tracking-wide">Color Restoration</h3>
-                    <p className="text-gray-600 text-sm mt-1">Reviving natural wool colors</p>
-                  </div>
-                </div>
-
-              </div>
-            }
-          />
+          {/* After Image */}
+          <div className="rounded-2xl overflow-hidden shadow-xl border border-gray-200">
+            <img
+              src={workItems[currentIndex].after}
+              alt="After"
+              className="w-full h-60 sm:h-80 object-cover"
+            />
+            <p className="text-center text-gray-600 text-sm py-2 font-serif">
+              After
+            </p>
+          </div>
         </div>
 
+        {/* Right Arrow */}
+        <button
+          onClick={handleNext}
+          className="hidden sm:flex flex-shrink-0 p-3 bg-white rounded-full shadow-md hover:shadow-lg hover:bg-gray-100 transition-all duration-300 z-10"
+          aria-label="Next"
+        >
+          <ChevronRight className="w-6 h-6 text-gray-800" />
+        </button>
       </div>
-    </section>
+
+      {/* Mobile Arrows (below images) */}
+      <div className="flex sm:hidden justify-center gap-8 mt-6">
+        <button
+          onClick={handlePrev}
+          className="p-2 bg-white rounded-full shadow-md hover:bg-gray-100 transition"
+        >
+          <ChevronLeft className="w-5 h-5 text-gray-800" />
+        </button>
+        <button
+          onClick={handleNext}
+          className="p-2 bg-white rounded-full shadow-md hover:bg-gray-100 transition"
+        >
+          <ChevronRight className="w-5 h-5 text-gray-800" />
+        </button>
+      </div>
+
+      {/* Carousel Indicators */}
+      <div className="flex justify-center gap-2 mt-6">
+        {workItems.map((_, index) => (
+          <button
+            key={index}
+            onClick={() => setCurrentIndex(index)}
+            className={`h-2 rounded-full transition-all duration-300 ${
+              index === currentIndex
+                ? "bg-gray-800 w-8"
+                : "bg-gray-300 w-2 hover:bg-gray-400"
+            }`}
+            aria-label={`Go to slide ${index + 1}`}
+          />
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
 
       {/* Appointment Section */}
-      <section className="py-24 bg-white from-primary via-primary-dark to-primary relative overflow-hidden">
+      <section className="py-16  bg-white from-primary via-primary-dark to-primary relative overflow-hidden">
         <div className="absolute inset-0 opacity-10">
           <div
             className="absolute inset-0"
