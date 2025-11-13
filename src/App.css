@@ -14,6 +14,18 @@
 .logo:hover {
   filter: drop-shadow(0 0 2em #646cffaa);
 }
+.ck-content img {
+  max-width: 100% !important;
+  height: auto !important;
+}
+
+/* Optional: make image resizable manually */
+.ck-content img {
+  resize: both;
+  overflow: auto;
+  border: 1px dashed #ccc;
+}
+
 .logo.react:hover {
   filter: drop-shadow(0 0 2em #61dafbaa);
 }

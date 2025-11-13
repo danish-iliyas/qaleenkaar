@@ -1,3 +1,5 @@
+// src/components/Header.tsx (Updated)
+
 import React, { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
@@ -42,7 +44,7 @@ const Header = () => {
   const navLinks = [
     { path: "/", label: "Home" },
     { path: "/services", label: "Services" },
-    { path: "/collection", label: "Collection" },
+    { path: "/collection/carpets", label: "Collection" }, // Point base link to one, e.g., carpets
     { path: "/about", label: "About Us" },
     { path: "/blog", label: "Blog" },
     { path: "/faqs", label: "FAQs" },
@@ -78,8 +80,7 @@ const Header = () => {
           <div className="hidden lg:flex flex-col items-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
             <Link to="/" className="flex items-center space-x-2 group">
              <h1 className="font-serif text-3xl md:text-4xl font-medium text-gray-800 tracking-wider">
-  THE QALEENKAAR
-</h1>
+              THE QALEENKAAR</h1>
 
             </Link>
             <NavigationMenu className="mt-3">
@@ -91,9 +92,9 @@ const Header = () => {
                         className={cn(
                           navigationMenuTriggerStyle(),
                           "font-serif text-sm uppercase tracking-widest bg-transparent hover:bg-transparent focus:bg-transparent data-[state=open]:bg-transparent",
-                          isActive(link.path)
+                          isActive(link.path) || location.pathname.startsWith('/services') // Highlight if on any services page
                             ? "text-gray-900 font-medium"
-                            : "text-gray-600 hover:text-gray-900"
+                            : "text-gray-600 hover:text-[#794299]"
                         )}
                       >
                         Services
@@ -105,8 +106,7 @@ const Header = () => {
                               <Link
                                 to="/services#carpet"
                                 className={cn(
-                                  "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
-                                  "font-serif text-sm"
+                                  "block rounded-lg px-4 py-3 font-serif text-sm text-gray-700 hover:bg-[#f4e7ff] hover:text-[#631b8d] transition-all"
                                 )}
                               >
                                 Carpet Services
@@ -118,8 +118,7 @@ const Header = () => {
                               <Link
                                 to="/services#shawl"
                                 className={cn(
-                                  "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
-                                  "font-serif text-sm"
+                                  "block rounded-lg px-4 py-3 font-serif text-sm text-gray-700 hover:bg-[#f4e7ff] hover:text-[#631b8d] transition-all"
                                 )}
                               >
                                 Shawl Services
@@ -132,48 +131,50 @@ const Header = () => {
                   ) : (
                     link.label === "Collection" ? (
                       <NavigationMenuItem key={link.path}>
-                        <NavigationMenuTrigger
-                          className={cn(
-                            navigationMenuTriggerStyle(),
-                            "font-serif text-sm uppercase tracking-widest bg-transparent hover:bg-transparent focus:bg-transparent data-[state=open]:bg-transparent",
-                            isActive(link.path)
-                              ? "text-gray-900 font-medium"
-                              : "text-gray-600 hover:text-gray-900"
-                          )}
-                        >
-                          Collection
-                        </NavigationMenuTrigger>
-                        <NavigationMenuContent>
-                          <ul className="grid w-[200px] gap-3 p-4">
-                            <li>
-                              <NavigationMenuLink asChild>
-                                <Link
-                                  to="/collection#carpet"
-                                  className={cn(
-                                    "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
-                                    "font-serif text-sm"
-                                  )}
-                                >
-                                  Carpet Collection
-                                </Link>
-                              </NavigationMenuLink>
-                            </li>
-                            <li>
-                              <NavigationMenuLink asChild>
-                                <Link
-                                  to="/collection#shawl"
-                                  className={cn(
-                                    "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
-                                    "font-serif text-sm"
-                                  )}
-                                >
-                                  Shawl Collection
-                                </Link>
-                              </NavigationMenuLink>
-                            </li>
-                          </ul>
-                        </NavigationMenuContent>
-                      </NavigationMenuItem>
+  <NavigationMenuTrigger
+    className={cn(
+      navigationMenuTriggerStyle(),
+      "font-serif text-sm uppercase tracking-widest bg-transparent hover:bg-transparent focus:bg-transparent data-[state=open]:bg-transparent",
+      "transition-all duration-200 px-4 py-2 rounded-md",
+      isActive(link.path) || location.pathname.startsWith('/collection')
+        ? "text-gray-900 font-semibold"
+        : "text-gray-700 hover:text-[#794299]"
+    )}
+  >
+    Collection
+  </NavigationMenuTrigger>
+
+  <NavigationMenuContent
+    className="rounded-xl shadow-xl bg-white border border-gray-200 mt-2"
+  >
+    <ul className="grid w-[240px] gap-1.5 p-3">
+
+      <li>
+        <NavigationMenuLink asChild>
+          <Link
+            to="/collection/carpets"
+            className="block rounded-lg px-4 py-3 font-serif text-sm text-gray-700 hover:bg-[#f4e7ff] hover:text-[#631b8d] transition-all"
+          >
+            Carpet Collection
+          </Link>
+        </NavigationMenuLink>
+      </li>
+
+      <li>
+        <NavigationMenuLink asChild>
+          <Link
+            to="/collection/shawls"
+            className="block rounded-lg px-4 py-3 font-serif text-sm text-gray-700 hover:bg-[#f4e7ff] hover:text-[#631b8d] transition-all"
+          >
+            Shawl Collection
+          </Link>
+        </NavigationMenuLink>
+      </li>
+
+    </ul>
+  </NavigationMenuContent>
+</NavigationMenuItem>
+
                     ) : (
                       <NavigationMenuItem key={link.path}>
                       <NavigationMenuLink asChild>
@@ -201,9 +202,9 @@ const Header = () => {
           {/* Center: Logo (Mobile) */}
           <div className="lg:hidden flex justify-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
              <Link to="/">
-                <h1 className="font-serif text-[15px] font-medium text-gray-800 tracking-wider">
-                  THE QALEENKAAR
-                </h1>
+               <h1 className="font-serif  text-[15px] font-medium text-gray-800 tracking-wider">
+                 THE QALEENKAAR
+               </h1>
              </Link>
           </div>
 
@@ -263,9 +264,9 @@ const Header = () => {
             </button>
           </div>
 
-           {/* --- Right Icons (Mobile) --- */}
-           <div className="lg:hidden">
-             {isAuthenticated ? (
+            {/* --- Right Icons (Mobile) --- */}
+            <div className="lg:hidden">
+              {isAuthenticated ? (
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <Button
@@ -318,7 +319,26 @@ const Header = () => {
       {isOpen && (
         <nav className="lg:hidden py-4 bg-white border-t border-gray-200 shadow-lg animate-fade-in-down">
           <div className="flex flex-col space-y-2 px-4">
-            {navLinks.map((link) => (
+            {/* --- 3. UPDATE MOBILE NAV LINKS --- */}
+            <Link
+              to="/collection/carpets"
+              onClick={() => setIsOpen(false)}
+              className="px-4 py-3 rounded-md font-serif uppercase tracking-widest text-gray-700 hover:bg-gray-100"
+            >
+              Carpet Collection
+            </Link>
+            <Link
+              to="/collection/shawls"
+              onClick={() => setIsOpen(false)}
+              className="px-4 py-3 rounded-md font-serif uppercase tracking-widest text-gray-700 hover:bg-gray-100"
+            >
+              Shawl Collection
+            </Link>
+
+            {/* Other links */}
+            {navLinks
+              .filter(link => link.label !== "Collection" && link.label !== "Services") // Filter out the ones we manually added
+              .map((link) => (
               <Link
                 key={link.path}
                 to={link.path}
@@ -332,6 +352,7 @@ const Header = () => {
                 {link.label}
               </Link>
             ))}
+            
             {/* Mobile menu icons */}
             <div className="flex justify-around pt-4 border-t border-gray-200 mt-2">
               

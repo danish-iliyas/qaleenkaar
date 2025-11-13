@@ -17,6 +17,8 @@ import FAQs from "./pages/FAQs";
 import Blog from "./pages/Blog";
 import BookAppointment from "./pages/BookAppointment";
 import NotFound from "./pages/NotFound";
+import ProductDetailPage from "./components/ProductDetailPage";
+import BlogDetail from "./components/BlogDetail.tsx"; 
 
 // Import New Admin Page and Protected Route
 import AdminDashboard from "./pages/AdminDashboard";
@@ -37,13 +39,14 @@ const App = () => (
             {/* Public Routes */}
             <Route path="/" element={<Index />} />
             <Route path="/services" element={<Services />} />
-            <Route path="/collection" element={<Collection />} />
+        <Route path="/collection/:type" element={<Collection />} />
             <Route path="/about" element={<About />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/faqs" element={<FAQs />} />
             <Route path="/book-appointment" element={<BookAppointment />} />
-
+            <Route path="/product/:id" element={<ProductDetailPage />} />
+              <Route path="/blog/:id" element={<BlogDetail />} />
             {/* Protected Admin Route */}
             <Route
               path="/admin/dashboard"

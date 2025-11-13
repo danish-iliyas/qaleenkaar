@@ -1,75 +1,82 @@
-import { Link, useLocation } from "react-router-dom";
-import { useRef, useEffect } from "react";
+import { Link, useParams } from "react-router-dom";
+import React, { useState, useEffect } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import collection1 from "@/assets/collection-1.jpg";
-import collection2 from "@/assets/collection-2.jpg";
-import collection3 from "@/assets/collection-3.jpg";
-import heroImage from "@/assets/hero-carpet.jpg";
+import heroImage from "@/assets/hero-carpet.jpg"; // Keep hero image
 import { InView } from "react-intersection-observer";
-import { ArrowRight } from "lucide-react"; // Make sure this is imported
+import { ArrowRight, Loader2 } from "lucide-react"; // Import Loader2
+
+const API_BASE = "http://localhost/adminPannel/api";
+
+interface CollectionItem {
+  id: number;
+  title: string;
+  description: string;
+  images: string[]; // Assuming 'images' is an array of URLs from your API
+  product_type: string;
+  ref_number: string;
+  // Add any other fields you might need from the API
+}
 
 const Collection = () => {
-  const carpetCollection = [
-    {
-      title: "Imperial Medallion Carpet",
-      description:
-        "Exquisite handwoven carpet featuring intricate geometric medallion patterns.",
-      image: collection1,
-      type: "Carpet",
-    },
-    {
-      title: "Persian Garden Runner",
-      description: "Elegant carpet runner with classical Persian garden design.",
-      image: collection3,
-      type: "Carpet",
-    },
-    {
-      title: "Vintage Floral Carpet",
-      description:
-        "Authentic vintage carpet with elaborate floral patterns and ornate borders.",
-      image: collection1,
-      type: "Carpet",
-    },
-    {
-      title: "Royal Medallion Carpet",
-      description:
-        "Grand statement carpet with symmetrical medallion design.",
-      image: collection3,
-      type: "Carpet",
-    },
-  ];
+  const { type } = useParams<{ type: string }>(); // 'carpets' or 'shawls'
+  const [pageTitle, setPageTitle] = useState("");
+  const [collectionData, setCollectionData] = useState<CollectionItem[]>([]);
+  
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const shawlCollection = [
-    {
-      title: "Kashmiri Paisley Shawl",
-      description: "Luxurious handcrafted shawl with traditional paisley motifs.",
-      image: collection2,
-      type: "Shawl",
-    },
-    {
-      title: "Heritage Pashmina Shawl",
-      description:
-        "Ultra-soft pashmina shawl with hand-embroidered botanical motifs.",
-      image: collection2,
-      type: "Shawl",
-    },
-  ];
-
-  const whatsappNumber = "+911234567890"; // For the CTA section
-  const carpetRef = useRef<HTMLDivElement>(null);
-  const shawlRef = useRef<HTMLDivElement>(null);
-  const { hash } = useLocation();
+  const whatsappNumber = "+911234567890";
 
   useEffect(() => {
-    const scrolltoId = hash.substring(1);
-    if (scrolltoId === "carpet" && carpetRef.current) {
-      carpetRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
-    } else if (scrolltoId === "shawl" && shawlRef.current) {
-      shawlRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-  }, [hash]);
+    const fetchCollectionData = async () => {
+      if (!type) return;
 
+      setLoading(true);
+      setError(null);
+
+      // Map URL param to API type
+      let apiType = "";
+      if (type === "carpets") {
+        setPageTitle("Carpet Collection");
+        apiType = "Carpet"; // Capitalized, singular
+      } else if (type === "shawls") {
+        setPageTitle("Shawl Collection");
+        apiType = "Shawl"; // Capitalized, singular
+      } else {
+        setError("Unknown collection type.");
+        setLoading(false);
+        return;
+      }
+
+      try {
+        // --- THIS IS THE CORRECTED API CALL ---
+        const response = await fetch(`${API_BASE}/products/?type=${apiType}`);
+        
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const data = await response.json();
+
+        // Check if API returns { status: 'success', data: [...] } or just [...]
+        if (data.status === 'success' && Array.isArray(data.data)) {
+          setCollectionData(data.data);
+        } else if (Array.isArray(data)) { // Fallback if API just returns array
+          setCollectionData(data);
+        } else {
+          setCollectionData([]);
+        }
+      } catch (err) {
+        console.error("Failed to fetch collection:", err);
+        setError("Failed to load collection. Please try again later.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCollectionData();
+    window.scrollTo(0, 0);
+  }, [type]); 
   return (
     <div className="bg-white">
       <Header />
@@ -84,7 +91,6 @@ const Collection = () => {
           />
           <div className="absolute inset-0 bg-gradient-to-r from-brown/60 via-brown/50 to-brown/40" />
         </div>
-
         <div className="relative z-10 container mx-auto px-4 py-24">
           <div className="max-w-3xl mx-auto text-center animate-fade-in">
             <h1 className="font-display text-5xl md:text-6xl font-bold text-[#FFFFFD] mb-6">
@@ -98,182 +104,101 @@ const Collection = () => {
         </div>
       </section>
 
-      {/* --- Collection Grid --- */}
+      {/* --- DYNAMIC Collection Grid --- */}
       <section className="py-12 md:py-24 bg-white">
-        <div className="container mx-auto px-4 space-y-16">
-          {/* --- Carpet Collection Section --- */}
-          <div ref={carpetRef} id="carpet" className="scroll-mt-24">
+        <div className="container mx-auto px-4">
+          <div>
             <h2 className="font-display text-4xl md:text-5xl font-bold mb-12 text-center text-[#5A386D]">
-              Carpet Collection
+              {pageTitle}
             </h2>
-            <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
-              {carpetCollection.map((item, index) => (
-                <InView
-                  key={index}
-                  triggerOnce
-                  threshold={0.1}
-                  rootMargin="0px 0px -50px 0px"
-                >
-                  {({ ref, inView }) => (
-                    <div
-                      ref={ref}
-                      className={`
-                        transition-all duration-1000 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]
-                        ${
-                          inView
-                            ? "opacity-100 translate-y-0"
-                            : "opacity-0 translate-y-12"
-                        }
-                      `}
-                      style={{ transitionDelay: `${index * 100}ms` }}
-                    >
-                      {/* --- UNIFIED CARD STYLE (for Mobile and Desktop) --- */}
+            
+            {/* --- Loading/Error/Empty States --- */}
+            {loading ? (
+              <div className="flex justify-center items-center py-20">
+                <Loader2 className="w-12 h-12 text-[#5A386D] animate-spin" />
+              </div>
+            ) : error ? (
+              <div className="text-center py-20 text-red-600 font-medium">
+                {error}
+              </div>
+            ) : collectionData.length === 0 ? (
+              <div className="text-center py-20 text-gray-500 font-medium">
+                No items found in this collection.
+              </div>
+            ) : (
+              <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
+                {collectionData.map((item, index) => (
+                  <InView
+                    key={item.id || index}
+                    triggerOnce
+                    threshold={0.1}
+                    rootMargin="0px 0px -50px 0px"
+                  >
+                    {({ ref, inView }) => (
                       <div
+                        ref={ref}
                         className={`
-                          group relative overflow-hidden rounded-lg cursor-pointer bg-card
-                          shadow-soft hover:shadow-hover
+                          transition-all duration-1000 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]
+                          ${
+                            inView
+                              ? "opacity-100 translate-y-0"
+                              : "opacity-0 translate-y-12"
+                          }
                         `}
+                        style={{ transitionDelay: `${index * 100}ms` }}
                       >
-                        {/* Using aspect-square for mobile 2-col grid
-                          Using lg:h-96 for desktop 3-col grid
-                        */}
-                        <div className="relative aspect-square lg:h-96 overflow-hidden">
-                          <img
-                            src={item.image}
-                            alt={item.title}
-                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                          />
-                          {/* Gradient */}
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent pointer-events-none" />
-                          
-                          {/* Text Container */}
-                          <div className="absolute bottom-0 left-0 p-3 md:p-5 text-white w-full">
-                            {/* Badge */}
-                            {item.type && (
-                              <span className="inline-block px-3 py-1 bg-[#62009b]/80 backdrop-blur-sm rounded-full text-xs mb-2">
-                                {item.type}
-                              </span>
-                            )}
-                            {/* Title - smaller on mobile, larger on desktop */}
-                            <h3 className="font-display text-lg md:text-2xl font-bold drop-shadow-md">
-                              {item.title}
-                            </h3>
-                            
-                            {/* --- HOVER BLOCK (for Mobile and Desktop) --- */}
-                            <div className="
-                              transition-all duration-300 ease-in-out 
-                              overflow-hidden max-h-0 opacity-0 
-                              group-hover:max-h-40 group-hover:opacity-100 group-hover:pt-2
-                            ">
-                              {/* Description - hidden on mobile, shown on desktop */}
-                              <p className="font-body text-sm text-white/90 mb-2 line-clamp-2 hidden md:block">
-                                {item.description}
-                              </p>
-                              <Link
-                                to={`/collection/${item.title.toLowerCase().replace(/ /g, "-")}`}
-                                className="inline-flex items-center text-accent hover:text-white font-medium transition-all duration-300 text-sm"
+                        <div
+                          className={`
+                            group relative overflow-hidden rounded-lg cursor-pointer bg-card
+                            shadow-soft hover:shadow-hover
+                          `}
+                        >
+                          <div className="relative aspect-square lg:h-96 overflow-hidden">
+                            <img
+                              // Use the first image from the API
+                              src={item.images?.[0] || "https://via.placeholder.com/400"}
+                              alt={item.title}
+                              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent pointer-events-none" />
+                            <div className="absolute bottom-0 left-0 p-3 md:p-5 text-white w-full">
+                              {item.product_type && (
+                                <span className="inline-block px-3 py-1 bg-[#62009b]/80 backdrop-blur-sm rounded-full text-xs mb-2">
+                                  {item.product_type}
+                                </span>
+                              )}
+                              <h3 className="font-display text-lg md:text-2xl font-bold drop-shadow-md">
+                                {item.title}
+                              </h3>
+                              <div
+                                className="
+                                  transition-all duration-300 ease-in-out 
+                                  overflow-hidden max-h-0 opacity-0 
+                                  group-hover:max-h-40 group-hover:opacity-100 group-hover:pt-2
+                                "
                               >
-                                View Details
-                                <ArrowRight className="w-4 h-4 ml-1 transition-transform duration-300 group-hover:translate-x-1" />
-                              </Link>
+                                <p className="font-body text-sm text-white/90 mb-2 line-clamp-2 hidden md:block">
+                                  {item.description}
+                                </p>
+                                <Link
+                                  // Update this link if you have a product detail page
+                                  to={`/product/${item.id || item.id}`}
+                                  className="inline-flex items-center text-accent hover:text-white font-medium transition-all duration-300 text-sm"
+                                >
+                                  View Details
+                                  <ArrowRight className="w-4 h-4 ml-1 transition-transform duration-300 group-hover:translate-x-1" />
+                                </Link>
+                              </div>
                             </div>
-                            {/* --- END HOVER BLOCK --- */}
                           </div>
                         </div>
                       </div>
-                    </div>
-                  )}
-                </InView>
-              ))}
-            </div>
-          </div>
-
-          {/* Mobile Grid: 2 columns | Desktop Grid: 3 columns */}
-          {/* --- Shawl Collection Section --- */}
-          <div ref={shawlRef} id="shawl" className="scroll-mt-24">
-            <h2 className="font-display text-4xl md:text-5xl font-bold mb-12 text-center text-[#5A386D]">
-              Shawl Collection
-            </h2>
-            <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
-              {shawlCollection.map((item, index) => (
-                <InView
-                  key={index}
-                  triggerOnce
-                  threshold={0.1}
-                  rootMargin="0px 0px -50px 0px"
-                >
-                  {({ ref, inView }) => (
-                    <div
-                      ref={ref}
-                      className={`
-                        transition-all duration-1000 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]
-                        ${
-                          inView
-                            ? "opacity-100 translate-y-0"
-                            : "opacity-0 translate-y-12"
-                        }
-                      `}
-                      style={{ transitionDelay: `${index * 100}ms` }}
-                    >
-                      {/* --- UNIFIED CARD STYLE (for Mobile and Desktop) --- */}
-                      <div
-                        className={`
-                          group relative overflow-hidden rounded-lg cursor-pointer bg-card
-                          shadow-soft hover:shadow-hover
-                        `}
-                      >
-                        {/* Using aspect-square for mobile 2-col grid
-                          Using lg:h-96 for desktop 3-col grid
-                        */}
-                        <div className="relative aspect-square lg:h-96 overflow-hidden">
-                          <img
-                            src={item.image}
-                            alt={item.title}
-                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                          />
-                          {/* Gradient */}
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent pointer-events-none" />
-                          
-                          {/* Text Container */}
-                          <div className="absolute bottom-0 left-0 p-3 md:p-5 text-white w-full">
-                            {/* Badge */}
-                            {item.type && (
-                              <span className="inline-block px-3 py-1 bg-[#62009b]/80 backdrop-blur-sm rounded-full text-xs mb-2">
-                                {item.type}
-                              </span>
-                            )}
-                            {/* Title - smaller on mobile, larger on desktop */}
-                            <h3 className="font-display text-lg md:text-2xl font-bold drop-shadow-md">
-                              {item.title}
-                            </h3>
-                            
-                            {/* --- HOVER BLOCK (for Mobile and Desktop) --- */}
-                            <div className="
-                              transition-all duration-300 ease-in-out 
-                              overflow-hidden max-h-0 opacity-0 
-                              group-hover:max-h-40 group-hover:opacity-100 group-hover:pt-2
-                            ">
-                              {/* Description - hidden on mobile, shown on desktop */}
-                              <p className="font-body text-sm text-white/90 mb-2 line-clamp-2 hidden md:block">
-                                {item.description}
-                              </p>
-                              <Link
-                                to={`/collection/${item.title.toLowerCase().replace(/ /g, "-")}`}
-                                className="inline-flex items-center text-accent hover:text-white font-medium transition-all duration-300 text-sm"
-                              >
-                                View Details
-                                <ArrowRight className="w-4 h-4 ml-1 transition-transform duration-300 group-hover:translate-x-1" />
-                              </Link>
-                            </div>
-                            {/* --- END HOVER BLOCK --- */}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                </InView>
-              ))}
-            </div>
+                    )}
+                  </InView>
+                ))}
+              </div>
+            )}
+            
           </div>
         </div>
       </section>

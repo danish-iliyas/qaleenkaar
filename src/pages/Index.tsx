@@ -241,7 +241,7 @@ const Index = () => {
       <Header />
       <WhatsAppFloat />
       {/* --- Hero Section --- */}
-      <section className="relative h-[50vh] min-h-[350px] flex items-center overflow-hidden">
+      <section className="relative h-[65vh]  min-h-[350px] bg-red-600 flex items-center overflow-hidden">
         {/* Embla Carousel Viewport */}
         <div className="absolute inset-0" ref={emblaRef}>
           <div className="flex h-full">
@@ -275,8 +275,8 @@ const Index = () => {
         {/* Static Content Overlay (Text + Button) */}
         <div className="relative z-10 container mx-auto px-4">
           <div className="max-w-xl animate-fade-in">
-            <h1 className="font-serif text-white text-5xl md:text-6xl lg:text-5xl font-normal mb-8 leading-tight">
-              Handcrafted masterpieces from the world's finest looms
+            <h1 className="font-serif text-white text-4xl md:text-6xl lg:text-4xl font-normal mb-8 leading-tight">
+              Handcrafted masterpieces <br/> from the world's finest looms
             </h1>
             <Button
               asChild
@@ -297,10 +297,10 @@ const Index = () => {
         {/* ✅ Container padding changed to allow cards to be closer to edge on mobile */}
         <div className="container mx-auto px-2 sm:px-4 ">
           {/* 1. Main "SERVICES" Title */}
-          <div className="text-center mx-auto mb-8 w-full">
-            <div className="inline-block  px-6 py-2  shadow-[0_8px_20px_rgba(0,0,0,0.15)] border border-none rounded-sm">
+          <div className="text-center mx-auto mb-4 w-full">
+            <div className="inline-block  border border-none rounded-sm">
               <h2
-                className="font-serif text-4xl md:text-5xl font-bold text-[#3f5066] uppercase tracking-wider 
+                className="font-serif text-2xl md:text-4xl font-bold text-[#3f5066] uppercase tracking-wider 
    drop-shadow-[2px_2px_0px_#e8d2ff]"
               >
                 Services
@@ -311,7 +311,7 @@ const Index = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-x-12 gap-y-16">
             {/* --- 3. CARPETS COLUMN (Left) --- */}
             <div>
-              <h3 className="font-serif text-3xl text-center font-medium text-gray-700 uppercase tracking-widest mb-4">
+              <h3 className="font-serif text-2xl text-center font-medium text-gray-700 uppercase tracking-widest mb-4">
                 Carpet
               </h3>
               {/* ✅ CHANGED: grid-cols-1 to grid-cols-2, gap-8 to gap-4, and added lg: breakpoints */}
@@ -354,7 +354,7 @@ const Index = () => {
                           )}
                           <div className="transition-transform duration-500 group-hover:-translate-y-1">
                             {/* ✅ CHANGED: Font size classes for mobile */}
-                            <h3 className="font-serif text-2xl md:text-4xl lg:text-5xl font-bold text-white mb-2 drop-shadow-md leading-tight">
+                            <h3 className="font-serif text-2xl md:text-4xl lg:text-4xl font-bold text-white mb-2 drop-shadow-md leading-tight">
                               {service.title}
                             </h3>
                             <Link
@@ -375,7 +375,7 @@ const Index = () => {
             {/* End carpet column */}
             {/* --- 4. SHAWLS COLUMN (Right) --- */}
             <div>
-              <h3 className="font-serif text-3xl text-center font-medium text-gray-700 uppercase tracking-widest mb-4">
+              <h3 className="font-serif text-2xl text-center font-medium text-gray-700 uppercase tracking-widest mb-4">
                 Shawl
               </h3>
               {/* ✅ CHANGED: grid-cols-1 to grid-cols-2, gap-8 to gap-4, and added lg: breakpoints */}
@@ -422,7 +422,7 @@ const Index = () => {
                           )}
                           <div className="transition-transform duration-500 group-hover:-translate-y-1">
                             {/* ✅ CHANGED: Font size classes for mobile */}
-                            <h3 className="font-serif text-2xl md:text-4xl lg:text-5xl font-bold text-white mb-2 drop-shadow-md leading-tight">
+                            <h3 className="font-serif text-2xl md:text-4xl lg:text-4xl font-bold text-white mb-2 drop-shadow-md leading-tight">
                               {service.title}
                             </h3>
                             <Link
