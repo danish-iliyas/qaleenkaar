@@ -47,8 +47,8 @@ const LoginDialog: React.FC<LoginDialogProps> = ({
   };
 
   return (
-    <Dialog open={isOpen} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[425px]">
+    <Dialog open={isOpen} onOpenChange={onOpenChange} >
+      <DialogContent className="w-full  max-w-[425px] mx-auto flex flex-col items-center justify-center" >
         <DialogHeader>
           <DialogTitle className="font-display text-3xl md:text-4xl font-medium text-gray-800 tracking-wider">
             Admin Login
