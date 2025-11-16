@@ -7,6 +7,7 @@ import {
   Facebook,
   Twitter,
 } from "lucide-react";
+import MobileBottomNav from "@/components/MobileBottomNav";
 
 const Footer = () => {
   const whatsappNumber = "+911234567890";
@@ -147,7 +148,9 @@ const Footer = () => {
           </div>
         </div>
       </div>
+      <MobileBottomNav />
     </footer>
+    
   );
 };
 

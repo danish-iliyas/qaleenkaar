@@ -24,6 +24,7 @@ import BlogDetail from "./components/BlogDetail.tsx";
 import AdminDashboard from "./pages/AdminDashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
 import ManageContent from "./pages/ManageContent"; // <-- IMPORT NEW PAGE
+import ScrollToTop from "./components/ScrollToTop";
 
 const queryClient = new QueryClient();
 
@@ -35,6 +36,7 @@ const App = () => (
       {/* Wrap the entire app in AuthProvider */}
       <AuthProvider>
         <BrowserRouter>
+        <ScrollToTop />
           <Routes>
             {/* Public Routes */}
             <Route path="/" element={<Index />} />

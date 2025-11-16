@@ -99,7 +99,7 @@ const Blog: React.FC = () => {
       <Header />
 
       {/* Hero Section */}
-      <section className="relative min-h-[500px] flex items-center justify-center overflow-hidden pt-20">
+  <section className="relative h-[45vh]  min-h-[350px] lg:h-[66vh] bg-red-600 flex items-center overflow-hidden">
         <div className="absolute inset-0">
           <img src={heroImage} alt="Blog" className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-r from-brown/60 via-brown/50 to-brown/40" />

@@ -91,7 +91,7 @@ const Header = () => {
                       <NavigationMenuTrigger
                         className={cn(
                           navigationMenuTriggerStyle(),
-                          "font-serif text-sm uppercase tracking-widest bg-transparent hover:bg-transparent focus:bg-transparent data-[state=open]:bg-transparent",
+                          "font-serif text-sm uppercase tracking-widest bg-transparent  hover:bg-transparent focus:bg-transparent data-[state=open]:bg-transparent",
                           isActive(link.path) || location.pathname.startsWith('/services') // Highlight if on any services page
                             ? "text-gray-900 font-medium"
                             : "text-gray-600 hover:text-[#794299]"

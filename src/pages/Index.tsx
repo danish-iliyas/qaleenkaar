@@ -241,8 +241,7 @@ const Index = () => {
       <Header />
       <WhatsAppFloat />
       {/* --- Hero Section --- */}
-      <section className="relative h-[65vh]  min-h-[350px] bg-red-600 flex items-center overflow-hidden">
-        {/* Embla Carousel Viewport */}
+      <section className="relative h-[45vh]  min-h-[350px] lg:h-[66vh] bg-red-600 flex items-center overflow-hidden">
         <div className="absolute inset-0" ref={emblaRef}>
           <div className="flex h-full">
             {/* Map through carousel slides */}
@@ -275,16 +274,22 @@ const Index = () => {
         {/* Static Content Overlay (Text + Button) */}
         <div className="relative z-10 container mx-auto px-4">
           <div className="max-w-xl animate-fade-in">
-            <h1 className="font-serif text-white text-4xl md:text-6xl lg:text-4xl font-normal mb-8 leading-tight">
-              Handcrafted masterpieces <br/> from the world's finest looms
+            <h1 className="font-serif text-white text-3xl md:text-6xl lg:text-4xl font-normal mb-8 leading-tight">
+              Handcrafted masterpieces <br /> from the world's finest looms
             </h1>
             <Button
               asChild
-              size="lg"
+              // size="lg" is removed since we are defining custom responsive sizes
               className="
-                bg-white text-gray-900 font-serif text-lg h-14 px-10 rounded-none
-                hover:bg-gray-200 transition-colors
-              "
+    bg-white text-gray-900 font-serif rounded-none
+    hover:bg-gray-200 transition-colors
+    
+    /* ✅ Mobile (default) sizes: */
+    h-[36px] px-4 text-base
+    
+    /* ✅ Desktop (lg:) sizes: */
+    lg:h-14 lg:px-10 lg:text-lg
+  "
             >
               <Link to="/shop">Shop Now</Link>
             </Button>
@@ -292,29 +297,30 @@ const Index = () => {
         </div>
       </section>
       {/* --- END: Hero Section --- */}
+
       {/* --- Dual Care Services Section --- */}
-      <section className="py-6 bg-secondary/30">
-        {/* ✅ Container padding changed to allow cards to be closer to edge on mobile */}
+      {/* ✅ CHANGED: Standardized section padding */}
+      <section className="py-8 pb-4 md:py-8 bg-secondary/30">
         <div className="container mx-auto px-2 sm:px-4 ">
           {/* 1. Main "SERVICES" Title */}
           <div className="text-center mx-auto mb-4 w-full">
             <div className="inline-block  border border-none rounded-sm">
               <h2
                 className="font-serif text-2xl md:text-4xl font-bold text-[#3f5066] uppercase tracking-wider 
-   drop-shadow-[2px_2px_0px_#e8d2ff]"
+  drop-shadow-[2px_2px_0px_#e8d2ff]"
               >
                 Services
               </h2>
             </div>
           </div>
           {/* 2. Main 2-column grid (Carpet vs Shawl) */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-x-12 gap-y-16">
+          {/* ✅ CHANGED: Reduced the gap that you saw in the screenshot */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-x-12 gap-y-8">
             {/* --- 3. CARPETS COLUMN (Left) --- */}
             <div>
               <h3 className="font-serif text-2xl text-center font-medium text-gray-700 uppercase tracking-widest mb-4">
                 Carpet
               </h3>
-              {/* ✅ CHANGED: grid-cols-1 to grid-cols-2, gap-8 to gap-4, and added lg: breakpoints */}
               <div className="grid grid-cols-2 gap-4 lg:grid-cols-1 lg:gap-8">
                 {carpetServices.map((service, index) => (
                   <InView
@@ -329,10 +335,9 @@ const Index = () => {
                         className={`
                           group relative h-80 lg:h-96 w-full overflow-hidden  shadow-lg cursor-pointer
                           transition-all duration-1000 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]
-                          ${
-                            inView
-                              ? "opacity-100 translate-y-0"
-                              : "opacity-0 translate-y-12"
+                          ${inView
+                            ? "opacity-100 translate-y-0"
+                            : "opacity-0 translate-y-12"
                           }
                         `}
                         style={{ transitionDelay: `${index * 100}ms` }}
@@ -346,14 +351,12 @@ const Index = () => {
                         <div className="relative z-10 flex flex-col justify-between h-full p-4 md:p-6">
                           {service.type && (
                             <div>
-                              {/* ✅ CHANGED: Font size and padding on badge for mobile */}
                               <span className="inline-block bg-[#794299] text-white px-3 py-1 md:px-4 md:py-1.5 rounded-full font-serif text-xs md:text-sm font-medium">
                                 {service.type}
                               </span>
                             </div>
                           )}
                           <div className="transition-transform duration-500 group-hover:-translate-y-1">
-                            {/* ✅ CHANGED: Font size classes for mobile */}
                             <h3 className="font-serif text-2xl md:text-4xl lg:text-4xl font-bold text-white mb-2 drop-shadow-md leading-tight">
                               {service.title}
                             </h3>
@@ -378,7 +381,6 @@ const Index = () => {
               <h3 className="font-serif text-2xl text-center font-medium text-gray-700 uppercase tracking-widest mb-4">
                 Shawl
               </h3>
-              {/* ✅ CHANGED: grid-cols-1 to grid-cols-2, gap-8 to gap-4, and added lg: breakpoints */}
               <div className="grid grid-cols-2 gap-4 lg:grid-cols-1 lg:gap-8">
                 {shawlServices.map((service, index) => (
                   <InView
@@ -393,16 +395,14 @@ const Index = () => {
                         className={`
                           group relative h-80 lg:h-96 w-full overflow-hidden  shadow-lg cursor-pointer
                           transition-all duration-1000 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]
-                          ${
-                            inView
-                              ? "opacity-100 translate-y-0"
-                              : "opacity-0 translate-y-12"
+                          ${inView
+                            ? "opacity-100 translate-y-0"
+                            : "opacity-0 translate-y-12"
                           }
                         `}
                         style={{
-                          transitionDelay: `${
-                            (carpetServices.length + index) * 100
-                          }ms`,
+                          transitionDelay: `${(carpetServices.length + index) * 100
+                            }ms`,
                         }}
                       >
                         <img
@@ -414,14 +414,12 @@ const Index = () => {
                         <div className="relative z-10 flex flex-col justify-between h-full p-4 md:p-6">
                           {service.type && (
                             <div>
-                              {/* ✅ CHANGED: Font size and padding on badge for mobile */}
                               <span className="inline-block bg-[#794299] text-white px-3 py-1 md:px-4 md:py-1.5 rounded-full font-serif text-xs md:text-sm font-medium">
                                 {service.type}
                               </span>
                             </div>
                           )}
                           <div className="transition-transform duration-500 group-hover:-translate-y-1">
-                            {/* ✅ CHANGED: Font size classes for mobile */}
                             <h3 className="font-serif text-2xl md:text-4xl lg:text-4xl font-bold text-white mb-2 drop-shadow-md leading-tight">
                               {service.title}
                             </h3>
@@ -444,7 +442,8 @@ const Index = () => {
           </div>{" "}
           {/* End 2-column grid */}
           {/* 5. "View All" Button */}
-          <div className="text-center mt-20 animate-fade-in">
+          {/* ✅ CHANGED: Reduced excessive top margin */}
+          <div className="text-center mt-12 animate-fade-in">
             <Button
               asChild
               size="lg"
@@ -460,6 +459,7 @@ const Index = () => {
         {/* End container */}
       </section>
       {/* --- END: Dual Care Services Section --- */}
+
       {/* --- YOUTUBE VIDEO SECTION --- */}
       <section className="relative w-full h-[60vh] md:h-[70vh] overflow-hidden">
         <iframe
@@ -482,11 +482,14 @@ const Index = () => {
           </div>
         </div>
       </section>
+
       {/* --- Collections Section --- */}
-      <section className="py-8 bg-gradient-to-b from-background to-secondary/30 overflow-hidden">
+      {/* ✅ CHANGED: Standardized section padding */}
+      <section className="py-12 md:py-16 bg-gradient-to-b from-background to-secondary/30 overflow-hidden">
         <div className="container mx-auto px-2 sm:px-4 overflow-hidden">
           {/* === Section Header === */}
-          <div className="text-center max-w-3xl mx-auto mb-16 animate-fade-in">
+          {/* ✅ CHANGED: Reduced bottom margin for consistency */}
+          <div className="text-center max-w-3xl mx-auto mb-12 animate-fade-in">
             <h2 className="font-display text-4xl md:text-6xl font-bold mb-6 text-[#5A386D]">
               Collections
             </h2>
@@ -519,11 +522,10 @@ const Index = () => {
                   {({ ref, inView }) => (
                     <div ref={ref} className="px-2 sm:px-4">
                       <div
-                        className={`group relative overflow-hidden cursor-pointer bg-card shadow-soft hover:shadow-hover transition-all duration-1000 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] ${
-                          inView
+                        className={`group relative overflow-hidden cursor-pointer bg-card shadow-soft hover:shadow-hover transition-all duration-1000 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] ${inView
                             ? "opacity-100 translate-y-0"
                             : "opacity-0 translate-y-12"
-                        }`}
+                          }`}
                         style={{ transitionDelay: `${index * 100}ms` }}
                       >
                         {/* === Image === */}
@@ -567,7 +569,8 @@ const Index = () => {
           </div>
 
           {/* === Button === */}
-          <div className="text-center mt-16 animate-fade-in">
+          {/* ✅ CHANGED: Reduced top margin for consistency */}
+          <div className="text-center mt-12 md:mt-16 animate-fade-in">
             <Button
               asChild
               size="lg"
@@ -581,84 +584,13 @@ const Index = () => {
           </div>
         </div>
       </section>
-      ;{/* Testimonials Section */}
-      {/* <section className="py-8 bg-gradient-to-b from-secondary/30 to-background">
-        <div className="container mx-auto px-4">
-          <div className="text-center max-w-3xl mx-auto mb-16 animate-fade-in">
-            <h2 className="font-display text-4xl md:text-6xl font-bold mb-6 text-[#5A386D]">
-              What Our Customers Say
-            </h2>
-            <p className="font-body text-lg text-[#7A4B7A] leading-relaxed">
-              Real experiences from our valued clients who trust us with their
-              precious textiles
-            </p>
-          </div>
+      {/* --- END: Collections Section --- */}
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-            {testimonials.map((testimonial, index) => (
-              <InView
-                key={index}
-                triggerOnce
-                threshold={0.1}
-                rootMargin="0px 0px -50px 0px"
-              >
-                {({ ref, inView }) => (
-                  <div
-                    ref={ref}
-                    className={`
-                      bg-card p-8 rounded-lg 
-                      shadow-[var(--shadow-soft)] hover:shadow-[var(--shadow-hover)]
-                      transition-all duration-1000 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]
-                      ${
-                        inView
-                          ? "opacity-100 translate-y-0"
-                          : "opacity-0 translate-y-12"
-                      }
-                    `}
-                    style={{ transitionDelay: `${index * 100}ms` }}
-                  >
-                    <div className="flex gap-1 mb-4">
-                      {[...Array(testimonial.rating)].map((_, i) => (
-                        <svg
-                          key={i}
-                          className="w-5 h-5 text-[#794299] fill-current"
-                          viewBox="0 0 20 20"
-                        >
-                          <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
-                        </svg>
-                      ))}
-                    </div>
-                    <p className="font-body text-foreground italic mb-6 leading-relaxed">
-                      "{testimonial.review}"
-                    </p>
-                    <p className="font-display text-lg font-semibold text-[#8637b4]">
-                      - {testimonial.name}
-                    </p>
-                  </div>
-                )}
-              </InView>
-            ))}
-          </div>
-
-          <div className="text-center animate-fade-in">
-            <div className="inline-flex items-center gap-2 px-6 py-3 bg-secondary rounded-full">
-              <svg
-                className="w-5 h-5 text-[#794299]"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-              >
-                <path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z" />
-              </svg>
-              <span className="font-body text-[#794299]">
-                Watch customer testimonial videos on our social media
-              </span>
-            </div>
-          </div>
-        </div>
-      </section> */}
       <CustomerReviews />
-      {/* for befor after work */}
-      <section className="w-full bg-gray-50 py-16">
+
+      {/* --- OUR WORK Section --- */}
+      {/* ✅ CHANGED: Standardized section padding */}
+      <section className="w-full bg-gray-50 py-12 md:py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           {/* Section Heading */}
           <h2 className="text-center font-serif text-3xl md:text-5xl font-semibold text-[#794299] tracking-wide mb-12">
@@ -693,14 +625,14 @@ const Index = () => {
 
                 {/* After Image */}
                 <div className="w-full rounded-2xl overflow-hidden shadow-xl border border-gray-200">
+                  <p className="text-center text-[#794299] text-xl py-2 font-serif">
+                    After
+                  </p>
                   <img
                     src={workItems[currentIndex].after}
                     alt="After"
                     className="w-full h-80 sm:h-96 object-cover"
                   />
-                  <p className="text-center text-[#794299] text-xl py-2 font-serif">
-                    After
-                  </p>
                 </div>
               </div>
 
@@ -736,11 +668,10 @@ const Index = () => {
                 <button
                   key={index}
                   onClick={() => setCurrentIndex(index)}
-                  className={`h-2 rounded-full transition-all duration-300 ${
-                    index === currentIndex
+                  className={`h-2 rounded-full transition-all duration-300 ${index === currentIndex
                       ? "bg-[#794299] w-8"
                       : "bg-gray-300 w-2 hover:bg-gray-400"
-                  }`}
+                    }`}
                   aria-label={`Go to slide ${index + 1}`}
                 />
               ))}
@@ -748,8 +679,11 @@ const Index = () => {
           </div>
         </div>
       </section>
-      {/* Appointment Section */}
-      <section className="py-16  bg-white from-primary via-primary-dark to-primary relative overflow-hidden">
+      {/* --- END: OUR WORK Section --- */}
+
+      {/* --- Appointment Section --- */}
+      {/* ✅ CHANGED: Standardized section padding */}
+      <section className="py-12 md:py-16  bg-white from-primary via-primary-dark to-primary relative overflow-hidden">
         <div className="absolute inset-0 opacity-10">
           <div
             className="absolute inset-0"
@@ -789,7 +723,7 @@ const Index = () => {
             </div>
             <div className="relative h-96 rounded-lg overflow-hidden animate-fade-in shadow-2xl">
               <img
-                src={restorationImg}
+                src={collection2}
                 alt="Consultation"
                 className="w-full h-full object-cover"
               />
@@ -797,6 +731,8 @@ const Index = () => {
           </div>
         </div>
       </section>
+      {/* --- END: Appointment Section --- */}
+
       <Footer />
     </div>
   );
