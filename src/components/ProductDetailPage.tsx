@@ -20,7 +20,7 @@ interface Product {
   images: string[];     // Expect an array of image URLs
 }
 
-const API_BASE = "http://localhost/adminPannel/api";
+const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost/adminPannel/api";
 
 const ProductDetailPage: React.FC = () => {
   // --- NEW --- Get the 'id' from the URL (e.g., /product/123)

@@ -14,7 +14,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 
-const API_BASE = "http://localhost/adminPannel/api";
+const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost/adminPannel/api";
 
 // Blog Type
 interface Blog {
