@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 // Static image
 import heroImage from "@/assets/hero-carpet.jpg";
 
-const API_BASE = "http://localhost/adminPannel/api";
+const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost/adminPannel/api";
 
 interface Blog {
   id: number;

@@ -6,7 +6,7 @@ import heroImage from "@/assets/hero-carpet.jpg"; // Keep hero image
 import { InView } from "react-intersection-observer";
 import { ArrowRight, Loader2 } from "lucide-react"; // Import Loader2
 
-const API_BASE = "http://localhost/adminPannel/api";
+const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost/adminPannel/api";
 
 interface CollectionItem {
   id: number;

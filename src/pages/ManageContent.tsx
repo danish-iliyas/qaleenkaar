@@ -22,7 +22,7 @@ import { Edit, Trash } from "lucide-react";
 import BlogUploadDialog from "@/components/BlogUploadDialog"; 
 import CollectionUploadDialog from "@/components/CollectionUploadDialog";
 
-const API_BASE = "http://localhost/adminPannel/api";
+const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost/adminPannel/api";
 
 // --- Interfaces ---
 
