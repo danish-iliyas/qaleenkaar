@@ -43,7 +43,7 @@ const MobileBottomNav = () => {
     { path: "/", label: "Home", icon: Home },
     { path: "/services", label: "Services", icon: ConciergeBell },
     { path: "/collection/carpets", label: "Collection", icon: LayoutGrid },
-    { path: "/about", label: "About", icon: Info },
+    // { path: "/about", label: "About", icon: Info },
     { path: "/contact", label: "Contact", icon: Phone },
   ];
 

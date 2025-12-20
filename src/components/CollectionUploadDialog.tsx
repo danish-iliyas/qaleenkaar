@@ -110,15 +110,15 @@ const CollectionUploadDialog: React.FC<CollectionUploadDialogProps> = ({
           console.log(`Added image ${index}:`, file.name);
         });
       }
-
-      console.log("Making API call to: http://localhost/adminPannel/api/products");
+        const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost/adminPannel/api";
+      console.log("Making API call to:", `${API_BASE}/products`);
       console.log("FormData entries:");
       for (let pair of formDataToSend.entries()) {
         console.log(pair[0] + ': ' + pair[1]);
       }
 
       // Make POST request to the API
-      const response = await fetch("http://localhost/adminPannel/api/products", {
+      const response = await fetch(`${API_BASE}/products`, {
         method: "POST",
         body: formDataToSend,
         // Don't set Content-Type - browser sets it automatically with boundary for FormData

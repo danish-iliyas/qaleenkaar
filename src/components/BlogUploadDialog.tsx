@@ -44,7 +44,8 @@ interface BlogUploadDialogProps {
 }
 
 // CKEditor upload endpoint
-const uploadUrl = "http://localhost/adminPannel/api/upload-image";
+const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost/adminPannel/api";
+const uploadUrl = `${API_BASE}/upload-image`;
 
 const BlogUploadDialog: React.FC<BlogUploadDialogProps> = ({
   isOpen,
@@ -115,11 +116,12 @@ const BlogUploadDialog: React.FC<BlogUploadDialogProps> = ({
         sendData.append("featured_image_path", featuredImage);
       }
 
-      let url = "http://localhost/adminPannel/api/blogs";
+      // let url = "http://localhost/adminPannel/api/blogs";
+      let url = `${API_BASE}/blogs`;
       let method = "POST";
 
       if (editMode) {
-        url = `http://localhost/adminPannel/api/blog/${blogData.id}`;
+        url = `${API_BASE}/blog/${blogData.id}`;
         sendData.append("_method", "PUT");
       }
 
@@ -155,7 +157,7 @@ const BlogUploadDialog: React.FC<BlogUploadDialogProps> = ({
 
     try {
       const res = await fetch(
-        `http://localhost/adminPannel/api/blog/${blogData.id}`,
+        `${API_BASE}/blog/${blogData.id}`,
         { method: "POST", body: sendData }
       );
       const text = await res.text();
@@ -176,7 +178,7 @@ const BlogUploadDialog: React.FC<BlogUploadDialogProps> = ({
         : "unpublish";
 
     const res = await fetch(
-      `http://localhost/adminPannel/api/blog/${blogData.id}/${endpoint}`,
+      `${API_BASE}/blog/${blogData.id}/${endpoint}`,
       { method: "POST" }
     );
 
