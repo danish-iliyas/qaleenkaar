@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom"; // Added useNavigate
 import {
   Menu,
   X,
   User,
   Plus,
-  ChevronDown, // Added for sub-menu indicator
+  ChevronDown,
+  LogOut, // Added for logout icon
 } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 import { cn } from "@/lib/utils";
@@ -13,9 +14,10 @@ import LoginDialog from "./LoginDialog";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [isCollectionsOpen, setIsCollectionsOpen] = useState(false); // Sub-menu state
+  const [isCollectionsOpen, setIsCollectionsOpen] = useState(false);
   const location = useLocation();
-  const { login } = useAuth();
+  const navigate = useNavigate(); // For redirecting after logout
+  const { login, logout, isAuthenticated, user } = useAuth(); // Added logout from context
   const [isLoginDialogOpen, setIsLoginDialogOpen] = useState(false);
 
   useEffect(() => {
@@ -23,11 +25,16 @@ const Header = () => {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "unset";
-      setIsCollectionsOpen(false); // Reset sub-menu when drawer closes
+      setIsCollectionsOpen(false);
     }
   }, [isOpen]);
 
-  // Modified navLinks to group Collections
+  const handleLogout = () => {
+    logout(); // Call the logout function from your AuthContext
+    setIsOpen(false); // Close the sidebar
+    navigate("/"); // Optional: redirect to home
+  };
+
   const navLinks = [
     { path: "/", label: "Home" },
     { path: "/services", label: "Services" },
@@ -78,7 +85,11 @@ const Header = () => {
                 Contact
               </Link>
               <div className="hidden lg:flex items-center space-x-8">
-                <button onClick={() => setIsLoginDialogOpen(true)} className="text-gray-900">
+                {/* Desktop User Icon Logic */}
+                <button 
+                  onClick={() => isAuthenticated ? navigate('/admin') : setIsLoginDialogOpen(true)} 
+                  className="text-gray-900"
+                >
                   <User className="w-5 h-5 stroke-[1.2px]" />
                 </button>
                 <button onClick={() => setIsOpen(true)} className="flex items-center space-x-2 group focus:outline-none">
@@ -102,12 +113,55 @@ const Header = () => {
           <X className="w-6 h-6" />
         </button>
 
-        <nav className="flex flex-col h-full pt-24 px-12 pb-10 overflow-y-auto">
+        <nav className="flex flex-col h-full pt-20 px-12 pb-10 overflow-y-auto">
+          
+          {/* ✅ UPDATED MOBILE LOGIN/LOGOUT SECTION */}
+          <div className="lg:hidden mb-10 pb-6 border-b border-gray-100">
+            {isAuthenticated ? (
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-4">
+                  <div className="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center">
+                    <User className="w-5 h-5 text-[#794299]" />
+                  </div>
+                  <div className="text-left">
+                    <p className="font-serif text-[10px] uppercase tracking-[0.2em] text-gray-400">Account</p>
+                    <p className="font-serif text-lg font-bold text-gray-900">
+                      Hello, {user?.name || 'Admin'}
+                    </p>
+                  </div>
+                </div>
+                {/* Logout Button */}
+                <button 
+                  onClick={handleLogout}
+                  className="p-2 text-gray-400 hover:text-red-500 transition-colors"
+                  aria-label="Logout"
+                >
+                  <LogOut className="w-5 h-5" />
+                </button>
+              </div>
+            ) : (
+              <button 
+                onClick={() => {
+                  setIsOpen(false);
+                  setIsLoginDialogOpen(true);
+                }}
+                className="flex items-center space-x-4 group"
+              >
+                <div className="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center group-hover:bg-[#794299] transition-colors">
+                  <User className="w-5 h-5 text-gray-600 group-hover:text-white" />
+                </div>
+                <div className="text-left">
+                  <p className="font-serif text-[10px] uppercase tracking-[0.2em] text-gray-400">Account</p>
+                  <p className="font-serif text-lg text-gray-900">Login / Register</p>
+                </div>
+              </button>
+            )}
+          </div>
+
           <div className="space-y-6">
             {navLinks.map((link, idx) => (
               <div key={idx}>
                 {link.isSubmenu ? (
-                  /* Nested Collection Logic */
                   <div className="space-y-4">
                     <button 
                       onClick={() => setIsCollectionsOpen(!isCollectionsOpen)}

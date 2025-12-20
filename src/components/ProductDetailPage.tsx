@@ -112,8 +112,8 @@ const ProductDetailPage: React.FC = () => {
   return (
     <>
       <Header />
-      <div className="min-h-screen flex justify-center items-center bg-gray-50 pb-20 lg:pb-8 mt-28 ">
-        <div className="max-w-7xl mx-auto bg-white lg:rounded-lg lg:shadow-lg overflow-hidden lg:m-8" >
+      <div className="min-h-screen flex justify-center items-center bg-gray-50 pb-20 lg:pb-8  ">
+        <div className="max-w-7xl mx-auto bg-white  lg:shadow-lg overflow-hidden lg:m-8" >
           
           {/* Desktop Layout */}
           <div className="hidden lg:grid lg:grid-cols-12 gap-0">
