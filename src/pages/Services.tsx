@@ -106,16 +106,23 @@ const otherServices = [
   },
 ];
 
-const ServiceSection = ({ services, sectionTitle, bgColor, sectionRef, id }: { services: any[], sectionTitle: string, bgColor: string, sectionRef: React.RefObject<HTMLElement>, id: string }) => {
+const ServiceSection = ({
+  services,
+  sectionTitle,
+  bgColor,
+  sectionRef,
+  id,
+}: {
+  services: any[];
+  sectionTitle: string;
+  bgColor: string;
+  sectionRef: React.RefObject<HTMLElement>;
+  id: string;
+}) => {
   return (
     <section ref={sectionRef} id={id}>
       <div className="container mx-auto px-4">
-        <h2
-          className="text-4xl md:text-5xl font-serif  text-[#3f5066] tracking-wider mb-16 text-center pt-16 uppercase"
-          style={{
-            textShadow: "2px 2px 3px rgba(150, 100, 200, 0.4)",
-          }}
-        >
+        <h2 className="text-4xl md:text-5xl font-serif text-black tracking-wider mb-16 text-center pt-16 uppercase">
           {sectionTitle}
         </h2>
 
@@ -124,7 +131,9 @@ const ServiceSection = ({ services, sectionTitle, bgColor, sectionRef, id }: { s
             <div
               key={index}
               className={`py-16 ${
-                index % 2 === 0 ? "bg-gradient-to-b from-secondary/30 to-background" : "bg-white"
+                index % 2 === 0
+                  ? "bg-gradient-to-b from-secondary/30 to-background"
+                  : "bg-white"
               }`}
             >
               <div className="container mx-auto px-4">
@@ -193,7 +202,7 @@ const Services = () => {
   }, [hash]);
 
   return (
-    <div>
+    <div className="bg-white">
       <Header />
       <img
         src={processImage}
