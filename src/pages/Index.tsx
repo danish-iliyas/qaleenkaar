@@ -33,7 +33,7 @@ const API_BASE =
   import.meta.env.VITE_API_BASE ||
   "https://hotpink-tapir-344575.hostingersite.com/api";
 
-// --- Helper Components ---
+// --- Helper Componentas ---
 
 const NextArrow = (props: any) => {
   const { className, onClick } = props;
@@ -418,7 +418,7 @@ const Index = () => {
       </section>
 
       {/* --- DYNAMIC COLLECTIONS CAROUSEL --- */}
-      <section className="py-12 md:py-16 bg-gradient-to-b from-background to-secondary/30 overflow-hidden">
+      <section className="py-12 md:py-16  overflow-hidden">
         <div className="container mx-auto px-2 sm:px-4">
           <div className="text-center max-w-3xl mx-auto mb-12 animate-fade-in">
             <h2 className="font-display text-4xl md:text-6xl  mb-6 text-black">

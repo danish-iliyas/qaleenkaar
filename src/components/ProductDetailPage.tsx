@@ -1,10 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 // --- NEW --- Import hooks to get URL param and fetch data
-import { useParams } from 'react-router-dom';
-import { ChevronLeft, ChevronRight, Heart, Home, User, ShoppingCart, Search } from 'lucide-react';
-import Header from '@/components/Header'; // Adjust path if needed
-import Footer from '@/components/Footer'; // Adjust path if needed
-import { Loader2 } from 'lucide-react'; // For loading spinner
+import { useParams } from "react-router-dom";
+import {
+  ChevronLeft,
+  ChevronRight,
+  Heart,
+  Home,
+  User,
+  ShoppingCart,
+  Search,
+} from "lucide-react";
+import Header from "@/components/Header"; // Adjust path if needed
+import Footer from "@/components/Footer"; // Adjust path if needed
+import { Loader2 } from "lucide-react"; // For loading spinner
 
 // --- NEW --- Define the Product type based on your API
 interface Product {
@@ -14,13 +22,15 @@ interface Product {
   size_feet: string;
   size_cms: string;
   material: string;
-  colour: string;     // Changed from colors to match backend
+  colour: string; // Changed from colors to match backend
   description: string;
   stock_status: string; // Changed from inStock to match backend
-  images: string[];     // Expect an array of image URLs
+  images: string[]; // Expect an array of image URLs
 }
 
-const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost/adminPannel/api";
+const API_BASE =
+  import.meta.env.VITE_API_BASE ||
+  "https://hotpink-tapir-344575.hostingersite.com/api";
 
 const ProductDetailPage: React.FC = () => {
   // --- NEW --- Get the 'id' from the URL (e.g., /product/123)
@@ -30,7 +40,7 @@ const ProductDetailPage: React.FC = () => {
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  
+
   // This state now controls the image index
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -38,17 +48,17 @@ const ProductDetailPage: React.FC = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       if (!id) return;
-      
+
       setLoading(true);
       setError(null);
-      
+
       try {
         const response = await fetch(`${API_BASE}/product/${id}`);
         if (!response.ok) {
-          throw new Error('Product not found');
+          throw new Error("Product not found");
         }
         const data = await response.json();
-        
+
         // Check if data is nested (e.g., { "data": { ... } })
         const productData = data.data ? data.data : data;
 
@@ -59,7 +69,9 @@ const ProductDetailPage: React.FC = () => {
 
         setProduct(productData);
       } catch (err) {
-        setError(err instanceof Error ? err.message : 'Failed to fetch product');
+        setError(
+          err instanceof Error ? err.message : "Failed to fetch product"
+        );
       } finally {
         setLoading(false);
       }
@@ -76,7 +88,9 @@ const ProductDetailPage: React.FC = () => {
 
   const prevImage = () => {
     if (!product) return;
-    setCurrentIndex((prev) => (prev - 1 + product.images.length) % product.images.length);
+    setCurrentIndex(
+      (prev) => (prev - 1 + product.images.length) % product.images.length
+    );
   };
 
   // --- NEW --- Loading State
@@ -100,7 +114,9 @@ const ProductDetailPage: React.FC = () => {
         <div className="min-h-screen flex justify-center items-center bg-gray-50">
           <div className="text-center">
             <h1 className="text-2xl font-bold text-red-600 mb-4">Error</h1>
-            <p className="text-gray-700">{error || 'Product could not be found.'}</p>
+            <p className="text-gray-700">
+              {error || "Product could not be found."}
+            </p>
           </div>
         </div>
         <Footer />
@@ -113,8 +129,7 @@ const ProductDetailPage: React.FC = () => {
     <>
       <Header />
       <div className="min-h-screen flex justify-center items-center bg-gray-50 pb-20 lg:pb-8  ">
-        <div className="max-w-7xl mx-auto bg-white  lg:shadow-lg overflow-hidden lg:m-8" >
-          
+        <div className="max-w-7xl mx-auto bg-white  lg:shadow-lg overflow-hidden lg:m-8">
           {/* Desktop Layout */}
           <div className="hidden lg:grid lg:grid-cols-12 gap-0">
             {/* Left Sidebar - Thumbnail Gallery */}
@@ -126,8 +141,8 @@ const ProductDetailPage: React.FC = () => {
                   onClick={() => setCurrentIndex(index)}
                   className={`cursor-pointer border-2 rounded overflow-hidden transition-all duration-300 ${
                     index === currentIndex
-                      ? 'border-blue-500 shadow-md scale-105'
-                      : 'border-gray-300 hover:border-gray-400'
+                      ? "border-blue-500 shadow-md scale-105"
+                      : "border-gray-300 hover:border-gray-400"
                   }`}
                 >
                   <img
@@ -171,7 +186,9 @@ const ProductDetailPage: React.FC = () => {
                   <div
                     key={index}
                     className={`h-2 rounded-full transition-all ${
-                      index === currentIndex ? 'w-8 bg-blue-500' : 'w-2 bg-gray-300'
+                      index === currentIndex
+                        ? "w-8 bg-blue-500"
+                        : "w-2 bg-gray-300"
                     }`}
                   />
                 ))}
@@ -190,7 +207,9 @@ const ProductDetailPage: React.FC = () => {
                 </button>
               </div>
 
-              <p className="text-lg text-gray-600 mb-8">Price available on request</p>
+              <p className="text-lg text-gray-600 mb-8">
+                Price available on request
+              </p>
 
               <div className="space-y-6 mb-8">
                 <p className="text-gray-700 leading-relaxed text-sm">
@@ -200,19 +219,27 @@ const ProductDetailPage: React.FC = () => {
                 <div className="space-y-3">
                   <div className="flex justify-between py-2 border-b border-gray-200">
                     <span className="text-gray-600">Reference Number</span>
-                    <span className="text-gray-900 font-medium">{product.ref_number}</span>
+                    <span className="text-gray-900 font-medium">
+                      {product.ref_number}
+                    </span>
                   </div>
                   <div className="flex justify-between py-2 border-b border-gray-200">
                     <span className="text-gray-600">Size In Feet</span>
-                    <span className="text-gray-900 font-medium">{product.size_feet}</span>
+                    <span className="text-gray-900 font-medium">
+                      {product.size_feet}
+                    </span>
                   </div>
                   <div className="flex justify-between py-2 border-b border-gray-200">
                     <span className="text-gray-600">Size In Cms</span>
-                    <span className="text-gray-900 font-medium">{product.size_cms}</span>
+                    <span className="text-gray-900 font-medium">
+                      {product.size_cms}
+                    </span>
                   </div>
                   <div className="flex justify-between py-2 border-b border-gray-200">
                     <span className="text-gray-600">Material</span>
-                    <span className="text-gray-900 font-medium">{product.material}</span>
+                    <span className="text-gray-900 font-medium">
+                      {product.material}
+                    </span>
                   </div>
                   <div className="flex justify-between py-2 border-b border-gray-200">
                     <span className="text-gray-600">Colour</span>
@@ -222,10 +249,22 @@ const ProductDetailPage: React.FC = () => {
                   </div>
                 </div>
 
-                <div className={`flex items-center gap-2 ${product.stock_status === '1' ? 'text-green-600' : 'text-red-600'}`}>
-                  <div className={`w-2 h-2 ${product.stock_status === '1' ? 'bg-green-600' : 'bg-red-600'} rounded-full`}></div>
+                <div
+                  className={`flex items-center gap-2 ${
+                    product.stock_status === "1"
+                      ? "text-green-600"
+                      : "text-red-600"
+                  }`}
+                >
+                  <div
+                    className={`w-2 h-2 ${
+                      product.stock_status === "1"
+                        ? "bg-green-600"
+                        : "bg-red-600"
+                    } rounded-full`}
+                  ></div>
                   <span className="text-sm font-medium">
-                    {product.stock_status === '1' ? 'In stock' : 'Out of stock'}
+                    {product.stock_status === "1" ? "In stock" : "Out of stock"}
                   </span>
                 </div>
               </div>
@@ -272,7 +311,9 @@ const ProductDetailPage: React.FC = () => {
                   <div
                     key={index}
                     className={`h-2 rounded-full transition-all ${
-                      index === currentIndex ? 'w-8 bg-blue-500' : 'w-2 bg-gray-300'
+                      index === currentIndex
+                        ? "w-8 bg-blue-500"
+                        : "w-2 bg-gray-300"
                     }`}
                   />
                 ))}
@@ -287,8 +328,8 @@ const ProductDetailPage: React.FC = () => {
                   onClick={() => setCurrentIndex(index)}
                   className={`flex-shrink-0 cursor-pointer border-2 rounded overflow-hidden transition-all duration-300 ${
                     index === currentIndex
-                      ? 'border-blue-500 shadow-md'
-                      : 'border-gray-300'
+                      ? "border-blue-500 shadow-md"
+                      : "border-gray-300"
                   }`}
                 >
                   <img
@@ -311,7 +352,9 @@ const ProductDetailPage: React.FC = () => {
                 </button>
               </div>
 
-              <p className="text-base text-gray-600 mb-4">Price available on request</p>
+              <p className="text-base text-gray-600 mb-4">
+                Price available on request
+              </p>
 
               <div className="space-y-4 mb-6">
                 <p className="text-gray-700 leading-relaxed text-sm">
@@ -321,19 +364,27 @@ const ProductDetailPage: React.FC = () => {
                 <div className="space-y-2">
                   <div className="flex justify-between py-2 border-b border-gray-200 text-sm">
                     <span className="text-gray-600">Reference Number</span>
-                    <span className="text-gray-900 font-medium">{product.ref_number}</span>
+                    <span className="text-gray-900 font-medium">
+                      {product.ref_number}
+                    </span>
                   </div>
                   <div className="flex justify-between py-2 border-b border-gray-200 text-sm">
                     <span className="text-gray-600">Size In Feet</span>
-                    <span className="text-gray-900 font-medium">{product.size_feet}</span>
+                    <span className="text-gray-900 font-medium">
+                      {product.size_feet}
+                    </span>
                   </div>
                   <div className="flex justify-between py-2 border-b border-gray-200 text-sm">
                     <span className="text-gray-600">Size In Cms</span>
-                    <span className="text-gray-900 font-medium">{product.size_cms}</span>
+                    <span className="text-gray-900 font-medium">
+                      {product.size_cms}
+                    </span>
                   </div>
                   <div className="flex justify-between py-2 border-b border-gray-200 text-sm">
                     <span className="text-gray-600">Material</span>
-                    <span className="text-gray-900 font-medium">{product.material}</span>
+                    <span className="text-gray-900 font-medium">
+                      {product.material}
+                    </span>
                   </div>
                   <div className="flex justify-between py-2 border-b border-gray-200 text-sm">
                     <span className="text-gray-600">Colour</span>
@@ -343,10 +394,22 @@ const ProductDetailPage: React.FC = () => {
                   </div>
                 </div>
 
-                <div className={`flex items-center gap-2 ${product.stock_status === '1' ? 'text-green-600' : 'text-red-600'}`}>
-                  <div className={`w-2 h-2 ${product.stock_status === '1' ? 'bg-green-600' : 'bg-red-600'} rounded-full`}></div>
+                <div
+                  className={`flex items-center gap-2 ${
+                    product.stock_status === "1"
+                      ? "text-green-600"
+                      : "text-red-600"
+                  }`}
+                >
+                  <div
+                    className={`w-2 h-2 ${
+                      product.stock_status === "1"
+                        ? "bg-green-600"
+                        : "bg-red-600"
+                    } rounded-full`}
+                  ></div>
                   <span className="text-sm font-medium">
-                    {product.stock_status === '1' ? 'In stock' : 'Out of stock'}
+                    {product.stock_status === "1" ? "In stock" : "Out of stock"}
                   </span>
                 </div>
               </div>
@@ -369,17 +432,17 @@ const ProductDetailPage: React.FC = () => {
               <Home className="w-6 h-6 mb-1" />
               <span className="text-xs font-medium">HOME</span>
             </button>
-            
+
             <button className="flex flex-col items-center justify-center text-gray-600 hover:text-gray-900 transition-colors">
               <User className="w-6 h-6 mb-1" />
               <span className="text-xs font-medium">ACCOUNT</span>
             </button>
-            
+
             <button className="flex flex-col items-center justify-center text-gray-600 hover:text-gray-900 transition-colors">
               <Heart className="w-6 h-6 mb-1" />
               <span className="text-xs font-medium">WISHLIST</span>
             </button>
-            
+
             <button className="flex flex-col items-center justify-center text-gray-600 hover:text-gray-900 transition-colors relative">
               <ShoppingCart className="w-6 h-6 mb-1" />
               <span className="text-xs font-medium">CART</span>
@@ -387,7 +450,7 @@ const ProductDetailPage: React.FC = () => {
                 0
               </span>
             </button>
-            
+
             <button className="flex flex-col items-center justify-center text-gray-600 hover:text-gray-900 transition-colors">
               <Search className="w-6 h-6 mb-1" />
               <span className="text-xs font-medium">SEARCH</span>
