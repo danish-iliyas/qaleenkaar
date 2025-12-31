@@ -1,3 +1,36 @@
+/* Gucci Sans Pro Font Family */
+@font-face {
+  font-family: "Gucci Sans Pro";
+  src: url("/fonts/GucciSansPro-Light.woff2") format("woff2");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Gucci Sans Pro";
+  src: url("/fonts/GucciSansPro-Book.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Gucci Sans Pro";
+  src: url("/fonts/GucciSansPro-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Gucci Sans Pro";
+  src: url("/fonts/GucciSansPro-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -44,7 +77,7 @@ body:has([data-radix-popper-content-wrapper]) {
     /* Warm Brown */
     --brown: 25 45% 30%;
     --brown-light: 25 35% 45%;
-    
+
     --destructive: 0 65% 55%;
     --destructive-foreground: 35 25% 96%;
 
@@ -55,15 +88,27 @@ body:has([data-radix-popper-content-wrapper]) {
     --radius: 0.75rem;
 
     /* Gradients */
-    --gradient-hero: linear-gradient(135deg, hsl(25 45% 30%) 0%, hsl(15 60% 45%) 100%);
-    --gradient-overlay: linear-gradient(180deg, transparent 0%, hsl(25 45% 15% / 0.7) 100%);
-    --gradient-card: linear-gradient(135deg, hsl(35 30% 98%) 0%, hsl(35 25% 96%) 100%);
-    
+    --gradient-hero: linear-gradient(
+      135deg,
+      hsl(25 45% 30%) 0%,
+      hsl(15 60% 45%) 100%
+    );
+    --gradient-overlay: linear-gradient(
+      180deg,
+      transparent 0%,
+      hsl(25 45% 15% / 0.7) 100%
+    );
+    --gradient-card: linear-gradient(
+      135deg,
+      hsl(35 30% 98%) 0%,
+      hsl(35 25% 96%) 100%
+    );
+
     /* Shadows */
     --shadow-soft: 0 4px 20px hsl(25 35% 15% / 0.08);
     --shadow-hover: 0 8px 30px hsl(15 65% 50% / 0.15);
     --shadow-elegant: 0 10px 40px hsl(25 45% 30% / 0.12);
-    
+
     /* Transitions */
     --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-bounce: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
@@ -112,7 +157,12 @@ body:has([data-radix-popper-content-wrapper]) {
     @apply bg-background text-foreground font-body antialiased;
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     @apply font-display;
   }
 }
@@ -121,19 +171,19 @@ body:has([data-radix-popper-content-wrapper]) {
   .text-balance {
     text-wrap: balance;
   }
-  
+
   .vintage-card {
     @apply relative overflow-hidden rounded-lg shadow-[var(--shadow-soft)] transition-all duration-500;
   }
-  
+
   .vintage-card:hover {
     @apply shadow-[var(--shadow-hover)] scale-[1.02];
   }
-  
+
   .vintage-overlay {
     @apply absolute inset-0 bg-gradient-to-t from-brown/80 via-brown/40 to-transparent;
   }
-  
+
   .elegant-underline {
     @apply relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-primary after:transition-all after:duration-500 hover:after:w-full;
   }
