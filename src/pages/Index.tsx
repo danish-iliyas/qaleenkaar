@@ -214,7 +214,7 @@ const Index = () => {
                   alt={slide.alt}
                   className="w-full h-full object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/20 to-black/80" />
               </div>
             ))}
           </div>
