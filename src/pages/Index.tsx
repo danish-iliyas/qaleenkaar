@@ -232,7 +232,7 @@ const Index = () => {
       </section>
 
       {/* --- CURATED SERVICES (DUAL CARE TABS) --- */}
-      <section className="py-8 pb-4 md:py-8 bg-secondary/30">
+      <section className="py-8 pb-4 md:py-8 bg-white">
         <div className="container mx-auto px-2 sm:px-4 text-center">
           <h2 className="font-serif text-2xl md:text-4xl font-bold text-black uppercase tracking-wider mb-4">
             OUR CURATED Services
@@ -241,7 +241,7 @@ const Index = () => {
             <div className="inline-flex gap-5 p-1 ">
               <button
                 onClick={() => setActiveTab("carpet")}
-                className={`px-8 py-3 md:px-16  font-serif uppercase tracking-[0.2em] text-[11px] md:text-xs transition-all duration-500 ${
+                className={`px-8 py-3 md:px-16 border border-black font-serif uppercase tracking-[0.2em] text-[11px] md:text-xs transition-all duration-500 ${
                   activeTab === "carpet"
                     ? "bg-black text-white"
                     : "bg-white text-gray-800 hover:text-gray-900"
@@ -251,7 +251,7 @@ const Index = () => {
               </button>
               <button
                 onClick={() => setActiveTab("shawl")}
-                className={`px-8 py-3 md:px-16 font-serif uppercase tracking-[0.2em] text-[11px] md:text-xs transition-all duration-500 ${
+                className={`px-8 py-3 md:px-16 border border-black font-serif uppercase tracking-[0.2em] text-[11px] md:text-xs transition-all duration-500 ${
                   activeTab === "shawl"
                     ? "bg-black text-white"
                     : "bg-white text-gray-800 hover:text-gray-900"
@@ -261,36 +261,36 @@ const Index = () => {
               </button>
             </div>
           </div>
-          <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 grid grid-cols-2 lg:grid-cols-2 gap-4 lg:gap-8">
+          <div className="animate-in  fade-in slide-in-from-bottom-4 duration-500 grid grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-10 lg:gap-x-16">
             {(activeTab === "carpet" ? carpetServices : shawlServices).map(
               (service, index) => (
                 <InView key={index} triggerOnce threshold={0.1}>
                   {({ ref, inView }) => (
                     <div
                       ref={ref}
-                      className={`group relative h-64 md:h-80 lg:h-96 w-full overflow-hidden shadow-lg cursor-pointer transition-all duration-700 ${
+                      className={`group flex flex-col w-full cursor-pointer transition-all duration-700 ${
                         inView
                           ? "opacity-100 translate-y-0"
                           : "opacity-0 translate-y-8"
                       }`}
                     >
-                      <img
-                        src={service.image}
-                        alt={service.title}
-                        className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-                      <div className="relative z-10 flex flex-col justify-end h-full p-4 md:p-6">
-                        <h3 className="font-serif text-lg md:text-3xl font-bold text-white mb-2 uppercase tracking-wide">
-                          {service.title}
-                        </h3>
-                        <Link
-                          to={service.linkTo}
-                          className="inline-flex items-center text-white/80 hover:text-white text-xs md:text-sm font-medium"
-                        >
-                          View Details <ArrowRight className="w-4 h-4 ml-1" />
-                        </Link>
-                      </div>
+                      {/* Image Container - Clean, Sharp, slight gray bg for loading */}
+                      <Link to={service.linkTo} className="block  w-full">
+                        <div className="relative w-full aspect-[4/5] overflow-hidden bg-[#f5f5f5] mb-4">
+                          <img
+                            src={service.image}
+                            alt={service.title}
+                            className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
+                          />
+                        </div>
+
+                        {/* Text Container - Minimal, Sans-Serif, Title Case like screenshot */}
+                        <div className="flex flex-col items-center text-center">
+                          <h3 className="font-sans text-sm   md:text-sm lg:text-base font-bold text-black tracking-wide">
+                            {service.title}
+                          </h3>
+                        </div>
+                      </Link>
                     </div>
                   )}
                 </InView>
@@ -300,7 +300,7 @@ const Index = () => {
           <div className="text-center mt-8">
             <Link
               to="/services"
-              className="inline-flex items-center text-black uppercase tracking-[0.2em] text-xs font-medium group"
+              className="inline-flex items-center text-black uppercase tracking-[0.2em] text-xs md:text-sm lg:text-lg  font-medium group"
             >
               <span className="border-b border-black pb-1 group-hover:border-b-2 transition-all">
                 View All Services
@@ -420,7 +420,7 @@ const Index = () => {
       <section className="py-12 md:py-16 bg-gradient-to-b from-background to-secondary/30 overflow-hidden">
         <div className="container mx-auto px-2 sm:px-4">
           <div className="text-center max-w-3xl mx-auto mb-12 animate-fade-in">
-            <h2 className="font-display text-4xl md:text-6xl font-bold mb-6 text-black">
+            <h2 className="font-display text-4xl md:text-6xl  mb-6 text-black">
               Latest Arrivals
             </h2>
           </div>

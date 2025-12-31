@@ -185,7 +185,7 @@ const CustomerReviews = () => {
       <div className="container mx-auto px-4">
         {/* Header */}
         <div className="text-center mb-12">
-          <h2 className="font-serif text-3xl md:text-5xl font-light text-black uppercase tracking-[0.2em] mb-4">
+          <h2 className="font-serif text-2xl md:text-5xl lg:text-5xl font-light text-black uppercase tracking-[0.2em] mb-4">
             Customer Reviews
           </h2>
           <div className="w-16 h-px bg-black mx-auto opacity-30" />
