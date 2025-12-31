@@ -26,10 +26,11 @@ import "slick-carousel/slick/slick-theme.css";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
 import CustomerReviews from "@/components/customerReview";
-import { useState, useEffect } from "react"; 
+import { useState, useEffect } from "react";
 import TrustSection from "@/components/TrustSection";
 
-const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost/adminPannel/api";
+const API_BASE =
+  import.meta.env.VITE_API_BASE || "http://localhost/adminPannel/api";
 
 // --- Helper Components ---
 
@@ -37,7 +38,7 @@ const NextArrow = (props: any) => {
   const { className, onClick } = props;
   return (
     <div
-      className={`${className} !flex !items-center !justify-center !right-3 !z-20 bg-[#c5aad4] hover:bg-[#e9e2ec] text-white w-7 h-7 rounded-full shadow-lg transition-all duration-300`}
+      className={`${className} !flex !items-center !justify-center !right-3 !z-20 bg-white hover:bg-black text-black hover:text-white w-8 h-8 border border-black/20 hover:border-black transition-all duration-300`}
       onClick={onClick}
     >
       <span className="text-lg font-bold">{"›"}</span>
@@ -49,7 +50,7 @@ const PrevArrow = (props: any) => {
   const { className, onClick } = props;
   return (
     <div
-      className={`${className} !flex !items-center !justify-center !left-3 !z-20 bg-[#ac92bb] hover:bg-[#ceb4dd] text-white w-7 h-7 rounded-full shadow-lg transition-all duration-300`}
+      className={`${className} !flex !items-center !justify-center !left-3 !z-20 bg-white hover:bg-black text-black hover:text-white w-8 h-8 border border-black/20 hover:border-black transition-all duration-300`}
       onClick={onClick}
     >
       <span className="text-lg font-bold">{"‹"}</span>
@@ -62,13 +63,25 @@ const PWAInstallPrompt = ({ deferredPrompt, onInstall, onDismiss }: any) => {
   return (
     <div className="fixed inset-0 bg-black/50 z-[100] flex items-end sm:items-center justify-center p-4">
       <div className="bg-white rounded-t-xl sm:rounded-xl shadow-2xl p-6 w-full max-w-sm">
-        <h3 className="font-serif text-xl font-bold text-[#794299] mb-3 flex items-center">
-          <Sparkles className="w-6 h-6 mr-2 text-yellow-500" /> Install Loom Tales App
+        <h3 className="font-serif text-xl font-bold text-black mb-3 flex items-center">
+          <Sparkles className="w-6 h-6 mr-2 text-yellow-500" /> Install Loom
+          Tales App
         </h3>
-        <p className="text-gray-700 mb-6">Get quick access! Install our app to save Loom Tales right to your phone's home screen.</p>
+        <p className="text-gray-700 mb-6">
+          Get quick access! Install our app to save Loom Tales right to your
+          phone's home screen.
+        </p>
         <div className="flex justify-end gap-3">
-          <Button onClick={onDismiss} variant="outline" className="border-[#794299] text-[#794299]">Not Now</Button>
-          <Button onClick={onInstall} className="bg-[#794299] hover:bg-[#62009b]">Install App</Button>
+          <Button
+            onClick={onDismiss}
+            variant="outline"
+            className="border-black text-black"
+          >
+            Not Now
+          </Button>
+          <Button onClick={onInstall} className="bg-black hover:bg-gray-800">
+            Install App
+          </Button>
         </div>
       </div>
     </div>
@@ -90,14 +103,21 @@ const Index = () => {
       try {
         const [carpetRes, shawlRes] = await Promise.all([
           fetch(`${API_BASE}/products/?type=Carpet`),
-          fetch(`${API_BASE}/products/?type=Shawl`)
+          fetch(`${API_BASE}/products/?type=Shawl`),
         ]);
         const carpetData = await carpetRes.json();
         const shawlData = await shawlRes.json();
-        const carpets = (carpetData.status === 'success' ? carpetData.data : carpetData) || [];
-        const shawls = (shawlData.status === 'success' ? shawlData.data : shawlData) || [];
+        const carpets =
+          (carpetData.status === "success" ? carpetData.data : carpetData) ||
+          [];
+        const shawls =
+          (shawlData.status === "success" ? shawlData.data : shawlData) || [];
         setLatestCollections([...carpets.slice(0, 4), ...shawls.slice(0, 4)]);
-      } catch (err) { console.error(err); } finally { setIsLoadingCollections(false); }
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setIsLoadingCollections(false);
+      }
     };
     fetchLatestProducts();
   }, []);
@@ -123,7 +143,9 @@ const Index = () => {
   };
 
   // --- CAROUSEL SETTINGS ---
-  const [emblaRef] = useEmblaCarousel({ loop: true }, [Autoplay({ delay: 3000, stopOnInteraction: false })]);
+  const [emblaRef] = useEmblaCarousel({ loop: true }, [
+    Autoplay({ delay: 3000, stopOnInteraction: false }),
+  ]);
 
   const carouselSlides = [
     { type: "image", src: heroImage, alt: "Handcrafted masterpieces" },
@@ -132,14 +154,26 @@ const Index = () => {
   ];
 
   const workItems = [
-    { id: 1, before: "https://qaleen.com/public/uploads/images/small/71448/71448.jpg", after: "https://qaleen.com/public/uploads/images/small/37769/37769.jpg" },
-    { id: 2, before: "https://qaleen.com/public/uploads/images/small/71448/71448.jpg", after: "https://qaleen.com/public/uploads/images/small/37769/37769.jpg" },
+    {
+      id: 1,
+      before: "https://qaleen.com/public/uploads/images/small/71448/71448.jpg",
+      after: "https://qaleen.com/public/uploads/images/small/37769/37769.jpg",
+    },
+    {
+      id: 2,
+      before: "https://qaleen.com/public/uploads/images/small/71448/71448.jpg",
+      after: "https://qaleen.com/public/uploads/images/small/37769/37769.jpg",
+    },
   ];
 
   const carpetServices = [
     { title: "Professional Washing", image: washingImg, linkTo: "/services" },
     { title: "Expert Repairing", image: repairImg, linkTo: "/services" },
-    { title: "Complete Restoration", image: restorationImg, linkTo: "/services" },
+    {
+      title: "Complete Restoration",
+      image: restorationImg,
+      linkTo: "/services",
+    },
     { title: "Wall Hanging Care", image: cleaningImg, linkTo: "/services" },
   ];
 
@@ -150,8 +184,10 @@ const Index = () => {
     { title: "Sell & Exchange", image: exchangeImg, linkTo: "/services" },
   ];
 
-  const handlePrev = () => setCurrentIndex((prev) => (prev === 0 ? workItems.length - 1 : prev - 1));
-  const handleNext = () => setCurrentIndex((prev) => (prev === workItems.length - 1 ? 0 : prev + 1));
+  const handlePrev = () =>
+    setCurrentIndex((prev) => (prev === 0 ? workItems.length - 1 : prev - 1));
+  const handleNext = () =>
+    setCurrentIndex((prev) => (prev === workItems.length - 1 ? 0 : prev + 1));
 
   return (
     <div className="min-h-screen">
@@ -159,7 +195,11 @@ const Index = () => {
       <WhatsAppFloat />
 
       {showPrompt && (
-        <PWAInstallPrompt deferredPrompt={installPrompt} onInstall={handleInstallClick} onDismiss={() => setShowPrompt(false)} />
+        <PWAInstallPrompt
+          deferredPrompt={installPrompt}
+          onInstall={handleInstallClick}
+          onDismiss={() => setShowPrompt(false)}
+        />
       )}
 
       {/* --- HERO SECTION --- */}
@@ -168,79 +208,190 @@ const Index = () => {
           <div className="flex h-full">
             {carouselSlides.map((slide, index) => (
               <div className="relative flex-[0_0_100%] h-full" key={index}>
-                <img src={slide.src} alt={slide.alt} className="w-full h-full object-cover" />
+                <img
+                  src={slide.src}
+                  alt={slide.alt}
+                  className="w-full h-full object-cover"
+                />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
               </div>
             ))}
           </div>
         </div>
         <div className="relative z-10 w-full pb-16 lg:pb-20 text-center animate-fade-in">
-          <Button asChild className="bg-white text-gray-900 font-serif rounded-none border-none hover:bg-gray-100 transition-all uppercase tracking-[0.2em] h-11 px-10 text-[11px] font-bold lg:h-14 lg:px-16 lg:text-[12px] min-w-[220px] shadow-md">
-            <Link to="/contact">Book Free Call</Link>
-          </Button>
+          <Link
+            to="/contact"
+            className="inline-flex items-center text-white uppercase tracking-[0.2em] text-xs font-medium group"
+          >
+            <span className="border-b border-white pb-1 group-hover:border-b-2 transition-all">
+              Book Free Call
+            </span>
+            <ArrowRight className="ml-3 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+          </Link>
         </div>
       </section>
 
       {/* --- CURATED SERVICES (DUAL CARE TABS) --- */}
       <section className="py-8 pb-4 md:py-8 bg-secondary/30">
         <div className="container mx-auto px-2 sm:px-4 text-center">
-          <h2 className="font-serif text-2xl md:text-4xl font-bold text-[#3f5066] uppercase tracking-wider mb-4 drop-shadow-[2px_2px_0px_#e8d2ff]">OUR CURATED Services</h2>
+          <h2 className="font-serif text-2xl md:text-4xl font-bold text-black uppercase tracking-wider mb-4">
+            OUR CURATED Services
+          </h2>
           <div className="flex justify-center mb-8">
-            <div className="inline-flex bg-white border border-gray-200 p-1 shadow-sm">
-              <button onClick={() => setActiveTab("carpet")} className={`px-8 py-3 md:px-16 font-serif uppercase tracking-[0.2em] text-[11px] md:text-xs transition-all duration-500 ${activeTab === "carpet" ? "bg-[#5A386D] text-white" : "bg-transparent text-gray-500 hover:text-gray-900"}`}>Carpets</button>
-              <button onClick={() => setActiveTab("shawl")} className={`px-8 py-3 md:px-16 font-serif uppercase tracking-[0.2em] text-[11px] md:text-xs transition-all duration-500 ${activeTab === "shawl" ? "bg-[#5A386D] text-white" : "bg-transparent text-gray-500 hover:text-gray-900"}`}>Shawls</button>
+            <div className="inline-flex gap-5 p-1 ">
+              <button
+                onClick={() => setActiveTab("carpet")}
+                className={`px-8 py-3 md:px-16  font-serif uppercase tracking-[0.2em] text-[11px] md:text-xs transition-all duration-500 ${
+                  activeTab === "carpet"
+                    ? "bg-black text-white"
+                    : "bg-white text-gray-800 hover:text-gray-900"
+                }`}
+              >
+                Carpets
+              </button>
+              <button
+                onClick={() => setActiveTab("shawl")}
+                className={`px-8 py-3 md:px-16 font-serif uppercase tracking-[0.2em] text-[11px] md:text-xs transition-all duration-500 ${
+                  activeTab === "shawl"
+                    ? "bg-black text-white"
+                    : "bg-white text-gray-800 hover:text-gray-900"
+                }`}
+              >
+                Shawls
+              </button>
             </div>
           </div>
           <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 grid grid-cols-2 lg:grid-cols-2 gap-4 lg:gap-8">
-            {(activeTab === "carpet" ? carpetServices : shawlServices).map((service, index) => (
-              <InView key={index} triggerOnce threshold={0.1}>
-                {({ ref, inView }) => (
-                  <div ref={ref} className={`group relative h-64 md:h-80 lg:h-96 w-full overflow-hidden shadow-lg cursor-pointer transition-all duration-700 ${inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-                    <img src={service.image} alt={service.title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-                    <div className="relative z-10 flex flex-col justify-end h-full p-4 md:p-6">
-                      <h3 className="font-serif text-lg md:text-3xl font-bold text-white mb-2 uppercase tracking-wide">{service.title}</h3>
-                      <Link to={service.linkTo} className="inline-flex items-center text-white/80 hover:text-white text-xs md:text-sm font-medium">View Details <ArrowRight className="w-4 h-4 ml-1" /></Link>
+            {(activeTab === "carpet" ? carpetServices : shawlServices).map(
+              (service, index) => (
+                <InView key={index} triggerOnce threshold={0.1}>
+                  {({ ref, inView }) => (
+                    <div
+                      ref={ref}
+                      className={`group relative h-64 md:h-80 lg:h-96 w-full overflow-hidden shadow-lg cursor-pointer transition-all duration-700 ${
+                        inView
+                          ? "opacity-100 translate-y-0"
+                          : "opacity-0 translate-y-8"
+                      }`}
+                    >
+                      <img
+                        src={service.image}
+                        alt={service.title}
+                        className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+                      <div className="relative z-10 flex flex-col justify-end h-full p-4 md:p-6">
+                        <h3 className="font-serif text-lg md:text-3xl font-bold text-white mb-2 uppercase tracking-wide">
+                          {service.title}
+                        </h3>
+                        <Link
+                          to={service.linkTo}
+                          className="inline-flex items-center text-white/80 hover:text-white text-xs md:text-sm font-medium"
+                        >
+                          View Details <ArrowRight className="w-4 h-4 ml-1" />
+                        </Link>
+                      </div>
                     </div>
-                  </div>
-                )}
-              </InView>
-            ))}
+                  )}
+                </InView>
+              )
+            )}
           </div>
-          <div className="text-center mt-8"><Button asChild size="lg" className="bg-[#5A386D] hover:bg-[#62009b] text-lg px-8 transition-all"><Link to="/services">View All Services <ArrowRight className="ml-2 w-5 h-5" /></Link></Button></div>
+          <div className="text-center mt-8">
+            <Link
+              to="/services"
+              className="inline-flex items-center text-black uppercase tracking-[0.2em] text-xs font-medium group"
+            >
+              <span className="border-b border-black pb-1 group-hover:border-b-2 transition-all">
+                View All Services
+              </span>
+              <ArrowRight className="ml-3 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </Link>
+          </div>
         </div>
       </section>
 
-      <TrustSection />
+      {/* <TrustSection />/ */}
 
       {/* --- OUR WORK TRANSFORMATION --- */}
       <section className="w-full bg-[#fdfcfd] py-8 md:py-12 overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col items-center">
           <div className="flex flex-col items-center mb-16">
-            <h2 className="text-center font-serif text-3xl md:text-5xl font-light text-[#5A386D] tracking-[0.2em] uppercase mb-4">The Transformation</h2>
-            <p className="text-[10px] md:text-xs tracking-[0.4em] uppercase text-gray-400 font-medium text-center">Restoring Heritage, One Thread at a Time</p>
+            <h2 className="text-center font-serif text-3xl md:text-5xl font-light text-black tracking-[0.2em] uppercase mb-4">
+              The Transformation
+            </h2>
+            <p className="text-[10px] md:text-xs tracking-[0.4em] uppercase text-gray-400 font-medium text-center">
+              Restoring Heritage, One Thread at a Time
+            </p>
           </div>
           <div className="relative flex flex-col items-center w-full max-w-6xl mx-auto">
             <div className="flex items-center justify-center w-full gap-2 md:gap-12">
-              <button onClick={handlePrev} className="hidden lg:flex p-4 text-gray-300 hover:text-[#5A386D] transition-colors"><ChevronLeft className="w-10 h-10 stroke-[1px]" /></button>
+              <button
+                onClick={handlePrev}
+                className="hidden lg:flex p-4 text-gray-300 hover:text-black transition-colors"
+              >
+                <ChevronLeft className="w-10 h-10 stroke-[1px]" />
+              </button>
               <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-4 items-end">
                 <div className="relative group">
-                  <div className="absolute -top-4 left-4 z-20 bg-white px-3 py-1 shadow-sm"><span className="text-[9px] uppercase tracking-[0.3em] font-bold text-gray-400">Phase 01: Before</span></div>
-                  <div className="overflow-hidden shadow-lg border border-gray-100"><img src={workItems[currentIndex].before} className="w-full h-72 sm:h-[450px] object-cover transition-transform duration-1000 group-hover:scale-105" /></div>
+                  <div className="absolute -top-4 left-4 z-20 bg-white px-3 py-1 shadow-sm">
+                    <span className="text-[9px] uppercase tracking-[0.3em] font-bold text-gray-400">
+                      Phase 01: Before
+                    </span>
+                  </div>
+                  <div className="overflow-hidden shadow-lg border border-gray-100">
+                    <img
+                      src={workItems[currentIndex].before}
+                      className="w-full h-72 sm:h-[450px] object-cover transition-transform duration-1000 group-hover:scale-105"
+                    />
+                  </div>
                 </div>
                 <div className="relative group md:-translate-y-8">
-                  <div className="absolute -top-4 right-4 z-20 bg-[#5A386D] px-4 py-1 shadow-md"><span className="text-[9px] uppercase tracking-[0.3em] font-bold text-white">Phase 02: Result</span></div>
-                  <div className="overflow-hidden shadow-2xl border-[10px] border-white"><img src={workItems[currentIndex].after} className="w-full h-80 sm:h-[500px] object-cover transition-transform duration-1000 group-hover:scale-110" /></div>
+                  <div className="absolute -top-4 right-4 z-20 bg-black px-4 py-1 shadow-md">
+                    <span className="text-[9px] uppercase tracking-[0.3em] font-bold text-white">
+                      Phase 02: Result
+                    </span>
+                  </div>
+                  <div className="overflow-hidden shadow-2xl border-[10px] border-white">
+                    <img
+                      src={workItems[currentIndex].after}
+                      className="w-full h-80 sm:h-[500px] object-cover transition-transform duration-1000 group-hover:scale-110"
+                    />
+                  </div>
                 </div>
               </div>
-              <button onClick={handleNext} className="hidden lg:flex p-4 text-gray-300 hover:text-[#5A386D] transition-colors"><ChevronRight className="w-10 h-10 stroke-[1px]" /></button>
+              <button
+                onClick={handleNext}
+                className="hidden lg:flex p-4 text-gray-300 hover:text-black transition-colors"
+              >
+                <ChevronRight className="w-10 h-10 stroke-[1px]" />
+              </button>
             </div>
             <div className="flex flex-col md:flex-row items-center justify-between w-full mt-12 gap-8 px-4">
-              <div className="hidden md:block font-serif text-sm tracking-widest text-gray-400"><span className="text-gray-900">0{currentIndex + 1}</span> / 0{workItems.length}</div>
-              <div className="flex justify-center gap-3">{workItems.map((_, index) => (<button key={index} onClick={() => setCurrentIndex(index)} className={`h-[2px] transition-all duration-500 ease-in-out ${index === currentIndex ? "bg-[#5A386D] w-12" : "bg-gray-200 w-6 hover:bg-gray-300"}`} />))}</div>
+              <div className="hidden md:block font-serif text-sm tracking-widest text-gray-400">
+                <span className="text-gray-900">0{currentIndex + 1}</span> / 0
+                {workItems.length}
+              </div>
+              <div className="flex justify-center gap-3">
+                {workItems.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setCurrentIndex(index)}
+                    className={`h-[2px] transition-all duration-500 ease-in-out ${
+                      index === currentIndex
+                        ? "bg-black w-12"
+                        : "bg-gray-200 w-6 hover:bg-gray-300"
+                    }`}
+                  />
+                ))}
+              </div>
               <div className="flex lg:hidden gap-10">
-                <button onClick={handlePrev} className="p-2 text-[#5A386D]"><ChevronLeft className="w-6 h-6" /></button>
-                <button onClick={handleNext} className="p-2 text-[#5A386D]"><ChevronRight className="w-6 h-6" /></button>
+                <button onClick={handlePrev} className="p-2 text-black">
+                  <ChevronLeft className="w-6 h-6" />
+                </button>
+                <button onClick={handleNext} className="p-2 text-black">
+                  <ChevronRight className="w-6 h-6" />
+                </button>
               </div>
             </div>
           </div>
@@ -249,10 +400,19 @@ const Index = () => {
 
       {/* --- YOUTUBE VIDEO SECTION --- */}
       <section className="relative w-full h-[60vh] md:h-[70vh] overflow-hidden">
-        <iframe className="absolute top-1/2 left-1/2 w-full h-full min-w-full min-h-full -translate-x-1/2 -translate-y-1/2 z-0 pointer-events-none" src="https://www.youtube.com/embed/JTA6VKeiRMY?autoplay=1&mute=1&loop=1&playlist=JTA6VKeiRMY&controls=0&showinfo=0&rel=0" frameBorder="0" allow="autoplay; encrypted-media" allowFullScreen title="YouTube Background Video" />
+        <iframe
+          className="absolute top-1/2 left-1/2 w-full h-full min-w-full min-h-full -translate-x-1/2 -translate-y-1/2 z-0 pointer-events-none"
+          src="https://www.youtube.com/embed/JTA6VKeiRMY?autoplay=1&mute=1&loop=1&playlist=JTA6VKeiRMY&controls=0&showinfo=0&rel=0"
+          frameBorder="0"
+          allow="autoplay; encrypted-media"
+          allowFullScreen
+          title="YouTube Background Video"
+        />
         <div className="absolute inset-0 bg-black/60 z-10" />
         <div className="relative z-20 h-full flex items-center justify-center container mx-auto px-4 text-center">
-          <h2 className="font-sans text-2xl md:text-3xl font-light text-white uppercase tracking-widest animate-fade-in">Because you deserve to shine!</h2>
+          <h2 className="font-sans text-2xl md:text-3xl font-light text-white uppercase tracking-widest animate-fade-in">
+            Because you deserve to shine!
+          </h2>
         </div>
       </section>
 
@@ -260,27 +420,54 @@ const Index = () => {
       <section className="py-12 md:py-16 bg-gradient-to-b from-background to-secondary/30 overflow-hidden">
         <div className="container mx-auto px-2 sm:px-4">
           <div className="text-center max-w-3xl mx-auto mb-12 animate-fade-in">
-            <h2 className="font-display text-4xl md:text-6xl font-bold mb-6 text-[#5A386D]">Latest Arrivals</h2>
+            <h2 className="font-display text-4xl md:text-6xl font-bold mb-6 text-black">
+              Latest Arrivals
+            </h2>
           </div>
           <div className="relative">
             {isLoadingCollections ? (
-              <div className="flex justify-center py-20"><Loader2 className="w-10 h-10 animate-spin text-[#5A386D]" /></div>
+              <div className="flex justify-center py-20">
+                <Loader2 className="w-10 h-10 animate-spin text-black" />
+              </div>
             ) : (
-              <Slider dots={false} infinite speed={800} slidesToShow={2} slidesToScroll={1} autoplay autoplaySpeed={3500} nextArrow={<NextArrow />} prevArrow={<PrevArrow />} responsive={[{ breakpoint: 768, settings: { slidesToShow: 1 } }]}>
+              <Slider
+                dots={false}
+                infinite
+                speed={800}
+                slidesToShow={2}
+                slidesToScroll={1}
+                autoplay
+                autoplaySpeed={3500}
+                nextArrow={<NextArrow />}
+                prevArrow={<PrevArrow />}
+                responsive={[
+                  { breakpoint: 768, settings: { slidesToShow: 1 } },
+                ]}
+              >
                 {latestCollections.map((item) => (
                   <div key={item.id} className="px-2 sm:px-4">
                     <Link to={`/product/${item.id}`}>
                       <div className="group relative overflow-hidden bg-card shadow-soft hover:shadow-hover transition-all duration-700">
                         <div className="relative h-80 lg:h-[400px] overflow-hidden">
-                          <img src={item.images?.[0] || "/placeholder.jpg"} alt={item.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                          <img
+                            src={item.images?.[0] || "/placeholder.jpg"}
+                            alt={item.title}
+                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                          />
                           <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
                           <div className="absolute bottom-0 left-0 p-5 text-white w-full">
-                            <span className="inline-block px-3 py-1 bg-[#62009b]/80 backdrop-blur-sm rounded-full text-[10px] uppercase tracking-widest mb-2">{item.product_type}</span>
-                            <h3 className="font-display text-xl font-bold drop-shadow-md">{item.title}</h3>
+                            <span className="inline-block px-3 py-1 bg-black/80 backdrop-blur-sm text-[10px] uppercase tracking-widest mb-2">
+                              {item.product_type}
+                            </span>
+                            <h3 className="font-display text-xl font-bold drop-shadow-md">
+                              {item.title}
+                            </h3>
                           </div>
                         </div>
                         <div className="text-center py-4 bg-white border-t border-gray-50">
-                          <h4 className="text-sm font-serif text-[#5A386D] uppercase tracking-widest">Explore {item.product_type}</h4>
+                          <h4 className="text-sm font-serif text-black uppercase tracking-widest">
+                            Explore {item.product_type}
+                          </h4>
                         </div>
                       </div>
                     </Link>
@@ -290,7 +477,15 @@ const Index = () => {
             )}
           </div>
           <div className="text-center mt-12 md:mt-16 animate-fade-in">
-            <Button asChild size="lg" className="bg-[#5A386D] hover:bg-[#62009b] text-lg px-8 transition-all"><Link to="/collection/carpets">Explore Collection <ArrowRight className="ml-2 w-5 h-5" /></Link></Button>
+            <Link
+              to="/collection/carpets"
+              className="inline-flex items-center text-black uppercase tracking-[0.2em] text-xs font-medium group"
+            >
+              <span className="border-b border-black pb-1 group-hover:border-b-2 transition-all">
+                Explore Collection
+              </span>
+              <ArrowRight className="ml-3 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </Link>
           </div>
         </div>
       </section>
@@ -299,19 +494,51 @@ const Index = () => {
 
       {/* --- APPOINTMENT SECTION --- */}
       <section className="py-12 md:py-16 bg-white relative overflow-hidden">
-        <div className="absolute inset-0 opacity-10" style={{ backgroundImage: "repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(121,66,153,.1) 35px, rgba(121,66,153,.1) 70px)" }} />
+        <div
+          className="absolute inset-0 opacity-5"
+          style={{
+            backgroundImage:
+              "repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(0,0,0,.05) 35px, rgba(0,0,0,.05) 70px)",
+          }}
+        />
         <div className="container mx-auto px-4 relative z-10">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="animate-fade-in">
-              <h2 className="font-display text-4xl md:text-5xl font-bold text-[#794299] mb-6">Book Your Free Design Consultation</h2>
-              <p className="font-body text-lg text-[#7A4B7A]/90 mb-8 leading-relaxed">Come visit our showroom to see firsthand our selection of beautiful textiles. Let our master craftsmen care for your precious textiles.</p>
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Button asChild size="lg" className="bg-[#794299] hover:bg-[#62009b] text-white text-lg px-8 transition-all"><Link to="/book-appointment">Book My Visit</Link></Button>
-                <Button asChild size="lg" className="bg-[#794299] hover:bg-[#62009b] text-white text-lg px-8 transition-all"><Link to="/contact">Contact Us</Link></Button>
+              <h2 className="font-display text-4xl md:text-5xl font-bold text-black mb-6">
+                Book Your Free Design Consultation
+              </h2>
+              <p className="font-body text-lg text-gray-600 mb-8 leading-relaxed">
+                Come visit our showroom to see firsthand our selection of
+                beautiful textiles. Let our master craftsmen care for your
+                precious textiles.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-6">
+                <Link
+                  to="/book-appointment"
+                  className="inline-flex items-center text-black uppercase tracking-[0.2em] text-xs font-medium group"
+                >
+                  <span className="border-b border-black pb-1 group-hover:border-b-2 transition-all">
+                    Book My Visit
+                  </span>
+                  <ArrowRight className="ml-3 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </Link>
+                <Link
+                  to="/contact"
+                  className="inline-flex items-center text-black uppercase tracking-[0.2em] text-xs font-medium group"
+                >
+                  <span className="border-b border-black pb-1 group-hover:border-b-2 transition-all">
+                    Contact Us
+                  </span>
+                  <ArrowRight className="ml-3 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </Link>
               </div>
             </div>
-            <div className="relative h-96 rounded-lg overflow-hidden animate-fade-in shadow-2xl">
-              <img src={collection2} alt="Consultation" className="w-full h-full object-cover" />
+            <div className="relative h-96 overflow-hidden animate-fade-in shadow-2xl">
+              <img
+                src={collection2}
+                alt="Consultation"
+                className="w-full h-full object-cover"
+              />
             </div>
           </div>
         </div>
