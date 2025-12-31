@@ -30,7 +30,8 @@ import { useState, useEffect } from "react";
 import TrustSection from "@/components/TrustSection";
 
 const API_BASE =
-  import.meta.env.VITE_API_BASE || "http://localhost/adminPannel/api";
+  import.meta.env.VITE_API_BASE ||
+  "https://hotpink-tapir-344575.hostingersite.com/api";
 
 // --- Helper Components ---
 

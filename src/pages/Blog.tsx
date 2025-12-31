@@ -9,7 +9,9 @@ import { Button } from "@/components/ui/button";
 // Static image
 import heroImage from "@/assets/hero-carpet.jpg";
 
-const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost/adminPannel/api";
+const API_BASE =
+  import.meta.env.VITE_API_BASE ||
+  "https://hotpink-tapir-344575.hostingersite.com/api";
 
 interface Blog {
   id: number;
@@ -99,18 +101,23 @@ const Blog: React.FC = () => {
       <Header />
 
       {/* Hero Section */}
-  <section className="relative h-[45vh]  min-h-[350px] lg:h-[66vh] bg-red-600 flex items-center overflow-hidden">
+      {/* Hero Section */}
+      <section className="relative h-[25vh] min-h-[200px] lg:h-[40vh] bg-black flex items-center overflow-hidden">
         <div className="absolute inset-0">
-          <img src={heroImage} alt="Blog" className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-r from-brown/60 via-brown/50 to-brown/40" />
+          <img
+            src={heroImage}
+            alt="Blog"
+            className="w-full h-full object-cover opacity-60"
+          />
+          <div className="absolute inset-0 bg-black/40" />
         </div>
 
-        <div className="relative z-10 container mx-auto px-4 py-24">
+        <div className="relative z-10 container mx-auto px-4 pt-10">
           <div className="max-w-3xl mx-auto text-center">
-            <h1 className="font-display text-5xl md:text-6xl font-bold text-white mb-6">
+            <h1 className="font-serif text-3xl md:text-5xl font-normal text-white mb-4 uppercase tracking-widest">
               Stories & Insights
             </h1>
-            <p className="font-body text-xl text-white/90 leading-relaxed">
+            <p className="font-sans text-xs md:text-sm text-white/80 leading-relaxed uppercase tracking-widest max-w-xl mx-auto">
               Explore the art, heritage, and craftsmanship behind every thread.
             </p>
           </div>
@@ -118,83 +125,83 @@ const Blog: React.FC = () => {
       </section>
 
       {/* Blog Grid */}
-      <section className="py-24 bg-background">
+      <section className="py-24 bg-white">
         <div className="container mx-auto px-4">
-          
           {/* Loading State */}
           {loading && (
             <div className="flex justify-center items-center h-64">
-              <Loader2 className="w-12 h-12 text-[#794299] animate-spin" />
+              <Loader2 className="w-8 h-8 text-black animate-spin" />
             </div>
           )}
 
           {/* Error State */}
           {error && (
             <div className="flex flex-col items-center justify-center h-64 text-red-600">
-              <AlertCircle className="w-12 h-12 mb-4" />
-              <h2 className="text-xl font-semibold mb-2">Error fetching blogs</h2>
-              <p>{error}</p>
+              <AlertCircle className="w-10 h-10 mb-4" />
+              <h2 className="text-sm font-bold uppercase tracking-wide mb-2">
+                Error fetching blogs
+              </h2>
+              <p className="text-xs uppercase tracking-wider">{error}</p>
             </div>
           )}
 
           {/* Empty State */}
           {!loading && !error && blogs.length === 0 && (
             <div className="text-center h-64">
-              <h2 className="text-2xl font-semibold text-muted-foreground">
+              <h2 className="text-xl font-normal text-gray-400 uppercase tracking-widest">
                 No blog posts found.
               </h2>
             </div>
           )}
 
-          {/* Blog Cards */}
+          {/* Blog Cards Grid - Editorial Style */}
           {!loading && !error && blogs.length > 0 && (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16">
               {blogs.map((post, i) => (
                 <article
                   key={post.id}
-                  className="group flex flex-col bg-card rounded-lg overflow-hidden shadow soft hover:shadow-lg duration-300 border border-black/5"
+                  className="group flex flex-col cursor-pointer"
                   style={{ animationDelay: `${i * 0.1}s` }}
                 >
-                  <div className="relative h-64 overflow-hidden">
+                  {/* Image - Clean, sharp, zoom effect */}
+                  <div className="relative aspect-[3/2] overflow-hidden bg-gray-100 mb-6">
                     <img
-                      src={post.featured_image_path || "https://placehold.co/600x400"}
+                      src={
+                        post.featured_image_path ||
+                        "https://placehold.co/600x400"
+                      }
                       alt={post.title}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                      className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
                     />
                   </div>
 
-                  <div className="p-6 flex flex-col flex-grow">
-                    <div className="flex items-center justify-between text-sm text-muted-foreground mb-4">
-                      <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-[#6a2e8c] rounded-full text-white">
-                        <Tag className="w-3 h-3" />
+                  <div className="flex flex-col flex-grow">
+                    {/* Meta Data - Minimal Uppercase */}
+                    <div className="flex items-center gap-4 text-[10px] text-gray-400 uppercase tracking-widest mb-3 font-sans">
+                      <span className="text-black font-bold">
                         {post.category || "General"}
                       </span>
-
-                      <span className="flex items-center gap-1.5">
-                        <Calendar className="w-4 h-4" />
-                        {formatDate(post.post_date)}
-                      </span>
+                      <span>|</span>
+                      <span>{formatDate(post.post_date)}</span>
                     </div>
 
-                    <h3 className="font-display text-2xl font-bold mb-3 text-foreground group-hover:text-[#794299] duration-300">
+                    {/* Title */}
+                    <h3 className="font-serif text-xl md:text-2xl font-normal mb-3 text-black group-hover:underline decoration-1 underline-offset-4 transition-all uppercase tracking-wide">
                       {post.title}
                     </h3>
 
-                    {/* FIXED — Clean excerpt without HTML tags */}
-                    <p className="font-body text-muted-foreground mb-4 flex-grow">
+                    {/* Excerpt */}
+                    <p className="font-sans text-xs text-gray-500 mb-4 line-clamp-3 leading-relaxed uppercase tracking-wide">
                       {truncateText(stripHtml(post.content), 120)}
                     </p>
 
-                    <Button
-                      asChild
-                      variant="link"
-                      className="text-[#794299] hover:text-[#62009b] p-0 h-auto self-start group-hover:gap-2 duration-300"
+                    {/* Read More Link */}
+                    <Link
+                      to={`/blog/${post.id}`}
+                      className="inline-flex items-center text-[10px] font-bold text-black uppercase tracking-[0.2em] hover:text-gray-600 transition-colors mt-auto self-start border-b border-black pb-0.5 hover:border-gray-600"
                     >
-                      <Link to={`/blog/${post.id}`}>
-                        Read More
-                        <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 duration-300" />
-                      </Link>
-                    </Button>
+                      Read Article
+                    </Link>
                   </div>
                 </article>
               ))}
@@ -203,22 +210,29 @@ const Blog: React.FC = () => {
 
           {/* Pagination */}
           {!loading && !error && pagination?.total_pages! > 1 && (
-            <div className="flex justify-center items-center gap-2 mt-16">
-              
+            <div className="flex justify-center items-center gap-4 mt-20">
               <Button
                 variant="outline"
                 onClick={() => setCurrentPage(currentPage - 1)}
                 disabled={currentPage === 1}
+                className="rounded-none border-black hover:bg-black hover:text-white font-sans text-xs uppercase tracking-widest px-6"
               >
                 Previous
               </Button>
 
-              {Array.from({ length: pagination.total_pages }, (_, i) => i + 1).map((page) => (
+              {Array.from(
+                { length: pagination.total_pages },
+                (_, i) => i + 1
+              ).map((page) => (
                 <Button
                   key={page}
                   variant={currentPage === page ? "default" : "outline"}
                   onClick={() => setCurrentPage(page)}
-                  className={`${currentPage === page ? "bg-[#794299]" : ""}`}
+                  className={`rounded-none w-10 h-10 font-sans text-xs ${
+                    currentPage === page
+                      ? "bg-black text-white hover:bg-gray-800"
+                      : "border-transparent text-gray-500 hover:text-black"
+                  }`}
                 >
                   {page}
                 </Button>
@@ -228,13 +242,12 @@ const Blog: React.FC = () => {
                 variant="outline"
                 onClick={() => setCurrentPage(currentPage + 1)}
                 disabled={currentPage === pagination?.total_pages}
+                className="rounded-none border-black hover:bg-black hover:text-white font-sans text-xs uppercase tracking-widest px-6"
               >
                 Next
               </Button>
-
             </div>
           )}
-
         </div>
       </section>
 

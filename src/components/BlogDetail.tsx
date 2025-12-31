@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { useParams, Link } from "react-router-dom";
 import {
   Loader2,
   AlertCircle,
@@ -7,14 +7,15 @@ import {
   Share2,
   Twitter,
   Linkedin,
-  Link2
-} from 'lucide-react';
+  Link2,
+} from "lucide-react";
 
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import { Button } from '@/components/ui/button';
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import { Button } from "@/components/ui/button";
 
-const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost/adminPannel/api";
+const API_BASE =
+  import.meta.env.VITE_API_BASE || "http://localhost/adminPannel/api";
 
 // Blog Type
 interface Blog {
@@ -30,11 +31,13 @@ interface Blog {
 
 const formatDate = (dateString: string) => {
   if (!dateString) return "Date not available";
-  return new Date(dateString).toLocaleDateString("en-US", {
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-  }).toUpperCase();
+  return new Date(dateString)
+    .toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+    })
+    .toUpperCase();
 };
 
 const BlogDetail: React.FC = () => {
@@ -46,17 +49,23 @@ const BlogDetail: React.FC = () => {
   const blogUrl = window.location.href;
 
   const shareOnTwitter = () => {
-    const url = `https://twitter.com/intent/tweet?url=${encodeURIComponent(blogUrl)}&text=${encodeURIComponent(blog?.title || "")}`;
+    const url = `https://twitter.com/intent/tweet?url=${encodeURIComponent(
+      blogUrl
+    )}&text=${encodeURIComponent(blog?.title || "")}`;
     window.open(url, "_blank");
   };
 
   const shareOnLinkedIn = () => {
-    const url = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(blogUrl)}`;
+    const url = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(
+      blogUrl
+    )}`;
     window.open(url, "_blank");
   };
 
   const shareOnWhatsApp = () => {
-    const url = `https://wa.me/?text=${encodeURIComponent(blog?.title + " - " + blogUrl)}`;
+    const url = `https://wa.me/?text=${encodeURIComponent(
+      blog?.title + " - " + blogUrl
+    )}`;
     window.open(url, "_blank");
   };
 
@@ -88,8 +97,8 @@ const BlogDetail: React.FC = () => {
     return (
       <>
         <Header />
-        <div className="flex items-center justify-center min-h-screen bg-gradient-to-b from-[#fff5fa] to-[#f8eaff]">
-          <Loader2 className="w-12 h-12 text-[#794299] animate-spin" />
+        <div className="flex items-center justify-center min-h-screen bg-white">
+          <Loader2 className="w-8 h-8 text-black animate-spin" />
         </div>
         <Footer />
       </>
@@ -100,11 +109,18 @@ const BlogDetail: React.FC = () => {
     return (
       <>
         <Header />
-        <div className="flex flex-col items-center justify-center min-h-screen bg-[#fff8fc] text-center px-4">
-          <AlertCircle className="w-16 h-16 text-red-500 mb-4" />
-          <h1 className="text-3xl font-bold text-gray-800 mb-2">Post Not Found</h1>
-          <p className="text-lg text-gray-500 mb-6">{error}</p>
-          <Button asChild className="bg-[#794299] hover:bg-[#62009b]">
+        <div className="flex flex-col items-center justify-center min-h-screen bg-white text-center px-4">
+          <AlertCircle className="w-10 h-10 text-red-500 mb-4" />
+          <h1 className="text-2xl font-normal text-black uppercase tracking-widest mb-2">
+            Post Not Found
+          </h1>
+          <p className="text-sm text-gray-500 mb-6 uppercase tracking-wide">
+            {error}
+          </p>
+          <Button
+            asChild
+            className="bg-black hover:bg-gray-900 text-white rounded-none font-sans text-xs uppercase tracking-widest px-8"
+          >
             <Link to="/blog">
               <ArrowLeft className="w-4 h-4 mr-2" /> Back to Blog
             </Link>
@@ -116,116 +132,99 @@ const BlogDetail: React.FC = () => {
 
   // SUCCESS UI
   return (
-    <div className="bg-gradient-to-b from-[#fff9fb] via-[#fdf3ff] to-[#f9e8ff]">
+    <div className="bg-white">
       <Header />
 
-      <main className="pt-[20px] pb-20">
+      <main className="pt-10 pb-20">
         <div className="container mx-auto px-4">
-
           {/* BACK BUTTON aligned with blog card */}
-          <div className="max-w-4xl mx-auto flex justify-end mb-6">
+          <div className="max-w-4xl mx-auto flex justify-start mb-8">
             <Link
               to="/blog"
               className="
-                inline-flex items-center gap-3
-                px-5 py-2.5
-                rounded-xl
-                bg-white
-                shadow-sm
-                border border-gray-100
+                inline-flex items-center gap-2
+                text-xs font-bold font-sans uppercase tracking-[0.2em]
+                text-black
+                border-b border-transparent
+                hover:border-black
                 transition-all
-                hover:shadow-md
-                hover:bg-[#f7e5ff]/70
+                pb-1
               "
             >
-              <span
-                className="
-                  w-9 h-9
-                  flex items-center justify-center
-                  rounded-full
-                  bg-[#e7c7ff]
-                  text-[#7c3aed]
-                "
-              >
-                <ArrowLeft className="w-4 h-4" />
-              </span>
-
-              <span className="font-medium text-gray-700 text-[15px]">
-                Back to all posts
-              </span>
+              <ArrowLeft className="w-4 h-4" />
+              <span>Back to all posts</span>
             </Link>
           </div>
 
-          {/* BLOG CARD */}
-          <div className="
-            max-w-4xl mx-auto 
-            bg-white/80 
-            backdrop-blur-xl 
-            shadow-xl 
-            rounded-3xl 
-            p-6 md:p-10 
-            border border-white/20
-          ">
-
-            {/* TITLE */}
-            <h1 className="text-3xl md:text-5xl font-bold text-gray-900 leading-tight mb-6">
-              {blog.title}
-            </h1>
-
-            {/* META */}
-            <div className="flex flex-wrap items-center gap-3 text-gray-500 mb-8">
-              <span className="font-medium text-[#794299]">The Qaleenkaar</span>
-              <span className="text-gray-400">•</span>
-              <span className="text-[#794299] font-medium">{blog.category}</span>
-              <span className="text-gray-400">•</span>
-              <span>{formatDate(blog.post_date)}</span>
-            </div>
-
-            {/* SHARE BUTTONS */}
-            <div className="flex items-center gap-3 flex-wrap mb-10">
-
-              <Button variant="outline" size="sm" onClick={shareOnWhatsApp} className="bg-white hover:bg-[#f7e5ff]">
-                <Share2 className="w-4 h-4 mr-2" /> WhatsApp
-              </Button>
-
-              <Button variant="outline" size="sm" onClick={shareOnTwitter} className="bg-white hover:bg-[#f7e5ff]">
-                <Twitter className="w-4 h-4 mr-2" /> Twitter
-              </Button>
-
-              <Button variant="outline" size="sm" onClick={shareOnLinkedIn} className="bg-white hover:bg-[#f7e5ff]">
-                <Linkedin className="w-4 h-4 mr-2" /> LinkedIn
-              </Button>
-
-              <Button variant="outline" size="sm" onClick={copyToClipboard} className="bg-white hover:bg-[#f7e5ff]">
-                <Link2 className="w-4 h-4 mr-2" /> Copy Link
-              </Button>
-
-            </div>
-
+          {/* BLOG CONTENT */}
+          <div className="max-w-4xl mx-auto">
             {/* FEATURED IMAGE */}
-            <div className="mb-10">
+            <div className="mb-10 w-full aspect-[21/9] overflow-hidden bg-gray-100">
               <img
                 src={blog.featured_image_path}
                 alt={blog.title}
-                className="w-full rounded-2xl shadow-lg max-h-[60vh] object-cover"
+                className="w-full h-full object-cover"
               />
             </div>
 
-            {/* CONTENT */}
+            {/* HEADER INFO */}
+            <div className="text-center mb-12 max-w-2xl mx-auto">
+              <div className="flex justify-center items-center gap-4 text-[11px] font-sans font-bold text-gray-400 uppercase tracking-[0.2em] mb-4">
+                <span className="text-black">{blog.category}</span>
+                <span>|</span>
+                <span>{formatDate(blog.post_date)}</span>
+              </div>
+
+              <h1 className="text-3xl md:text-5xl font-normal font-serif text-black leading-tight mb-8 uppercase tracking-wide">
+                {blog.title}
+              </h1>
+
+              {/* SHARE BUTTONS - Minimal */}
+              <div className="flex justify-center gap-4">
+                <button
+                  onClick={shareOnWhatsApp}
+                  className="p-2 border border-gray-200 hover:bg-black hover:text-white hover:border-black transition-colors rounded-none"
+                >
+                  <Share2 className="w-4 h-4" />
+                </button>
+                <button
+                  onClick={shareOnTwitter}
+                  className="p-2 border border-gray-200 hover:bg-black hover:text-white hover:border-black transition-colors rounded-none"
+                >
+                  <Twitter className="w-4 h-4" />
+                </button>
+                <button
+                  onClick={shareOnLinkedIn}
+                  className="p-2 border border-gray-200 hover:bg-black hover:text-white hover:border-black transition-colors rounded-none"
+                >
+                  <Linkedin className="w-4 h-4" />
+                </button>
+                <button
+                  onClick={copyToClipboard}
+                  className="p-2 border border-gray-200 hover:bg-black hover:text-white hover:border-black transition-colors rounded-none"
+                >
+                  <Link2 className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+
+            {/* CONTENT PROSE */}
             <article
               className="
-                prose prose-lg md:prose-xl 
-                text-gray-700 leading-relaxed
-                prose-headings:text-gray-900 
-                prose-a:text-[#794299]
-                hover:prose-a:text-[#62009b]
-                prose-img:rounded-xl 
-                prose-img:shadow-md
-                prose-blockquote:border-l-4 
-                prose-blockquote:border-[#794299]
+                prose prose-lg md:prose-xl mx-auto
+                font-sans text-gray-600 leading-8
+                prose-headings:font-serif prose-headings:uppercase prose-headings:tracking-wide prose-headings:font-normal prose-headings:text-black
+                prose-a:text-black prose-a:underline prose-a:decoration-1 prose-a:underline-offset-4
+                prose-strong:text-black prose-strong:font-bold
+                prose-blockquote:border-l-2 
+                prose-blockquote:border-black
                 prose-blockquote:pl-6
-                prose-blockquote:text-xl 
+                prose-blockquote:text-lg 
+                prose-blockquote:font-serif
                 prose-blockquote:italic
+                prose-blockquote:text-black
+                prose-img:rounded-none
+                prose-img:my-10
               "
               dangerouslySetInnerHTML={{ __html: blog.content }}
             />

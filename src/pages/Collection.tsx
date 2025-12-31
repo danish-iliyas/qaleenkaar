@@ -7,7 +7,8 @@ import { InView } from "react-intersection-observer";
 import { ArrowRight, Loader2 } from "lucide-react";
 
 const API_BASE =
-  import.meta.env.VITE_API_BASE || "http://localhost/adminPannel/api";
+  import.meta.env.VITE_API_BASE ||
+  "https://hotpink-tapir-344575.hostingersite.com/api";
 
 interface CollectionItem {
   id: number;
