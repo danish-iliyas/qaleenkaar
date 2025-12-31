@@ -317,7 +317,7 @@ const Index = () => {
       <section className="w-full bg-[#fdfcfd] py-8 md:py-12 overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col items-center">
           <div className="flex flex-col items-center mb-16">
-            <h2 className="text-center font-serif text-3xl md:text-5xl font-light text-black tracking-[0.2em] uppercase mb-4">
+            <h2 className="text-center font-serif text-xl md:text-5xl lg:text-6xl font-light text-black tracking-[0.2em] uppercase mb-4">
               The Transformation
             </h2>
             <p className="text-[10px] md:text-xs tracking-[0.4em] uppercase text-gray-400 font-medium text-center">
