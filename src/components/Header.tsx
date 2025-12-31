@@ -86,7 +86,7 @@ const Header = () => {
   const desktopTranslateY = isHome ? 150 - 150 * progress : 0; // 150px -> 0px
 
   // Mobile: Scale 1.5 -> 1 AND Shift down -> 0
-  const mobileScale = isHome ? 1.5 - 0.5 * progress : 1;
+  const mobileScale = isHome ? 1.5 - 0.8 * progress : 1;
   const mobileTranslateY = isHome ? 100 - 100 * progress : 0; // Start 100px down
 
   const navLinks = [
@@ -123,7 +123,7 @@ const Header = () => {
         }}
       >
         <div className="mx-auto px-4 md:px-10">
-          <div className="grid grid-cols-3 items-center h-[75px] lg:h-[70px]">
+          <div className="grid grid-cols-3 items-center h-[55px] lg:h-[70px]">
             {/* LEFT COLUMN */}
             <div className="flex items-center">
               {/* MOBILE: Phone Icon (Contact) */}
@@ -169,7 +169,7 @@ const Header = () => {
                     transform: `translateY(${mobileTranslateY}px) scale(${mobileScale})`,
                     transformOrigin: "center center",
                     willChange: "transform, color",
-                    fontSize: "28px",
+                    fontSize: "24px",
                   }}
                 >
                   QALEENKAAR

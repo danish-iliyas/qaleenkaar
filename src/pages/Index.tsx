@@ -219,12 +219,12 @@ const Index = () => {
             ))}
           </div>
         </div>
-        <div className="relative z-10 w-full pb-16 lg:pb-20 text-center animate-fade-in">
+        <div className="relative z-10 w-full pb-16 lg:pb-20  text-center animate-fade-in">
           <Link
             to="/contact"
-            className="inline-flex items-center text-white uppercase tracking-[0.2em] text-xs font-medium group"
+            className="inline-flex items-center border lg:py-4 py-2 px-4  border-white text-white uppercase tracking-[0.2em] text-xs lg:text-sm font-medium group"
           >
-            <span className="border-b border-white pb-1 group-hover:border-b-2 transition-all">
+            <span className=" group-hover:border-b-2 transition-all">
               Book Free Call
             </span>
             <ArrowRight className="ml-3 w-4 h-4 group-hover:translate-x-1 transition-transform" />
