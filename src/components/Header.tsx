@@ -36,7 +36,7 @@ const Header = () => {
       const currentScrollY = window.scrollY;
       setScrollY(currentScrollY);
 
-      // Only apply hide/show after scrolling past the hero area (200px)
+      // Only apply hide/show AFTER logo animation is complete (200px+)
       if (currentScrollY > 200) {
         // Scrolling DOWN → show header
         if (currentScrollY > lastScrollY && currentScrollY - lastScrollY > 5) {
@@ -47,7 +47,7 @@ const Header = () => {
           setIsHeaderHidden(true);
         }
       } else {
-        // Always show header near top
+        // Always show header when near top (during logo animation)
         setIsHeaderHidden(false);
       }
 
@@ -140,7 +140,7 @@ const Header = () => {
           // Add a subtle shadow only when white background is solid
           boxShadow:
             isHome && progress < 0.9 ? "none" : "0 1px 2px rgba(0,0,0,0.05)",
-          // Hide/show based on scroll direction
+          // Hide/show based on scroll direction (only after logo animation completes)
           transform: isHeaderHidden ? "translateY(-100%)" : "translateY(0)",
           transition:
             "transform 0.3s ease-in-out, background-color 0.2s, box-shadow 0.2s",
