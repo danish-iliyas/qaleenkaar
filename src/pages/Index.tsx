@@ -26,6 +26,7 @@ import "slick-carousel/slick/slick-theme.css";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
 import CustomerReviews from "@/components/customerReview";
+import ContactForm from "@/components/ContactForm";
 import { useState, useEffect } from "react";
 import TrustSection from "@/components/TrustSection";
 
@@ -503,36 +504,9 @@ const Index = () => {
           }}
         />
         <div className="container mx-auto px-4 relative z-10">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
+          <div className="grid md:grid-cols-2 gap-2 lg:gap-12 items-center">
             <div className="animate-fade-in">
-              <h2 className="font-display text-4xl md:text-5xl font-bold text-black mb-6">
-                Book Your Free Design Consultation
-              </h2>
-              <p className="font-body text-lg text-gray-600 mb-8 leading-relaxed">
-                Come visit our showroom to see firsthand our selection of
-                beautiful textiles. Let our master craftsmen care for your
-                precious textiles.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-6">
-                <Link
-                  to="/book-appointment"
-                  className="inline-flex items-center text-black uppercase tracking-[0.2em] text-xs font-medium group"
-                >
-                  <span className="border-b border-black pb-1 group-hover:border-b-2 transition-all">
-                    Book My Visit
-                  </span>
-                  <ArrowRight className="ml-3 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </Link>
-                <Link
-                  to="/contact"
-                  className="inline-flex items-center text-black uppercase tracking-[0.2em] text-xs font-medium group"
-                >
-                  <span className="border-b border-black pb-1 group-hover:border-b-2 transition-all">
-                    Contact Us
-                  </span>
-                  <ArrowRight className="ml-3 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </Link>
-              </div>
+              <ContactForm />
             </div>
             <div className="relative h-96 overflow-hidden animate-fade-in shadow-2xl">
               <img
