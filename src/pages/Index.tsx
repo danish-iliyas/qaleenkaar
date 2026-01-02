@@ -315,48 +315,48 @@ const Index = () => {
       {/* <TrustSection />/ */}
 
       {/* --- OUR WORK TRANSFORMATION --- */}
-      <section className="w-full bg-[#fdfcfd] py-8 md:py-12 overflow-hidden">
+      <section className="w-full bg-[#fdfcfd] py-4 md:py-12 overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col items-center">
-          <div className="flex flex-col items-center mb-16">
-            <h2 className="text-center font-serif text-xl md:text-5xl lg:text-6xl font-light text-black tracking-[0.2em] uppercase mb-4">
+          <div className="flex flex-col items-center mb-4 lg:mb-12">
+            <h2 className="text-center font-serif text-xl md:text-5xl lg:text-6xl font-light text-black tracking-[0.2em] uppercase mb-0 lg:mb-4">
               The Transformation
             </h2>
-            <p className="text-[10px] md:text-xs tracking-[0.4em] uppercase text-gray-400 font-medium text-center">
+            {/* <p className="text-[10px] md:text-xs tracking-[0.4em] uppercase text-gray-400 font-medium text-center">
               Restoring Heritage, One Thread at a Time
-            </p>
+            </p> */}
           </div>
           <div className="relative flex flex-col items-center w-full max-w-6xl mx-auto">
-            <div className="flex items-center justify-center w-full gap-2 md:gap-12">
+            <div className="flex items-center px-8 lg:px-0 justify-center w-full gap-2 md:gap-12">
               <button
                 onClick={handlePrev}
                 className="hidden lg:flex p-4 text-gray-300 hover:text-black transition-colors"
               >
                 <ChevronLeft className="w-10 h-10 stroke-[1px]" />
               </button>
-              <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-4 items-end">
+              <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-4 items-end">
                 <div className="relative group">
                   <div className="absolute -top-4 left-4 z-20 bg-white px-3 py-1 shadow-sm">
                     <span className="text-[9px] uppercase tracking-[0.3em] font-bold text-gray-400">
-                      Phase 01: Before
+                      Before
                     </span>
                   </div>
-                  <div className="overflow-hidden shadow-lg border border-gray-100">
+                  <div className=" overflow-hidden shadow-lg border border-gray-100">
                     <img
                       src={workItems[currentIndex].before}
-                      className="w-full h-72 sm:h-[450px] object-cover transition-transform duration-1000 group-hover:scale-105"
+                      className="w-full h-80 sm:h-[550px] object-cover transition-transform duration-1000 group-hover:scale-105"
                     />
                   </div>
                 </div>
                 <div className="relative group md:-translate-y-8">
-                  <div className="absolute -top-4 right-4 z-20 bg-black px-4 py-1 shadow-md">
+                  <div className="absolute -top-3 right-4 z-20 bg-black px-4 py-1 shadow-md">
                     <span className="text-[9px] uppercase tracking-[0.3em] font-bold text-white">
-                      Phase 02: Result
+                      After
                     </span>
                   </div>
-                  <div className="overflow-hidden shadow-2xl border-[10px] border-white">
+                  <div className="overflow-hidden shadow-  border border-gray-100">
                     <img
                       src={workItems[currentIndex].after}
-                      className="w-full h-80 sm:h-[500px] object-cover transition-transform duration-1000 group-hover:scale-110"
+                      className="w-full h-80 sm:h-[550px] object-cover transition-transform duration-1000 group-hover:scale-110"
                     />
                   </div>
                 </div>
@@ -368,7 +368,7 @@ const Index = () => {
                 <ChevronRight className="w-10 h-10 stroke-[1px]" />
               </button>
             </div>
-            <div className="flex flex-col md:flex-row items-center justify-between w-full mt-12 gap-8 px-4">
+            <div className="flex flex-col md:flex-row items-center justify-between w-full mt-4 gap-2 px-4">
               <div className="hidden md:block font-serif text-sm tracking-widest text-gray-400">
                 <span className="text-gray-900">0{currentIndex + 1}</span> / 0
                 {workItems.length}
@@ -418,9 +418,9 @@ const Index = () => {
       </section>
 
       {/* --- DYNAMIC COLLECTIONS CAROUSEL --- */}
-      <section className="py-12 md:py-16  overflow-hidden">
+      <section className="py-8 md:py-16  overflow-hidden">
         <div className="container mx-auto px-2 sm:px-4">
-          <div className="text-center max-w-3xl mx-auto mb-12 animate-fade-in">
+          <div className="text-center max-w-3xl mx-auto mb-8 animate-fade-in">
             <h2 className="font-display text-4xl md:text-6xl  mb-6 text-black">
               Latest Arrivals
             </h2>
@@ -477,12 +477,12 @@ const Index = () => {
               </Slider>
             )}
           </div>
-          <div className="text-center mt-12 md:mt-16 animate-fade-in">
+          <div className="text-center mt-4 md:mt-16 animate-fade-in">
             <Link
               to="/collection/carpets"
               className="inline-flex items-center text-black uppercase tracking-[0.2em] text-xs font-medium group"
             >
-              <span className="border-b border-black pb-1 group-hover:border-b-2 transition-all">
+              <span className="border-b lg:text-lg border-black pb-1 group-hover:border-b-2 transition-all">
                 Explore Collection
               </span>
               <ArrowRight className="ml-3 w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -494,7 +494,7 @@ const Index = () => {
       <CustomerReviews />
 
       {/* --- APPOINTMENT SECTION --- */}
-      <section className="py-12 md:py-16 bg-white relative overflow-hidden">
+      <section className="py-2 md:py-8 relative overflow-hidden">
         <div
           className="absolute inset-0 opacity-5"
           style={{

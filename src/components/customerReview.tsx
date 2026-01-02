@@ -181,10 +181,10 @@ const CustomerReviews = () => {
   ];
 
   return (
-    <section className="py-16 bg-white overflow-hidden">
+    <section className="py-2 md:py-8 bg-white overflow-hidden">
       <div className="container mx-auto px-4">
         {/* Header */}
-        <div className="text-center mb-12">
+        <div className="text-center lg:mb-12 mb-4">
           <h2 className="font-serif text-2xl md:text-5xl lg:text-5xl font-light text-black uppercase tracking-[0.2em] mb-4">
             Customer Reviews
           </h2>
@@ -207,7 +207,7 @@ const CustomerReviews = () => {
           </div>
 
           {/* Minimal Navigation Arrows */}
-          <div className="flex justify-center items-center gap-12 mt-12">
+          <div className="flex justify-center items-center gap-2 mt-2 lg:mt-12">
             <button
               onClick={scrollPrev}
               className="p-2 text-gray-300 hover:text-black transition-colors"
