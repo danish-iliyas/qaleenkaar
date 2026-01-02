@@ -503,7 +503,7 @@ const Index = () => {
             <div className="animate-fade-in">
               <ContactForm />
             </div>
-            <div className="relative h-96 lg:h-[600px] overflow-hidden animate-fade-in shadow-2xl">
+            <div className="hidden md:block relative h-96 lg:h-[600px] overflow-hidden animate-fade-in shadow-2xl">
               <img
                 src={consultationImg}
                 alt="Consultation"

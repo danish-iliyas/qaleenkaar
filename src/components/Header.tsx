@@ -23,6 +23,8 @@ const Header = () => {
   const [isLoginDialogOpen, setIsLoginDialogOpen] = useState(false);
 
   const [scrollY, setScrollY] = useState(0);
+  const [lastScrollY, setLastScrollY] = useState(0);
+  const [isHeaderHidden, setIsHeaderHidden] = useState(false);
   const [isHome, setIsHome] = useState(false);
 
   useEffect(() => {
@@ -31,12 +33,30 @@ const Header = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrollY(window.scrollY);
+      const currentScrollY = window.scrollY;
+      setScrollY(currentScrollY);
+
+      // Only apply hide/show after scrolling past the hero area (200px)
+      if (currentScrollY > 200) {
+        // Scrolling DOWN → show header
+        if (currentScrollY > lastScrollY && currentScrollY - lastScrollY > 5) {
+          setIsHeaderHidden(false);
+        }
+        // Scrolling UP → hide header
+        if (currentScrollY < lastScrollY && lastScrollY - currentScrollY > 5) {
+          setIsHeaderHidden(true);
+        }
+      } else {
+        // Always show header near top
+        setIsHeaderHidden(false);
+      }
+
+      setLastScrollY(currentScrollY);
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [lastScrollY]);
 
   useEffect(() => {
     if (isOpen) {
@@ -120,31 +140,39 @@ const Header = () => {
           // Add a subtle shadow only when white background is solid
           boxShadow:
             isHome && progress < 0.9 ? "none" : "0 1px 2px rgba(0,0,0,0.05)",
+          // Hide/show based on scroll direction
+          transform: isHeaderHidden ? "translateY(-100%)" : "translateY(0)",
+          transition:
+            "transform 0.3s ease-in-out, background-color 0.2s, box-shadow 0.2s",
         }}
       >
         <div className="mx-auto px-4 md:px-10">
           <div className="grid grid-cols-3 items-center h-[55px] lg:h-[70px]">
             {/* LEFT COLUMN */}
             <div className="flex items-center">
-              {/* MOBILE: Phone Icon (Contact) */}
-              <Link
-                to="/contact"
+              {/* MOBILE: Phone Icon (WhatsApp) */}
+              <a
+                href="https://wa.me/917982698231"
+                target="_blank"
+                rel="noopener noreferrer"
                 className={`lg:hidden p-2 -ml-2 focus:outline-none transition-colors duration-300 ${iconColorClass}`}
               >
                 <Phone className="w-5 h-5 stroke-[1.2px]" />
-              </Link>
+              </a>
 
-              {/* DESKTOP: Plus + Contact Text */}
+              {/* DESKTOP: Plus + Contact Text (WhatsApp) */}
               <div className="hidden lg:flex items-center space-x-2">
                 <Plus
                   className={`w-3.5 h-3.5 transition-colors duration-300 ${iconColorClass}`}
                 />
-                <Link
-                  to="/contact"
+                <a
+                  href="https://wa.me/917982698231"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className={`font-serif text-[13px] font-medium uppercase tracking-tight transition-colors duration-300 ${textColorClass}`}
                 >
                   Contact Us
-                </Link>
+                </a>
               </div>
             </div>
 
