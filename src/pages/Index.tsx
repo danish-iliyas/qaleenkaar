@@ -16,6 +16,7 @@ import repairImg from "@/assets/service-repair.jpg";
 import restorationImg from "@/assets/service-restoration.jpg";
 import exchangeImg from "@/assets/service-exchange.jpg";
 import cleaningImg from "@/assets/service-cleaning.jpg";
+import consultationImg from "@/assets/consultation-image.png";
 import collection1 from "@/assets/collection-1.jpg";
 import collection2 from "@/assets/collection-2.jpg";
 import collection3 from "@/assets/collection-3.jpg";
@@ -495,22 +496,16 @@ const Index = () => {
       <CustomerReviews />
 
       {/* --- APPOINTMENT SECTION --- */}
-      <section className="py-2 md:py-8 relative overflow-hidden">
-        <div
-          className="absolute inset-0 opacity-5"
-          style={{
-            backgroundImage:
-              "repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(0,0,0,.05) 35px, rgba(0,0,0,.05) 70px)",
-          }}
-        />
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="grid md:grid-cols-2 gap-2 lg:gap-12 items-center">
+      <section className="py-2 md:py-4 bg-white relative overflow-hidden">
+        <div className="absolute inset-0 opacity-5" />
+        <div className="container mx-auto px-4 lg:px-16 relative z-10">
+          <div className="grid md:grid-cols-2 gap-2 lg:gap-20 items-center">
             <div className="animate-fade-in">
               <ContactForm />
             </div>
-            <div className="relative h-96 overflow-hidden animate-fade-in shadow-2xl">
+            <div className="relative h-96 lg:h-[600px] overflow-hidden animate-fade-in shadow-2xl">
               <img
-                src={collection2}
+                src={consultationImg}
                 alt="Consultation"
                 className="w-full h-full object-cover"
               />
