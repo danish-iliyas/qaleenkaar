@@ -206,7 +206,7 @@ const Index = () => {
       )}
 
       {/* --- HERO SECTION --- */}
-      <section className="relative h-[60vh] lg:h-[100vh] w-full flex flex-col justify-end overflow-hidden">
+      <section className="relative h-[70vh] lg:h-[100vh] w-full flex flex-col justify-end overflow-hidden">
         <div className="absolute inset-0 z-0" ref={emblaRef}>
           <div className="flex h-full">
             {carouselSlides.map((slide, index) => (
@@ -314,7 +314,7 @@ const Index = () => {
         </div>
       </section>
 
-      {/* <TrustSection />/ */}
+      <TrustSection />/
 
       {/* --- OUR WORK TRANSFORMATION --- */}
       <section className="w-full bg-[#fdfcfd] py-4 md:py-12 overflow-hidden">

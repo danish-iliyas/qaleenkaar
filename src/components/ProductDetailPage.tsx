@@ -203,7 +203,7 @@ const ProductDetailPage: React.FC = () => {
                   {product.name}
                 </h1>
                 <button className="text-gray-400 hover:text-red-500 transition-colors">
-                  <Heart className="w-6 h-6" />
+                  {/* <Heart className="w-6 h-6" /> */}
                 </button>
               </div>
 
@@ -273,9 +273,9 @@ const ProductDetailPage: React.FC = () => {
                 Contact Us
               </button>
 
-              <button className="w-full border-2 border-gray-300 hover:border-gray-400 text-gray-900 py-3 px-6 rounded-lg transition-colors font-medium">
+              {/* <button className="w-full border-2 border-gray-300 hover:border-gray-400 text-gray-900 py-3 px-6 rounded-lg transition-colors font-medium">
                 Add to wishlist
-              </button>
+              </button> */}
             </div>
           </div>
 

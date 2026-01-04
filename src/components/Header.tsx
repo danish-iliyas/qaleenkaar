@@ -107,7 +107,7 @@ const Header = () => {
 
   // Mobile: Scale 1.5 -> 1 AND Shift down -> 0
   const mobileScale = isHome ? 1.5 - 0.8 * progress : 1;
-  const mobileTranslateY = isHome ? 100 - 100 * progress : 0; // Start 100px down
+  const mobileTranslateY = isHome ? 120 - 120 * progress : 0; // Start 100px down
 
   const navLinks = [
     { path: "/", label: "Home" },
@@ -280,9 +280,9 @@ const Header = () => {
                     <User className="w-5 h-5 text-[#794299]" />
                   </div>
                   <div className="text-left">
-                    <p className="font-serif text-[10px] uppercase tracking-[0.2em] text-gray-400">
+                    {/* <p className="font-serif text-[10px] uppercase tracking-[0.2em] text-gray-400">
                       Account
-                    </p>
+                    </p> */}
                     <p className="font-serif text-lg font-bold text-gray-900">
                       Hello, {user?.name || "Admin"}
                     </p>
@@ -309,12 +309,12 @@ const Header = () => {
                   <User className="w-5 h-5 text-gray-600 group-hover:text-white" />
                 </div>
                 <div className="text-left">
-                  <p className="font-serif text-[10px] uppercase tracking-[0.2em] text-gray-400">
+                  {/* <p className="font-serif text-[10px] uppercase tracking-[0.2em] text-gray-400">
                     Account
-                  </p>
-                  <p className="font-serif text-lg text-gray-900">
-                    Login / Register
-                  </p>
+                  </p> */}
+                  {/* <p className="font-serif text-lg text-gray-900">
+                    Login
+                  </p> */}
                 </div>
               </button>
             )}
