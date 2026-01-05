@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import {
   Phone,
@@ -8,8 +9,10 @@ import {
   Twitter,
 } from "lucide-react";
 import MobileBottomNav from "@/components/MobileBottomNav";
+import SellExchangeModal from "@/components/SellExchangeModal";
 
 const Footer = () => {
+  const [isSellExchangeOpen, setIsSellExchangeOpen] = useState(false);
   const whatsappNumber = "+911234567890";
   const email = "info@loomtales.com";
   // 6d44a6
@@ -71,7 +74,12 @@ const Footer = () => {
               <li>Professional Washing</li>
               <li>Expert Repairing</li>
               <li>Carpet Restoration</li>
-              <li>Sell & Exchange</li>
+              <li
+                onClick={() => setIsSellExchangeOpen(true)}
+                className="cursor-pointer hover:text-white hover:underline underline-offset-4 transition-all w-fit"
+              >
+                Sell & Exchange
+              </li>
               <li>Special Cleaning</li>
             </ul>
           </div>
@@ -147,6 +155,12 @@ const Footer = () => {
         </div>
       </div>
       <MobileBottomNav />
+
+      {/* Sell & Exchange Modal */}
+      <SellExchangeModal
+        open={isSellExchangeOpen}
+        onOpenChange={setIsSellExchangeOpen}
+      />
     </footer>
   );
 };
