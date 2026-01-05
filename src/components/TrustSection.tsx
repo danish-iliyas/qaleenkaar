@@ -1,5 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
+import { ArrowRight } from 'lucide-react';
 
 const TrustSection = () => {
   // Data from your sketch
@@ -16,11 +18,11 @@ const TrustSection = () => {
   ];
 
   return (
-    <section className="py-16 bg-white overflow-hidden">
+    <section className="py-8 m-4  bg-white overflow-hidden">
       <div className="container mx-auto px-4">
         
         {/* 1. TRUST SIGNALS (Stats Grid) */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-20">
+        {/* <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-20">
           {stats.map((stat, index) => (
             <motion.div 
               key={index}
@@ -38,15 +40,21 @@ const TrustSection = () => {
               </p>
             </motion.div>
           ))}
-        </div>
+        </div> */}
 
         {/* 2. TRUSTED CLIENTS (Horizontal Infinite Scroll) */}
-        <div className="relative border-t border-b border-gray-100 py-10">
-          <div className="text-center mb-8">
-            <h4 className="text-[11px] uppercase tracking-[0.4em]  font-bold text-gray-400">
-              Trusted By
-            </h4>
-          </div>
+        <div className="relative border-t border-b border-gray-100 ">
+          <div className="text-center mb-8 ">
+                      <Link
+                        to="#"
+                        className="inline-flex items-center text-black uppercase tracking-[0.2em] text-xs md:text-sm lg:text-lg  font-medium group"
+                      >
+                        <span className="border-b border-black pb-1 group-hover:border-b-2 transition-all">
+                         Trusted By Leading Brands
+                        </span>
+                        <ArrowRight className="ml-3 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                      </Link>
+                    </div>
 
           {/* Scrolling Container */}
           <div className="flex overflow-hidden group">
