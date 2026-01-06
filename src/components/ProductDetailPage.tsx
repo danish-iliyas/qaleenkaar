@@ -273,9 +273,14 @@ const ProductDetailPage: React.FC = () => {
                 Contact Us
               </button>
 
-              {/* <button className="w-full border-2 border-gray-300 hover:border-gray-400 text-gray-900 py-3 px-6 rounded-lg transition-colors font-medium">
-                Add to wishlist
-              </button> */}
+              <a
+                href="https://wa.me/917982698231"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full inline-block text-center border-2 border-gray-300 hover:border-gray-400 text-gray-900 py-3 px-6 rounded-lg transition-colors font-medium"
+              >
+                Order Now
+              </a>
             </div>
           </div>
 
@@ -418,9 +423,14 @@ const ProductDetailPage: React.FC = () => {
                 Contact Us
               </button>
 
-              {/* <button className="w-full border-2 border-gray-300 hover:border-gray-400 text-gray-900 py-3 px-6 rounded-lg transition-colors font-medium">
-                Add to wishlist
-              </button> */}
+              <a
+                href="https://wa.me/917982698231"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full inline-block text-center border-2 border-gray-300 hover:border-gray-400 text-gray-900 py-3 px-6 rounded-lg transition-colors font-medium"
+              >
+                Order Now
+              </a>
             </div>
           </div>
         </div>
