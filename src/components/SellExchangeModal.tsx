@@ -27,6 +27,7 @@ interface SellExchangeModalProps {
 
 interface FormData {
   name: string;
+  email: string;
   contactNumber: string;
   itemType: string;
   size: string;
@@ -39,6 +40,7 @@ const SellExchangeModal = ({ open, onOpenChange }: SellExchangeModalProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState<FormData>({
     name: "",
+    email: "",
     contactNumber: "",
     itemType: "",
     size: "",
@@ -115,6 +117,7 @@ const SellExchangeModal = ({ open, onOpenChange }: SellExchangeModalProps) => {
   const resetForm = () => {
     setFormData({
       name: "",
+      email: "",
       contactNumber: "",
       itemType: "",
       size: "",
@@ -133,7 +136,11 @@ const SellExchangeModal = ({ open, onOpenChange }: SellExchangeModalProps) => {
       return;
     }
     if (!formData.contactNumber.trim()) {
-      toast.error("Please enter your contact number");
+      toast.error("Please enter your phone number");
+      return;
+    }
+    if (!formData.email.trim()) {
+      toast.error("Please enter your email address");
       return;
     }
     if (!formData.itemType) {
@@ -286,18 +293,35 @@ const SellExchangeModal = ({ open, onOpenChange }: SellExchangeModalProps) => {
             />
           </div>
 
-          {/* Contact Number */}
+          {/* Phone Number */}
           <div className="space-y-2">
             <Label className="font-sans text-xs font-bold text-black uppercase tracking-widest">
-              Contact Number *
+              Phone Number *
             </Label>
             <Input
               name="contactNumber"
               type="tel"
               value={formData.contactNumber}
               onChange={handleInputChange}
-              placeholder="ENTER CONTACT NUMBER"
+              placeholder="ENTER PHONE NUMBER"
               className="bg-white border-gray-200 focus:border-black rounded-none h-12 placeholder:text-gray-300 placeholder:text-xs placeholder:uppercase placeholder:tracking-wider"
+              required
+            />
+          </div>
+
+          {/* Email */}
+          <div className="space-y-2">
+            <Label className="font-sans text-xs font-bold text-black uppercase tracking-widest">
+              Email *
+            </Label>
+            <Input
+              name="email"
+              type="email"
+              value={formData.email}
+              onChange={handleInputChange}
+              placeholder="ENTER EMAIL ADDRESS"
+              className="bg-white border-gray-200 focus:border-black rounded-none h-12 placeholder:text-gray-300 placeholder:text-xs placeholder:uppercase placeholder:tracking-wider"
+              required
             />
           </div>
 
