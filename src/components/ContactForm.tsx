@@ -53,6 +53,24 @@ const ContactForm = () => {
         </div>
         <div>
           <label
+            htmlFor="phone"
+            className="block font-sans text-xs font-bold mb-2 text-black uppercase tracking-widest"
+          >
+            Phone Number *
+          </label>
+          <Input
+            id="phone"
+            name="phone"
+            type="tel"
+            required
+            value={formData.phone}
+            onChange={handleChange}
+            placeholder="ENTER YOUR PHONE"
+            className="bg-white border-gray-200 focus:border-black rounded-none h-12 placeholder:text-gray-300 placeholder:text-xs placeholder:uppercase placeholder:tracking-wider focus:ring-0"
+          />
+        </div>
+        <div>
+          <label
             htmlFor="email"
             className="block font-sans text-xs font-bold mb-2 text-black uppercase tracking-widest"
           >
@@ -66,23 +84,6 @@ const ContactForm = () => {
             value={formData.email}
             onChange={handleChange}
             placeholder="ENTER YOUR EMAIL"
-            className="bg-white border-gray-200 focus:border-black rounded-none h-12 placeholder:text-gray-300 placeholder:text-xs placeholder:uppercase placeholder:tracking-wider focus:ring-0"
-          />
-        </div>
-        <div>
-          <label
-            htmlFor="phone"
-            className="block font-sans text-xs font-bold mb-2 text-black uppercase tracking-widest"
-          >
-            Phone Number
-          </label>
-          <Input
-            id="phone"
-            name="phone"
-            type="tel"
-            value={formData.phone}
-            onChange={handleChange}
-            placeholder="ENTER YOUR PHONE"
             className="bg-white border-gray-200 focus:border-black rounded-none h-12 placeholder:text-gray-300 placeholder:text-xs placeholder:uppercase placeholder:tracking-wider focus:ring-0"
           />
         </div>
