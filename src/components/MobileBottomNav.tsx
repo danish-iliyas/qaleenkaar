@@ -131,8 +131,8 @@ const MobileBottomNav = () => {
           {bottomNavLinks.map((link) => {
             const Icon = link.icon;
             const active = link.path === "/collection"
-                ? location.pathname.includes("/collection")
-                : isActive(link.path);
+              ? location.pathname.includes("/collection")
+              : isActive(link.path);
 
             return (
               <Link
@@ -141,7 +141,7 @@ const MobileBottomNav = () => {
                 onClick={(e) => handleLinkClick(link.path, e)}
                 className={cn(
                   "flex flex-col items-center justify-center w-full h-full transition-all duration-300 relative",
-                  active ? "text-[#794299]" : "text-gray-400"
+                  active ? "text-black" : "text-gray-400"
                 )}
               >
                 {link.path === "/collection" && (
