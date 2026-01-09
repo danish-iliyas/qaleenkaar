@@ -109,7 +109,7 @@ const Footer = () => {
               <div className="flex items-start gap-3">
                 <MapPin className="w-4 h-4 mt-0.5 flex-shrink-0" />
                 <span className="leading-relaxed">
-                  123 Heritage Lane, Jaipur
+                  New Delhi, India
                 </span>
               </div>
             </div>
@@ -120,7 +120,7 @@ const Footer = () => {
         <div className="pt-8 border-t border-gray-800">
           <div className="flex flex-col md:flex-row justify-between items-center gap-6">
             <p className="font-sans text-[10px] text-gray-500 uppercase tracking-widest">
-              © {new Date().getFullYear()} Loom Tales. All rights reserved.
+              © {new Date().getFullYear()} Qaleenkaar. All rights reserved.
             </p>
             <div className="flex items-center gap-6">
               <a

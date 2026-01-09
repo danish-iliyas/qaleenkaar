@@ -141,8 +141,8 @@ const ProductDetailPage: React.FC = () => {
                   key={index}
                   onClick={() => setCurrentIndex(index)}
                   className={`cursor-pointer border-2 rounded overflow-hidden transition-all duration-300 ${index === currentIndex
-                      ? "border-blue-500 shadow-md scale-105"
-                      : "border-gray-300 hover:border-gray-400"
+                    ? "border-blue-500 shadow-md scale-105"
+                    : "border-gray-300 hover:border-gray-400"
                     }`}
                 >
                   <img
@@ -186,8 +186,8 @@ const ProductDetailPage: React.FC = () => {
                   <div
                     key={index}
                     className={`h-2 rounded-full transition-all ${index === currentIndex
-                        ? "w-8 bg-blue-500"
-                        : "w-2 bg-gray-300"
+                      ? "w-8 bg-blue-500"
+                      : "w-2 bg-gray-300"
                       }`}
                   />
                 ))}
@@ -250,14 +250,14 @@ const ProductDetailPage: React.FC = () => {
 
                 <div
                   className={`flex items-center gap-2 ${product.stock_status === "1"
-                      ? "text-green-600"
-                      : "text-red-600"
+                    ? "text-green-600"
+                    : "text-red-600"
                     }`}
                 >
                   <div
                     className={`w-2 h-2 ${product.stock_status === "1"
-                        ? "bg-green-600"
-                        : "bg-red-600"
+                      ? "bg-green-600"
+                      : "bg-red-600"
                       } rounded-full`}
                   ></div>
                   <span className="text-sm font-medium">
@@ -270,7 +270,7 @@ const ProductDetailPage: React.FC = () => {
                 href="https://wa.me/917982698231"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full inline-block text-center border-2 border-gray-300 hover:border-gray-400 hover:bg-gray-100 text-gray-900 py-3 px-6 rounded-lg transition-colors font-medium"
+                className="w-full inline-block text-center bg-gray-100 border-2 border-gray-200 hover:bg-gray-200 hover:border-gray-300 text-gray-900 py-3 px-6 rounded-lg transition-colors font-medium"
               >
                 Book this {product.product_type?.toLowerCase() === 'shawl' ? 'shawl' : 'carpet'}
               </a>
@@ -309,8 +309,8 @@ const ProductDetailPage: React.FC = () => {
                   <div
                     key={index}
                     className={`h-2 rounded-full transition-all ${index === currentIndex
-                        ? "w-8 bg-blue-500"
-                        : "w-2 bg-gray-300"
+                      ? "w-8 bg-blue-500"
+                      : "w-2 bg-gray-300"
                       }`}
                   />
                 ))}
@@ -324,8 +324,8 @@ const ProductDetailPage: React.FC = () => {
                   key={index}
                   onClick={() => setCurrentIndex(index)}
                   className={`flex-shrink-0 cursor-pointer border-2 rounded overflow-hidden transition-all duration-300 ${index === currentIndex
-                      ? "border-blue-500 shadow-md"
-                      : "border-gray-300"
+                    ? "border-blue-500 shadow-md"
+                    : "border-gray-300"
                     }`}
                 >
                   <img
@@ -392,14 +392,14 @@ const ProductDetailPage: React.FC = () => {
 
                 <div
                   className={`flex items-center gap-2 ${product.stock_status === "1"
-                      ? "text-green-600"
-                      : "text-red-600"
+                    ? "text-green-600"
+                    : "text-red-600"
                     }`}
                 >
                   <div
                     className={`w-2 h-2 ${product.stock_status === "1"
-                        ? "bg-green-600"
-                        : "bg-red-600"
+                      ? "bg-green-600"
+                      : "bg-red-600"
                       } rounded-full`}
                   ></div>
                   <span className="text-sm font-medium">
@@ -412,44 +412,11 @@ const ProductDetailPage: React.FC = () => {
                 href="https://wa.me/917982698231"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full inline-block text-center border-2 border-gray-300 hover:border-gray-400 hover:bg-gray-100 text-gray-900 py-3 px-6 rounded-lg transition-colors font-medium"
+                className="w-full inline-block text-center bg-gray-100 border-2 border-gray-200 hover:bg-gray-200 hover:border-gray-300 text-gray-900 py-3 px-6 rounded-lg transition-colors font-medium"
               >
                 Book this {product.product_type?.toLowerCase() === 'shawl' ? 'shawl' : 'carpet'}
               </a>
             </div>
-          </div>
-        </div>
-
-        {/* Mobile Bottom Navigation */}
-        <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-lg lg:hidden z-50">
-          <div className="grid grid-cols-5 h-16">
-            <button className="flex flex-col items-center justify-center text-gray-600 hover:text-gray-900 transition-colors">
-              <Home className="w-6 h-6 mb-1" />
-              <span className="text-xs font-medium">HOME</span>
-            </button>
-
-            <button className="flex flex-col items-center justify-center text-gray-600 hover:text-gray-900 transition-colors">
-              <User className="w-6 h-6 mb-1" />
-              <span className="text-xs font-medium">ACCOUNT</span>
-            </button>
-
-            <button className="flex flex-col items-center justify-center text-gray-600 hover:text-gray-900 transition-colors">
-              <Heart className="w-6 h-6 mb-1" />
-              <span className="text-xs font-medium">WISHLIST</span>
-            </button>
-
-            <button className="flex flex-col items-center justify-center text-gray-600 hover:text-gray-900 transition-colors relative">
-              <ShoppingCart className="w-6 h-6 mb-1" />
-              <span className="text-xs font-medium">CART</span>
-              <span className="absolute top-1 right-6 bg-gray-900 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-                0
-              </span>
-            </button>
-
-            <button className="flex flex-col items-center justify-center text-gray-600 hover:text-gray-900 transition-colors">
-              <Search className="w-6 h-6 mb-1" />
-              <span className="text-xs font-medium">SEARCH</span>
-            </button>
           </div>
         </div>
       </div>

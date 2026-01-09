@@ -31,7 +31,7 @@ const carpetServices = [
   },
   {
     id: "expert-repairing",
-    title: "Expert Repairing",
+    title: "Expert Repairings",
     description: [
       "Expertise and skill are crucial when it to repairing damaged rugs, guaranteeing a successful restoration. Restoring a rug with minor damage is relatively easier compared to one with extensive damage. Our team of professional rug repair specialists possesses the necessary knowledge and experience to address various types of rug damage.",
     ],
@@ -128,16 +128,16 @@ const ServiceSection = ({
   return (
     <section ref={sectionRef} id={id}>
       <div className="container mx-auto px-4">
-        {/* Index.tsx style heading */}
+        {/* Main section heading - larger */}
         <div className="text-center pt-4 mb-6">
           <Link
             to="#"
-            className="inline-flex items-center text-black uppercase tracking-[0.2em] text-sm md:text-sm lg:text-lg font-medium group"
+            className="inline-flex items-center text-black uppercase tracking-[0.2em] text-base md:text-lg lg:text-xl font-medium group"
           >
             <span className="border-b border-black font-bold pb-1 group-hover:border-b-2 transition-all">
               {sectionTitle}
             </span>
-            <ArrowRight className="ml-3 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            <ArrowRight className="ml-3 w-5 h-5 group-hover:translate-x-1 transition-transform" />
           </Link>
         </div>
 
@@ -170,21 +170,21 @@ const ServiceSection = ({
                   </div>
 
                   <div className="font-serif flex flex-col justify-start">
-                    {/* Heading with Book Now Button */}
+                    {/* Subheading with Book Now Button - smaller sizes */}
                     <div className="flex flex-wrap items-center gap-3 md:gap-4 mb-6">
-                      <h3 className="text-3xl md:text-4xl font-medium text-gray-800 tracking-wider">
+                      <h3 className="text-xl md:text-2xl font-medium text-gray-800 tracking-wider">
                         {service.title}
                       </h3>
                       <a
                         href={`https://wa.me/917982698231?text=Hi, I'm interested in ${encodeURIComponent(service.title)} service. Please provide more details.`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center text-black uppercase tracking-[0.2em] text-sm md:text-base font-medium group"
+                        className="inline-flex items-center text-black uppercase tracking-[0.2em] text-xs font-medium group"
                       >
-                        <span className="border-b border-black font-bold pb-1 group-hover:border-b-2 transition-all">
+                        <span className="border-b border-black font-bold pb-0.5 group-hover:border-b-2 transition-all">
                           Book Now
                         </span>
-                        <ArrowRight className="ml-3 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                        <ArrowRight className="ml-2 w-3 h-3 group-hover:translate-x-1 transition-transform" />
                       </a>
                     </div>
 
