@@ -106,8 +106,8 @@ const Header = () => {
   const desktopTranslateY = isHome ? 150 - 150 * progress : 0; // 150px -> 0px
 
   // Mobile: Scale 1.5 -> 1 AND Shift down -> 0
-  const mobileScale = isHome ? 1.5 - 0.8 * progress : 1;
-  const mobileTranslateY = isHome ? 120 - 120 * progress : 0; // Start 100px down
+  const mobileScale = isHome ? 1.5 - 0.5 * progress : 1; // 1.5 -> 1 (was 0.7, now correctly ends at 1)
+  const mobileTranslateY = isHome ? 120 - 120 * progress : 0; // Start 120px down -> 0
 
   const navLinks = [
     { path: "/", label: "Home" },
@@ -150,15 +150,13 @@ const Header = () => {
           <div className="grid grid-cols-3 items-center h-[55px] lg:h-[70px]">
             {/* LEFT COLUMN */}
             <div className="flex items-center">
-              {/* MOBILE: Phone Icon (WhatsApp) */}
-              <a
-                href="https://wa.me/917982698231"
-                target="_blank"
-                rel="noopener noreferrer"
+              {/* MOBILE: Hamburger Menu (moved from right) */}
+              <button
+                onClick={() => setIsOpen(true)}
                 className={`lg:hidden p-2 -ml-2 focus:outline-none transition-colors duration-300 ${iconColorClass}`}
               >
-                <Phone className="w-5 h-5 stroke-[1.2px]" />
-              </a>
+                <Menu className="w-6 h-6 stroke-[1.2px]" />
+              </button>
 
               {/* DESKTOP: Plus + Contact Text (WhatsApp) */}
               <div className="hidden lg:flex items-center space-x-2">
@@ -185,7 +183,7 @@ const Header = () => {
                     transform: `translateY(${desktopTranslateY}px) scale(${desktopScale})`,
                     transformOrigin: "center top",
                     willChange: "transform, color",
-                    fontSize: "38px", // Base size, scaled up by transform
+                    fontSize: "45px", // Base size, scaled up by transform
                   }}
                 >
                   QALEENKAAR
@@ -207,13 +205,15 @@ const Header = () => {
 
             {/* RIGHT COLUMN */}
             <div className="flex items-center justify-end">
-              {/* MOBILE: Hamburger Menu */}
-              <button
-                onClick={() => setIsOpen(true)}
+              {/* MOBILE: Phone Icon (moved from left) */}
+              <a
+                href="https://wa.me/917982698231"
+                target="_blank"
+                rel="noopener noreferrer"
                 className={`lg:hidden p-2 -mr-2 focus:outline-none transition-colors duration-300 ${iconColorClass}`}
               >
-                <Menu className="w-6 h-6 stroke-[1.2px]" />
-              </button>
+                <Phone className="w-5 h-5 stroke-[1.2px]" />
+              </a>
 
               <div className="hidden lg:flex items-center space-x-8">
                 {/* Desktop User Icon Logic */}
@@ -227,6 +227,7 @@ const Header = () => {
                 >
                   <User className="w-5 h-5 stroke-[1.2px]" />
                 </button>
+                {/* Menu Button */}
                 <button
                   onClick={() => setIsOpen(true)}
                   className="flex items-center space-x-2 group focus:outline-none"
@@ -234,12 +235,20 @@ const Header = () => {
                   <Menu
                     className={`w-6 h-6 stroke-[1.2px] transition-colors duration-300 ${iconColorClass}`}
                   />
+                </button>
+                {/* Contact Button */}
+                {/* <a
+                  href="https://wa.me/917982698231"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center space-x-2 group focus:outline-none"
+                >
                   <span
                     className={`font-serif text-[11px] uppercase tracking-widest font-bold transition-colors duration-300 ${textColorClass}`}
                   >
-                    Menu
+                    Contact
                   </span>
-                </button>
+                </a> */}
               </div>
             </div>
           </div>

@@ -26,6 +26,7 @@ interface Product {
   description: string;
   stock_status: string; // Changed from inStock to match backend
   images: string[]; // Expect an array of image URLs
+  product_type?: string; // Added for dynamic button text (Carpet/Shawl)
 }
 
 const API_BASE =
@@ -139,11 +140,10 @@ const ProductDetailPage: React.FC = () => {
                 <div
                   key={index}
                   onClick={() => setCurrentIndex(index)}
-                  className={`cursor-pointer border-2 rounded overflow-hidden transition-all duration-300 ${
-                    index === currentIndex
+                  className={`cursor-pointer border-2 rounded overflow-hidden transition-all duration-300 ${index === currentIndex
                       ? "border-blue-500 shadow-md scale-105"
                       : "border-gray-300 hover:border-gray-400"
-                  }`}
+                    }`}
                 >
                   <img
                     src={imageSrc}
@@ -185,11 +185,10 @@ const ProductDetailPage: React.FC = () => {
                 {product.images.map((_, index) => (
                   <div
                     key={index}
-                    className={`h-2 rounded-full transition-all ${
-                      index === currentIndex
+                    className={`h-2 rounded-full transition-all ${index === currentIndex
                         ? "w-8 bg-blue-500"
                         : "w-2 bg-gray-300"
-                    }`}
+                      }`}
                   />
                 ))}
               </div>
@@ -250,18 +249,16 @@ const ProductDetailPage: React.FC = () => {
                 </div>
 
                 <div
-                  className={`flex items-center gap-2 ${
-                    product.stock_status === "1"
+                  className={`flex items-center gap-2 ${product.stock_status === "1"
                       ? "text-green-600"
                       : "text-red-600"
-                  }`}
+                    }`}
                 >
                   <div
-                    className={`w-2 h-2 ${
-                      product.stock_status === "1"
+                    className={`w-2 h-2 ${product.stock_status === "1"
                         ? "bg-green-600"
                         : "bg-red-600"
-                    } rounded-full`}
+                      } rounded-full`}
                   ></div>
                   <span className="text-sm font-medium">
                     {product.stock_status === "1" ? "In stock" : "Out of stock"}
@@ -269,17 +266,13 @@ const ProductDetailPage: React.FC = () => {
                 </div>
               </div>
 
-              <button className="w-full bg-gray-900 hover:bg-gray-800 text-white py-3 px-6 rounded-lg transition-colors font-medium mb-3">
-                Contact Us
-              </button>
-
               <a
                 href="https://wa.me/917982698231"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full inline-block text-center border-2 border-gray-300 hover:border-gray-400 text-gray-900 py-3 px-6 rounded-lg transition-colors font-medium"
+                className="w-full inline-block text-center border-2 border-gray-300 hover:border-gray-400 hover:bg-gray-100 text-gray-900 py-3 px-6 rounded-lg transition-colors font-medium"
               >
-                Order Now
+                Book this {product.product_type?.toLowerCase() === 'shawl' ? 'shawl' : 'carpet'}
               </a>
             </div>
           </div>
@@ -315,11 +308,10 @@ const ProductDetailPage: React.FC = () => {
                 {product.images.map((_, index) => (
                   <div
                     key={index}
-                    className={`h-2 rounded-full transition-all ${
-                      index === currentIndex
+                    className={`h-2 rounded-full transition-all ${index === currentIndex
                         ? "w-8 bg-blue-500"
                         : "w-2 bg-gray-300"
-                    }`}
+                      }`}
                   />
                 ))}
               </div>
@@ -331,11 +323,10 @@ const ProductDetailPage: React.FC = () => {
                 <div
                   key={index}
                   onClick={() => setCurrentIndex(index)}
-                  className={`flex-shrink-0 cursor-pointer border-2 rounded overflow-hidden transition-all duration-300 ${
-                    index === currentIndex
+                  className={`flex-shrink-0 cursor-pointer border-2 rounded overflow-hidden transition-all duration-300 ${index === currentIndex
                       ? "border-blue-500 shadow-md"
                       : "border-gray-300"
-                  }`}
+                    }`}
                 >
                   <img
                     src={imageSrc}
@@ -400,18 +391,16 @@ const ProductDetailPage: React.FC = () => {
                 </div>
 
                 <div
-                  className={`flex items-center gap-2 ${
-                    product.stock_status === "1"
+                  className={`flex items-center gap-2 ${product.stock_status === "1"
                       ? "text-green-600"
                       : "text-red-600"
-                  }`}
+                    }`}
                 >
                   <div
-                    className={`w-2 h-2 ${
-                      product.stock_status === "1"
+                    className={`w-2 h-2 ${product.stock_status === "1"
                         ? "bg-green-600"
                         : "bg-red-600"
-                    } rounded-full`}
+                      } rounded-full`}
                   ></div>
                   <span className="text-sm font-medium">
                     {product.stock_status === "1" ? "In stock" : "Out of stock"}
@@ -419,17 +408,13 @@ const ProductDetailPage: React.FC = () => {
                 </div>
               </div>
 
-              <button className="w-full bg-gray-900 hover:bg-gray-800 text-white py-3 px-6 rounded-lg transition-colors font-medium mb-3">
-                Contact Us
-              </button>
-
               <a
                 href="https://wa.me/917982698231"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full inline-block text-center border-2 border-gray-300 hover:border-gray-400 text-gray-900 py-3 px-6 rounded-lg transition-colors font-medium"
+                className="w-full inline-block text-center border-2 border-gray-300 hover:border-gray-400 hover:bg-gray-100 text-gray-900 py-3 px-6 rounded-lg transition-colors font-medium"
               >
-                Order Now
+                Book this {product.product_type?.toLowerCase() === 'shawl' ? 'shawl' : 'carpet'}
               </a>
             </div>
           </div>

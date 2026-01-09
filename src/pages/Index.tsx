@@ -170,21 +170,21 @@ const Index = () => {
   ];
 
   const carpetServices = [
-    { title: "Professional Washing", image: washingImg, linkTo: "/services" },
-    { title: "Expert Repairing", image: repairImg, linkTo: "/services" },
+    { title: "Professional Washing", image: washingImg, linkTo: "/services#professional-washing" },
+    { title: "Expert Repairing", image: repairImg, linkTo: "/services#expert-repairing" },
     {
       title: "Complete Restoration",
       image: restorationImg,
-      linkTo: "/services",
+      linkTo: "/services#complete-restoration",
     },
-    { title: "Wall Hanging Care", image: cleaningImg, linkTo: "/services" },
+    { title: "Wall Hanging Care", image: cleaningImg, linkTo: "/services#carpet" },
   ];
 
   const shawlServices = [
-    { title: "Delicate Shawl Washing", image: washingImg, linkTo: "/services" },
-    { title: "Shawl Restoration", image: restorationImg, linkTo: "/services" },
-    { title: "Premium Dry Cleaning", image: cleaningImg, linkTo: "/services" },
-    { title: "Sell & Exchange", image: exchangeImg, linkTo: "/services" },
+    { title: "Delicate Shawl Washing", image: washingImg, linkTo: "/services#delicate-shawl-washing" },
+    { title: "Shawl Restoration", image: restorationImg, linkTo: "/services#shawl-restoration" },
+    { title: "Premium Dry Cleaning", image: cleaningImg, linkTo: "/services#shawl" },
+    { title: "Sell & Exchange", image: exchangeImg, linkTo: "/services#sell-exchange" },
   ];
 
   const handlePrev = () =>
@@ -206,7 +206,7 @@ const Index = () => {
       )}
 
       {/* --- HERO SECTION --- */}
-      <section className="relative h-[70vh] lg:h-[100vh] w-full flex flex-col justify-end overflow-hidden">
+      <section className="relative h-[80vh] lg:h-[100vh] w-full flex flex-col justify-end overflow-hidden">
         <div className="absolute inset-0 z-0" ref={emblaRef}>
           <div className="flex h-full">
             {carouselSlides.map((slide, index) => (
@@ -241,41 +241,38 @@ const Index = () => {
             OUR CURATED Services
           </h2>
           <div className="flex justify-center mb-8">
-            <div className="inline-flex gap-5 p-1 ">
+            <div className="inline-flex gap-[4px] p-1 ">
               <button
                 onClick={() => setActiveTab("carpet")}
-                className={`px-8 py-3 md:px-16 border border-black font-serif uppercase tracking-[0.2em] text-[11px] md:text-xs transition-all duration-500 ${
-                  activeTab === "carpet"
-                    ? "bg-black text-white"
-                    : "bg-white text-gray-800 hover:text-gray-900"
-                }`}
+                className={`px-8 py-3 md:px-16 border border-black font-serif uppercase tracking-[0.2em] text-[11px] md:text-xs transition-all duration-500 ${activeTab === "carpet"
+                  ? "bg-black text-white"
+                  : "bg-white text-gray-800 hover:text-gray-900"
+                  }`}
               >
                 Carpets
               </button>
               <button
                 onClick={() => setActiveTab("shawl")}
-                className={`px-8 py-3 md:px-16 border border-black font-serif uppercase tracking-[0.2em] text-[11px] md:text-xs transition-all duration-500 ${
-                  activeTab === "shawl"
-                    ? "bg-black text-white"
-                    : "bg-white text-gray-800 hover:text-gray-900"
-                }`}
+                className={`px-8 py-3 md:px-16 border border-black font-serif uppercase tracking-[0.2em] text-[11px] md:text-xs transition-all duration-500 ${activeTab === "shawl"
+                  ? "bg-black text-white"
+                  : "bg-white text-gray-800 hover:text-gray-900"
+                  }`}
               >
                 Shawls
               </button>
             </div>
           </div>
-          <div className="animate-in  fade-in slide-in-from-bottom-4 duration-500 grid grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-10 lg:gap-x-16">
+          <div className="animate-in  fade-in slide-in-from-bottom-4 duration-500 grid grid-cols-2 lg:grid-cols-4 gap-x-[4px] gap-y-10 lg:gap-x-[4px]">
             {(activeTab === "carpet" ? carpetServices : shawlServices).map(
               (service, index) => (
                 <InView key={index} triggerOnce threshold={0.1}>
                   {({ ref, inView }) => (
                     <div
                       ref={ref}
-                      className={`group flex flex-col w-full cursor-pointer transition-all duration-700 ${
-                        inView
-                          ? "opacity-100 translate-y-0"
-                          : "opacity-0 translate-y-8"
-                      }`}
+                      className={`group flex flex-col w-full cursor-pointer transition-all duration-700 ${inView
+                        ? "opacity-100 translate-y-0"
+                        : "opacity-0 translate-y-8"
+                        }`}
                     >
                       {/* Image Container - Clean, Sharp, slight gray bg for loading */}
                       <Link to={service.linkTo} className="block  w-full">
@@ -303,9 +300,9 @@ const Index = () => {
           <div className="text-center mt-8">
             <Link
               to="/services"
-              className="inline-flex items-center text-black uppercase tracking-[0.2em] text-xs md:text-sm lg:text-lg  font-medium group"
+              className="inline-flex items-center text-black uppercase tracking-[0.2em] text-sm md:text-sm lg:text-lg  font-medium group"
             >
-              <span className="border-b border-black pb-1 group-hover:border-b-2 transition-all">
+              <span className="border-b  border-black pb-1 group-hover:border-b-2 transition-all">
                 View All Services
               </span>
               <ArrowRight className="ml-3 w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -314,18 +311,21 @@ const Index = () => {
         </div>
       </section>
 
-      <TrustSection />/
+      <TrustSection />
 
       {/* --- OUR WORK TRANSFORMATION --- */}
       <section className="w-full bg-[#fdfcfd] py-4 md:py-12 overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col items-center">
-          <div className="flex flex-col items-center mb-4 lg:mb-12">
-            <h2 className="text-center font-serif text-xl md:text-5xl lg:text-6xl font-light text-black tracking-[0.2em] uppercase mb-0 lg:mb-4">
-              The Transformation
-            </h2>
-            {/* <p className="text-[10px] md:text-xs tracking-[0.4em] uppercase text-gray-400 font-medium text-center">
-              Restoring Heritage, One Thread at a Time
-            </p> */}
+          <div className="flex flex-col items-center mb-6 lg:mb-12">
+            <Link
+              to="#"
+              className="inline-flex items-center text-black uppercase tracking-[0.2em] text-sm md:text-sm lg:text-lg  font-medium group"
+            >
+              <span className="border-b border-black font-bold pb-1 group-hover:border-b-2 transition-all">
+                Our Work
+              </span>
+              <ArrowRight className="ml-3 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </Link>
           </div>
           <div className="relative flex flex-col items-center w-full max-w-6xl mx-auto">
             <div className="flex items-center px-8 lg:px-0 justify-center w-full gap-2 md:gap-12">
@@ -338,7 +338,7 @@ const Index = () => {
               <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-4 items-end">
                 <div className="relative group">
                   <div className="absolute -top-4 left-4 z-20 bg-white px-3 py-1 shadow-sm">
-                    <span className="text-[9px] uppercase tracking-[0.3em] font-bold text-gray-400">
+                    <span className="text-[12px] uppercase tracking-[0.3em] font-bold text-gray-500">
                       Before
                     </span>
                   </div>
@@ -351,7 +351,7 @@ const Index = () => {
                 </div>
                 <div className="relative group md:-translate-y-8">
                   <div className="absolute -top-3 right-4 z-20 bg-black px-4 py-1 shadow-md">
-                    <span className="text-[9px] uppercase tracking-[0.3em] font-bold text-white">
+                    <span className="text-[12px] uppercase tracking-[0.3em] font-bold text-white">
                       After
                     </span>
                   </div>
@@ -380,11 +380,10 @@ const Index = () => {
                   <button
                     key={index}
                     onClick={() => setCurrentIndex(index)}
-                    className={`h-[2px] transition-all duration-500 ease-in-out ${
-                      index === currentIndex
-                        ? "bg-black w-12"
-                        : "bg-gray-200 w-6 hover:bg-gray-300"
-                    }`}
+                    className={`h-[2px] transition-all duration-500 ease-in-out ${index === currentIndex
+                      ? "bg-black w-12"
+                      : "bg-gray-200 w-6 hover:bg-gray-300"
+                      }`}
                   />
                 ))}
               </div>
@@ -423,9 +422,15 @@ const Index = () => {
       <section className="py-8 md:py-16  overflow-hidden">
         <div className="container mx-auto px-2 sm:px-4">
           <div className="text-center max-w-3xl mx-auto mb-8 animate-fade-in">
-            <h2 className="font-display text-4xl md:text-6xl  mb-6 text-black">
-              Latest Arrivals
-            </h2>
+            <Link
+              to="#"
+              className="inline-flex items-center text-black uppercase tracking-[0.2em] text-sm md:text-sm lg:text-lg  font-medium group"
+            >
+              <span className="border-b border-black font-bold pb-1 group-hover:border-b-2 transition-all">
+                Latest Arrivals
+              </span>
+              <ArrowRight className="ml-3 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </Link>
           </div>
           <div className="relative">
             {isLoadingCollections ? (
@@ -482,9 +487,9 @@ const Index = () => {
           <div className="text-center mt-4 md:mt-16 animate-fade-in">
             <Link
               to="/collection/carpets"
-              className="inline-flex items-center text-black uppercase tracking-[0.2em] text-xs font-medium group"
+              className="inline-flex items-center text-black uppercase tracking-[0.2em] text-sm md:text-sm lg:text-lg  font-medium group"
             >
-              <span className="border-b lg:text-lg border-black pb-1 group-hover:border-b-2 transition-all">
+              <span className="border-b border-black font-bold pb-1 group-hover:border-b-2 transition-all">
                 Explore Collection
               </span>
               <ArrowRight className="ml-3 w-4 h-4 group-hover:translate-x-1 transition-transform" />

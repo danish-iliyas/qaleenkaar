@@ -30,7 +30,7 @@ const ContactForm = () => {
   return (
     <div className="bg-gray-50 p-4 md:p-12">
       <h2 className="font-serif text-2xl md:text-3xl font-normal mb-8 text-black uppercase tracking-widest">
-        Send Us a Message
+        Send Your Requirements
       </h2>
       <form onSubmit={handleSubmit} className="space-y-6">
         <div>

@@ -126,8 +126,8 @@ const MobileBottomNav = () => {
       )}
 
       {/* ================= MAIN BOTTOM NAV ================= */}
-      <nav className="fixed bottom-0 left-0 right-0 h-16 bg-white border-t border-gray-100 shadow-[0_-10px_25px_rgba(0,0,0,0.04)] z-50">
-        <div className="flex justify-around items-center h-full px-2">
+      <nav className="fixed bottom-0 left-0 right-0 h-12 bg-white border-t border-gray-100 shadow-[0_-10px_25px_rgba(0,0,0,0.04)] z-50">
+        <div className="flex justify-around items-center h-full px-1">
           {bottomNavLinks.map((link) => {
             const Icon = link.icon;
             const active = link.path === "/collection"
@@ -153,8 +153,8 @@ const MobileBottomNav = () => {
                   </div>
                 )}
 
-                <Icon className={cn("w-6 h-6 mb-0.5 transition-all duration-500", active && "scale-110")} />
-                <span className="text-[10px] font-bold uppercase tracking-[0.15em]">
+                <Icon className={cn("w-5 h-5 mb-0.5 transition-all duration-500", active && "scale-110")} />
+                <span className="text-[9px] font-bold uppercase tracking-[0.1em]">
                   {link.label}
                 </span>
               </Link>

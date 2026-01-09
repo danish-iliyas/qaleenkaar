@@ -162,15 +162,41 @@ const SellExchangeModal = ({ open, onOpenChange }: SellExchangeModalProps) => {
 
     setIsSubmitting(true);
 
-    // Simulate API call (replace with actual API endpoint)
     try {
-      // Here you would typically send formData to your API
-      await new Promise((resolve) => setTimeout(resolve, 1500));
+      // Create email body with form data
+      const emailBody = `
+SELL & EXCHANGE REQUEST
+========================
 
-      toast.success("Your request has been submitted successfully!", {
-        description: "We will contact you soon regarding your item.",
-        position: "bottom-right",
-        duration: 5000,
+Customer Details:
+-----------------
+Name: ${formData.name}
+Email: ${formData.email}
+Phone: ${formData.contactNumber}
+
+Item Details:
+-------------
+Item Type: ${formData.itemType}
+Size: ${formData.size}
+
+Condition & Description:
+------------------------
+${formData.condition}
+
+Note: ${formData.photos.length} photo(s) attached. Please check your email attachments.
+      `.trim();
+
+      const emailSubject = `Sell & Exchange Request - ${formData.itemType} from ${formData.name}`;
+
+      // Open mailto with form data
+      const mailtoLink = `mailto:Qaleenkaar@gmail.com?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
+
+      // Open email client
+      window.location.href = mailtoLink;
+
+      toast.success("Your request has been sent successfully.", {
+        description: "we will contact you with in 2 ,3 buisness days.",
+        duration: 7000,
       });
 
       resetForm();
@@ -181,6 +207,14 @@ const SellExchangeModal = ({ open, onOpenChange }: SellExchangeModalProps) => {
       setIsSubmitting(false);
     }
   };
+
+  // Example image labels for guidance
+  const imageGuideLabels = [
+    "Full Front View",
+    "Front Zoom In",
+    "Back Zoom In",
+    "Any Damages"
+  ];
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -195,10 +229,32 @@ const SellExchangeModal = ({ open, onOpenChange }: SellExchangeModalProps) => {
         </DialogHeader>
 
         <form onSubmit={handleSubmit} className="space-y-2 mt-4">
-          {/* Photo Upload Section */}
+          {/* Photo Upload Guide */}
           <div className="space-y-2">
             <Label className="font-sans text-xs font-bold text-black uppercase tracking-widest">
-              Photos (3-4 recommended) *
+              Photos Guide - Upload 4 Photos Like This *
+            </Label>
+
+            {/* Example Image Guide */}
+            <div className="grid grid-cols-4 gap-2 mb-3">
+              {imageGuideLabels.map((label, index) => (
+                <div
+                  key={index}
+                  className="aspect-square rounded-lg border-2 border-dashed border-gray-200 bg-gray-50 flex flex-col items-center justify-center p-1"
+                >
+                  <div className="w-8 h-8 mb-1 rounded bg-gray-200 flex items-center justify-center">
+                    <span className="text-gray-400 text-lg font-bold">{index + 1}</span>
+                  </div>
+                  <span className="text-[8px] text-gray-500 uppercase text-center leading-tight font-medium">
+                    {label}
+                  </span>
+                </div>
+              ))}
+            </div>
+
+            {/* Actual Photo Upload Section */}
+            <Label className="font-sans text-[10px] text-gray-600 uppercase tracking-wide">
+              Your Uploaded Photos:
             </Label>
             <div className="grid grid-cols-4 gap-3">
               {photoPreview.map((preview, index) => (
@@ -218,6 +274,9 @@ const SellExchangeModal = ({ open, onOpenChange }: SellExchangeModalProps) => {
                   >
                     <X className="w-4 h-4" />
                   </button>
+                  <div className="absolute bottom-0 left-0 right-0 bg-black/60 text-white text-[8px] text-center py-0.5 uppercase">
+                    {imageGuideLabels[index] || `Photo ${index + 1}`}
+                  </div>
                 </div>
               ))}
               {formData.photos.length < 4 && (
@@ -242,7 +301,7 @@ const SellExchangeModal = ({ open, onOpenChange }: SellExchangeModalProps) => {
               className="hidden"
             />
             <p className="text-[10px] text-gray-400 uppercase tracking-wide">
-              Upload up to 4 photos of your item
+              Upload photos as shown above (will be attached to email)
             </p>
           </div>
 
@@ -268,7 +327,7 @@ const SellExchangeModal = ({ open, onOpenChange }: SellExchangeModalProps) => {
           {/* Size */}
           <div className="space-y-2">
             <Label className="font-sans text-xs font-bold text-black uppercase tracking-widest">
-              Size (e.g., 6x9 ft, 2x3 m) *
+              Size (e.g., 6x9 foot) *
             </Label>
             <Input
               name="size"

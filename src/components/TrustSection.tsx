@@ -13,14 +13,14 @@ const TrustSection = () => {
   ];
 
   const clients = [
-    "EROS GROUP", "FAB INDIA", "DHAMPUR MILLS", "FILM CITY NOIDA", 
+    "EROS GROUP", "FAB INDIA", "DHAMPUR MILLS", "FILM CITY NOIDA",
     "EROS GROUP", "FAB INDIA", "DHAMPUR MILLS", "FILM CITY NOIDA" // Doubled for seamless loop
   ];
 
   return (
-    <section className="py-8 m-4  bg-white overflow-hidden">
-      <div className="container mx-auto px-4">
-        
+    <section className="py-8  bg-white overflow-hidden">
+      <div className="container  px-[4px]">
+
         {/* 1. TRUST SIGNALS (Stats Grid) */}
         {/* <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-20">
           {stats.map((stat, index) => (
@@ -45,32 +45,32 @@ const TrustSection = () => {
         {/* 2. TRUSTED CLIENTS (Horizontal Infinite Scroll) */}
         <div className="relative border-t border-b border-gray-100 ">
           <div className="text-center mb-8 ">
-                      <Link
-                        to="#"
-                        className="inline-flex items-center text-black uppercase tracking-[0.2em] text-xs md:text-sm lg:text-lg  font-medium group"
-                      >
-                        <span className="border-b border-black pb-1 group-hover:border-b-2 transition-all">
-                         Trusted By Leading Brands
-                        </span>
-                        <ArrowRight className="ml-3 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                      </Link>
-                    </div>
+            <Link
+              to="#"
+              className="inline-flex items-center text-black uppercase tracking-[0.2em] text-xs md:text-sm lg:text-lg  font-medium group"
+            >
+              <span className="border-b border-black pb-1 font-bold text-black group-hover:border-b-2 transition-all">
+                Trusted by reputed customers
+              </span>
+              <ArrowRight className="ml-3 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </Link>
+          </div>
 
           {/* Scrolling Container */}
           <div className="flex overflow-hidden group">
-            <motion.div 
+            <motion.div
               className="flex whitespace-nowrap"
               animate={{ x: ["0%", "-50%"] }}
-              transition={{ 
-                repeat: Infinity, 
-                ease: "linear", 
-                duration: 25 
+              transition={{
+                repeat: Infinity,
+                ease: "linear",
+                duration: 25
               }}
             >
               {clients.map((client, index) => (
-                <span 
-                  key={index} 
-                  className="inline-block mx-12 text-sm md:text-lg font-serif text-gray-800 tracking-[0.2em] grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all"
+                <span
+                  key={index}
+                  className="inline-block mx-[10px] text-sm md:text-lg font-serif text-gray-800 tracking-[0.2em] grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all"
                 >
                   {client}
                 </span>

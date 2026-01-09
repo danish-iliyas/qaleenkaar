@@ -5,8 +5,8 @@ import { Phone, Mail, MapPin } from "lucide-react";
 import heroImage from "@/assets/hero-carpet.jpg";
 
 const Contact = () => {
-  const whatsappNumber = "+911234567890";
-  const email = "info@loomtales.com";
+  const whatsappNumber = "+917982698231";
+  const email = "Qaleenkaar@gmail.com";
 
   return (
     <div className="bg-background">
@@ -67,7 +67,7 @@ const Contact = () => {
                       href={`tel:${whatsappNumber}`}
                       className="font-sans text-sm text-gray-600 hover:text-black transition-colors border-b border-transparent hover:border-black pb-0.5"
                     >
-                      +91 123 456 7890
+                      +91 987 193 0986
                     </a>
                   </div>
                 </div>
@@ -102,7 +102,7 @@ const Contact = () => {
                     <p className="font-sans text-sm text-gray-600 leading-relaxed uppercase tracking-wide">
                       123 Heritage Lane, Crafts District
                       <br />
-                      Jaipur, Rajasthan 302001
+                      New Delhi, Delhi 110001
                     </p>
                   </div>
                 </div>

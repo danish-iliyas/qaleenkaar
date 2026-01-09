@@ -13,8 +13,8 @@ import SellExchangeModal from "@/components/SellExchangeModal";
 
 const Footer = () => {
   const [isSellExchangeOpen, setIsSellExchangeOpen] = useState(false);
-  const whatsappNumber = "+911234567890";
-  const email = "info@loomtales.com";
+  const whatsappNumber = "+917982698231";
+  const email = "Qaleenkaar@gmail.com";
   // 6d44a6
 
   return (
@@ -24,7 +24,7 @@ const Footer = () => {
           {/* Brand */}
           <div className="space-y-6">
             <h3 className="font-serif text-2xl font-bold uppercase tracking-widest">
-              Loom Tales
+              Qaleenkaar
             </h3>
             <p className="font-sans text-xs text-gray-400 leading-relaxed uppercase tracking-wider max-w-xs">
               Where art meets care. Expert carpet and shawl care services
@@ -97,7 +97,7 @@ const Footer = () => {
                 rel="noopener noreferrer"
               >
                 <Phone className="w-4 h-4" />
-                <span>+91 123 456 7890</span>
+                <span>+91 987 193 0986</span>
               </a>
               <a
                 href={`mailto:${email}`}

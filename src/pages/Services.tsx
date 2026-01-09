@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
-import { useLocation } from "react-router-dom";
-
+import { Link, useLocation } from "react-router-dom";
+import { ArrowRight } from "lucide-react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import washingImg from "@/assets/service-washing.jpg";
@@ -12,6 +12,7 @@ import processImage from "../assets/sales-service.jpg";
 
 const carpetServices = [
   {
+    id: "professional-washing",
     title: "Professional Washing",
     description: [
       "Proper rug cleaning is vital for preserving the appearance and longevity of your precious rugs. The frequency of deep cleaning depends on factors like rug type, foot traffic, and the presence of pets or allergens. Generally, it's best to schedule a deep clean every 12 to 18 months.",
@@ -29,6 +30,7 @@ const carpetServices = [
     layout: "video-left",
   },
   {
+    id: "expert-repairing",
     title: "Expert Repairing",
     description: [
       "Expertise and skill are crucial when it to repairing damaged rugs, guaranteeing a successful restoration. Restoring a rug with minor damage is relatively easier compared to one with extensive damage. Our team of professional rug repair specialists possesses the necessary knowledge and experience to address various types of rug damage.",
@@ -44,6 +46,7 @@ const carpetServices = [
     layout: "video-right",
   },
   {
+    id: "complete-restoration",
     title: "Complete Restoration",
     description: [
       "It's always better to restore than replace. Our finest technicians will ensure your old rug matches your new interior. We bring vintage and antique carpets back to their former glory with our comprehensive service.",
@@ -60,6 +63,7 @@ const carpetServices = [
 
 const shawlServices = [
   {
+    id: "delicate-shawl-washing",
     title: "Delicate Shawl Washing",
     description: [
       "Specialized hand-washing for precious Pashmina and Kashmiri shawls, using gentle techniques that preserve the delicate fibers and intricate embroidery of your treasured items.",
@@ -74,6 +78,7 @@ const shawlServices = [
     layout: "video-left",
   },
   {
+    id: "shawl-restoration",
     title: "Shawl Restoration",
     description: [
       "Expert restoration of vintage and heirloom shawls. Our artisans meticulously repair tears, re-weave holes, and revive faded colors using authentic materials and time-honored methods.",
@@ -91,6 +96,7 @@ const shawlServices = [
 
 const otherServices = [
   {
+    id: "sell-exchange",
     title: "Sell & Exchange Program",
     description: [
       "Upgrade your collection with our exclusive sell and exchange program. We offer fair valuations for your quality pieces, allowing you to trade them for a new treasure from our curated collection.",
@@ -122,28 +128,36 @@ const ServiceSection = ({
   return (
     <section ref={sectionRef} id={id}>
       <div className="container mx-auto px-4">
-        <h2 className="text-4xl md:text-5xl font-serif text-black tracking-wider mb-16 text-center pt-16 uppercase">
-          {sectionTitle}
-        </h2>
+        {/* Index.tsx style heading */}
+        <div className="text-center pt-4 mb-6">
+          <Link
+            to="#"
+            className="inline-flex items-center text-black uppercase tracking-[0.2em] text-sm md:text-sm lg:text-lg font-medium group"
+          >
+            <span className="border-b border-black font-bold pb-1 group-hover:border-b-2 transition-all">
+              {sectionTitle}
+            </span>
+            <ArrowRight className="ml-3 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+          </Link>
+        </div>
 
         <div className="space-y-0">
           {services.map((service, index) => (
             <div
               key={index}
-              className={`py-16 ${
-                index % 2 === 0
-                  ? "bg-gradient-to-b from-secondary/30 to-background"
-                  : "bg-white"
-              }`}
+              id={service.id}
+              className={`py-16 scroll-mt-20 ${index % 2 === 0
+                ? "bg-gradient-to-b from-secondary/30 to-background"
+                : "bg-white"
+                }`}
             >
               <div className="container mx-auto px-4">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start w-full">
                   <div
-                    className={`${
-                      index % 2 === 1 ? "lg:order-last" : ""
-                    } flex items-center justify-center`}
+                    className={`${index % 2 === 1 ? "lg:order-last" : ""
+                      } flex items-center justify-center`}
                   >
-                    <div className="rounded-lg w-full h-[24rem] overflow-hidden shadow-lg border border-black/5">
+                    <div className="rounded-lg w-full h-[16rem] lg:h-[20rem] overflow-hidden shadow-lg border border-black/5">
                       <iframe
                         src={`${service.videoSrc}?autoplay=1&mute=1&loop=1&controls=1&showinfo=0`}
                         title={service.title}
@@ -156,9 +170,23 @@ const ServiceSection = ({
                   </div>
 
                   <div className="font-serif flex flex-col justify-start">
-                    <h3 className="text-3xl md:text-4xl font-medium text-gray-800 tracking-wider mb-6">
-                      {service.title}
-                    </h3>
+                    {/* Heading with Book Now Button */}
+                    <div className="flex flex-wrap items-center gap-3 md:gap-4 mb-6">
+                      <h3 className="text-3xl md:text-4xl font-medium text-gray-800 tracking-wider">
+                        {service.title}
+                      </h3>
+                      <a
+                        href={`https://wa.me/917982698231?text=Hi, I'm interested in ${encodeURIComponent(service.title)} service. Please provide more details.`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center text-black uppercase tracking-[0.2em] text-sm md:text-base font-medium group"
+                      >
+                        <span className="border-b border-black font-bold pb-1 group-hover:border-b-2 transition-all">
+                          Book Now
+                        </span>
+                        <ArrowRight className="ml-3 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                      </a>
+                    </div>
 
                     {service.description.map((text: string, i: number) => (
                       <p
@@ -169,7 +197,7 @@ const ServiceSection = ({
                       </p>
                     ))}
 
-                    <ul className="list-disc list-inside space-y-2 mt-6 text-base text-gray-600">
+                    <ul className="list-disc list-inside space-y-2 mt-4 text-base text-gray-600">
                       {service.bulletPoints.map((point: string, i: number) => (
                         <li key={i}>{point}</li>
                       ))}
@@ -192,12 +220,15 @@ const Services = () => {
   const { hash } = useLocation();
 
   useEffect(() => {
-    if (hash === "#carpet" && carpetRef.current) {
-      carpetRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
-    } else if (hash === "#shawl" && shawlRef.current) {
-      shawlRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
-    } else if (hash === "#other" && otherRef.current) {
-      otherRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    // Handle hash navigation after page loads
+    if (hash) {
+      // Small delay to ensure DOM is ready
+      setTimeout(() => {
+        const element = document.querySelector(hash);
+        if (element) {
+          element.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      }, 100);
     }
   }, [hash]);
 
@@ -238,7 +269,7 @@ const Services = () => {
       />
 
       {/* Our Advantages Section - White */}
-      <section className="py-16 bg-white border-t border-black/5">
+      <section className="py-4 bg-white border-t border-black/5">
         <div className="container mx-auto px-4">
           <div className="flex flex-col lg:flex-row items-center justify-between gap-12">
             <h2 className="text-3xl md:text-4xl font-serif font-medium text-gray-800 tracking-wider whitespace-nowrap">
