@@ -267,7 +267,7 @@ const ProductDetailPage: React.FC = () => {
               </div>
 
               <a
-                href="https://wa.me/917982698231"
+                href={`https://wa.me/917982698231?text=${encodeURIComponent(`Hi, I'm interested in ${product.name} (Ref: ${product.ref_number}). Please provide more details.`)}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full inline-block text-center bg-gray-200 border-2 border-gray-300 hover:bg-gray-300 hover:border-gray-400 text-gray-900 py-3 px-6 rounded-lg transition-colors font-medium"
@@ -409,7 +409,7 @@ const ProductDetailPage: React.FC = () => {
               </div>
 
               <a
-                href="https://wa.me/917982698231"
+                href={`https://wa.me/917982698231?text=${encodeURIComponent(`Hi, I'm interested in ${product.name} (Ref: ${product.ref_number}). Please provide more details.`)}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full inline-block text-center bg-gray-300 border-2 border-gray-300 hover:bg-gray-300 hover:border-gray-400 text-gray-900 py-3 px-6 rounded-lg transition-colors font-medium"
