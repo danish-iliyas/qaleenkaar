@@ -270,7 +270,7 @@ const ProductDetailPage: React.FC = () => {
                 href="https://wa.me/917982698231"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full inline-block text-center bg-gray-100 border-2 border-gray-200 hover:bg-gray-200 hover:border-gray-300 text-gray-900 py-3 px-6 rounded-lg transition-colors font-medium"
+                className="w-full inline-block text-center bg-gray-200 border-2 border-gray-300 hover:bg-gray-300 hover:border-gray-400 text-gray-900 py-3 px-6 rounded-lg transition-colors font-medium"
               >
                 Book this {product.product_type?.toLowerCase() === 'shawl' ? 'shawl' : 'carpet'}
               </a>
@@ -412,7 +412,7 @@ const ProductDetailPage: React.FC = () => {
                 href="https://wa.me/917982698231"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full inline-block text-center bg-gray-100 border-2 border-gray-200 hover:bg-gray-200 hover:border-gray-300 text-gray-900 py-3 px-6 rounded-lg transition-colors font-medium"
+                className="w-full inline-block text-center bg-gray-300 border-2 border-gray-300 hover:bg-gray-300 hover:border-gray-400 text-gray-900 py-3 px-6 rounded-lg transition-colors font-medium"
               >
                 Book this {product.product_type?.toLowerCase() === 'shawl' ? 'shawl' : 'carpet'}
               </a>

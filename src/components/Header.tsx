@@ -106,8 +106,8 @@ const Header = () => {
   const desktopTranslateY = isHome ? 150 - 150 * progress : 0; // 150px -> 0px
 
   // Mobile: Scale 1.5 -> 1 AND Shift down -> 0
-  const mobileScale = isHome ? 1.5 - 0.5 * progress : 1; // 1.5 -> 1 (was 0.7, now correctly ends at 1)
-  const mobileTranslateY = isHome ? 120 - 120 * progress : 0; // Start 120px down -> 0
+  const mobileScale = isHome ? 1.5 - 0.5 * progress : 1; // 1.5 -> 1
+  const mobileTranslateY = isHome ? 120 - 120 * progress : 0; // Start 180px down -> 0 (more elongated)
 
   const navLinks = [
     { path: "/", label: "Home" },
@@ -195,7 +195,7 @@ const Header = () => {
                     transform: `translateY(${mobileTranslateY}px) scale(${mobileScale})`,
                     transformOrigin: "center center",
                     willChange: "transform, color",
-                    fontSize: "24px",
+                    fontSize: "26px",
                   }}
                 >
                   QALEENKAAR

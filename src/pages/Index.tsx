@@ -145,6 +145,14 @@ const Index = () => {
     });
   };
 
+  // --- AUTO-SCROLL for Our Work section (5 seconds) ---
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => (prev === workItems.length - 1 ? 0 : prev + 1));
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
+
   // --- CAROUSEL SETTINGS ---
   const [emblaRef] = useEmblaCarousel({ loop: true }, [
     Autoplay({ delay: 3000, stopOnInteraction: false }),
@@ -227,7 +235,7 @@ const Index = () => {
             className="inline-flex items-center border lg:py-4 py-2 px-4  border-white text-white uppercase tracking-[0.2em] text-xs lg:text-sm font-medium group"
           >
             <span className=" group-hover:border-b-2 transition-all">
-             Get Free Quote
+              Get Free Quote
             </span>
             <ArrowRight className="ml-3 w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </Link>

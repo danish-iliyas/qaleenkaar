@@ -170,23 +170,22 @@ const ServiceSection = ({
                   </div>
 
                   <div className="font-serif flex flex-col justify-start">
-                    {/* Subheading with Book Now Button - smaller sizes */}
-                    <div className="flex flex-wrap items-center gap-3 md:gap-4 mb-6">
-                      <h3 className="text-xl md:text-2xl font-medium text-gray-800 tracking-wider">
-                        {service.title}
-                      </h3>
-                      <a
-                        href={`https://wa.me/917982698231?text=Hi, I'm interested in ${encodeURIComponent(service.title)} service. Please provide more details.`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center text-black uppercase tracking-[0.2em] text-xs font-medium group"
-                      >
-                        <span className="border-b border-black font-bold pb-0.5 group-hover:border-b-2 transition-all">
-                          Book Now
-                        </span>
-                        <ArrowRight className="ml-2 w-3 h-3 group-hover:translate-x-1 transition-transform" />
-                      </a>
-                    </div>
+                    {/* Subheading */}
+                    <h3 className="text-xl md:text-2xl font-medium text-gray-800 tracking-wider mb-2">
+                      {service.title}
+                    </h3>
+                    {/* Book Now Button - always below subheading */}
+                    <a
+                      href={`https://wa.me/917982698231?text=Hi, I'm interested in ${encodeURIComponent(service.title)} service. Please provide more details.`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center text-black uppercase tracking-[0.2em] text-xs font-medium group mb-4"
+                    >
+                      <span className="border-b border-black font-bold pb-0.5 group-hover:border-b-2 transition-all">
+                        Book Now
+                      </span>
+                      <ArrowRight className="ml-2 w-3 h-3 group-hover:translate-x-1 transition-transform" />
+                    </a>
 
                     {service.description.map((text: string, i: number) => (
                       <p
