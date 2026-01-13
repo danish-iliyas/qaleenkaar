@@ -249,7 +249,7 @@ const Index = () => {
             OUR CURATED Services
           </h2>
           <div className="flex justify-center mb-8">
-            <div className="inline-flex gap-[4px] p-1 ">
+            <div className="inline-flex gap-[6px] p-1 ">
               <button
                 onClick={() => setActiveTab("carpet")}
                 className={`px-8 py-3 md:px-16 border border-black font-serif uppercase tracking-[0.2em] text-[11px] md:text-xs transition-all duration-500 ${activeTab === "carpet"
@@ -270,7 +270,7 @@ const Index = () => {
               </button>
             </div>
           </div>
-          <div className="animate-in  fade-in slide-in-from-bottom-4 duration-500 grid grid-cols-2 lg:grid-cols-4 gap-x-[4px] gap-y-10 lg:gap-x-[4px]">
+          <div className="animate-in  fade-in slide-in-from-bottom-4 duration-500 grid grid-cols-2 lg:grid-cols-4 gap-x-[6px] gap-y-10 lg:gap-x-[4px]">
             {(activeTab === "carpet" ? carpetServices : shawlServices).map(
               (service, index) => (
                 <InView key={index} triggerOnce threshold={0.1}>
@@ -437,7 +437,7 @@ const Index = () => {
               <span className="border-b border-black font-bold pb-1 group-hover:border-b-2 transition-all">
                 Latest Arrivals
               </span>
-              <ArrowRight className="ml-3 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              {/* <ArrowRight className="ml-3 w-4 h-4 group-hover:translate-x-1 transition-transform" /> */}
             </Link>
           </div>
           <div className="relative">

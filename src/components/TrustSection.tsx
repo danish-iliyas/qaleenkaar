@@ -18,7 +18,7 @@ const TrustSection = () => {
   ];
 
   return (
-    <section className="py-8  bg-white overflow-hidden">
+    <section className="py-8  bg-grey-100 overflow-hidden">
       <div className="container  px-[4px]">
 
         {/* 1. TRUST SIGNALS (Stats Grid) */}
@@ -43,7 +43,7 @@ const TrustSection = () => {
         </div> */}
 
         {/* 2. TRUSTED CLIENTS (Horizontal Infinite Scroll) */}
-        <div className="relative border-t border-b border-gray-100 ">
+        <div className="relative border-t border-b bg-grey-100 border-gray-100 ">
           <div className="text-center mb-8 ">
             <Link
               to="#"
@@ -52,7 +52,7 @@ const TrustSection = () => {
               <span className="border-b border-black pb-1 font-bold text-black group-hover:border-b-2 transition-all">
                 Trusted by reputed customers
               </span>
-              <ArrowRight className="ml-3 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              {/* <ArrowRight className="ml-3 w-4 h-4 group-hover:translate-x-1 transition-transform" /> */}
             </Link>
           </div>
 

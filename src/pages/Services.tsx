@@ -137,7 +137,7 @@ const ServiceSection = ({
             <span className="border-b border-black font-bold pb-1 group-hover:border-b-2 transition-all">
               {sectionTitle}
             </span>
-            <ArrowRight className="ml-3 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            {/* <ArrowRight className="ml-3 w-5 h-5 group-hover:translate-x-1 transition-transform" /> */}
           </Link>
         </div>
 
