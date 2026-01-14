@@ -18,8 +18,8 @@ const TrustSection = () => {
   ];
 
   return (
-    <section className="py-8  bg-grey-100 overflow-hidden">
-      <div className="container  px-[4px]">
+    <section className="py-8 bg-gray-100 overflow-hidden">
+      <div className="container bg-gray-100 px-[4px]">
 
         {/* 1. TRUST SIGNALS (Stats Grid) */}
         {/* <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-20">
@@ -43,11 +43,11 @@ const TrustSection = () => {
         </div> */}
 
         {/* 2. TRUSTED CLIENTS (Horizontal Infinite Scroll) */}
-        <div className="relative border-t border-b bg-grey-100 border-gray-100 ">
-          <div className="text-center mb-8 ">
+        <div className="relative border-t border-b bg-gray-200 border-gray-100">
+          <div className="text-center bg-gray-100 mb-8">
             <Link
               to="#"
-              className="inline-flex items-center text-black uppercase tracking-[0.2em] text-xs md:text-sm lg:text-lg  font-medium group"
+              className="inline-flex items-center text-black uppercase tracking-[0.1em] text-xs md:text-sm lg:text-lg font-medium group"
             >
               <span className="border-b border-black pb-1 font-bold text-black group-hover:border-b-2 transition-all">
                 Trusted by reputed customers
@@ -78,9 +78,9 @@ const TrustSection = () => {
             </motion.div>
           </div>
 
-          {/* Fading Edges for that "Beautiful Animation" look */}
-          <div className="absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-white to-transparent z-10" />
-          <div className="absolute inset-y-0 right-0 w-20 bg-gradient-to-l from-white to-transparent z-10" />
+          {/* Fading Edges - using gray-100 to match background */}
+          <div className="absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-gray-100 to-transparent z-10" />
+          <div className="absolute inset-y-0 right-0 w-20 bg-gradient-to-l from-gray-100 to-transparent z-10" />
         </div>
 
       </div>
