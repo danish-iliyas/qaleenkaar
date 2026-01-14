@@ -333,7 +333,7 @@ const Index = () => {
               <span className="border-b border-black font-bold pb-1 group-hover:border-b-2 transition-all">
                 Our Work
               </span>
-              <ArrowRight className="ml-3 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              {/* <ArrowRight className="ml-3 w-4 h-4 group-hover:translate-x-1 transition-transform" /> */}
             </Link>
           </div>
           <div className="relative flex flex-col items-center w-full max-w-6xl mx-auto">
