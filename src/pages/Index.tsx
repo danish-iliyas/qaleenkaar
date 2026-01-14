@@ -98,6 +98,7 @@ const Index = () => {
   const [installPrompt, setInstallPrompt] = useState(null);
   const [showPrompt, setShowPrompt] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [collectionDropdownOpen, setCollectionDropdownOpen] = useState(false);
 
   // --- API LOGIC: Latest 4 from each ---
   useEffect(() => {
@@ -185,7 +186,7 @@ const Index = () => {
       image: restorationImg,
       linkTo: "/services#complete-restoration",
     },
-    { title: "Wall Hanging Care", image: cleaningImg, linkTo: "/services#carpet" },
+    { title: "Wall Hanging Care", image: cleaningImg, linkTo: "/services#wall-hanging-care" },
   ];
 
   const shawlServices = [
@@ -427,7 +428,7 @@ const Index = () => {
       </section>
 
       {/* --- DYNAMIC COLLECTIONS CAROUSEL --- */}
-      <section className="py-8 md:py-16  overflow-hidden">
+      <section className="py-8 md:py-16  relative z-30">
         <div className="container mx-auto px-2 sm:px-4">
           <div className="text-center max-w-3xl mx-auto mb-8 animate-fade-in">
             <Link
@@ -492,16 +493,50 @@ const Index = () => {
               </Slider>
             )}
           </div>
-          <div className="text-center mt-4 md:mt-16 animate-fade-in">
-            <Link
-              to="/collection/carpets"
-              className="inline-flex items-center text-black uppercase tracking-[0.2em] text-sm md:text-sm lg:text-lg  font-medium group"
-            >
-              <span className="border-b border-black font-bold pb-1 group-hover:border-b-2 transition-all">
-                Explore Collection
-              </span>
-              <ArrowRight className="ml-3 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </Link>
+          <div className="text-center mt-4 md:mt-16 animate-fade-in relative z-[100]">
+            <div className="inline-block relative">
+              <button
+                onClick={() => setCollectionDropdownOpen(!collectionDropdownOpen)}
+                className="inline-flex items-center text-black uppercase tracking-[0.2em] text-sm md:text-sm lg:text-lg font-medium group"
+              >
+                <span className="border-b border-black font-bold pb-1 group-hover:border-b-2 transition-all">
+                  Explore Collection
+                </span>
+                <ChevronRight className={`ml-3 w-4 h-4 transition-transform duration-300 ${collectionDropdownOpen ? 'rotate-90' : ''}`} />
+              </button>
+              {/* Elegant Dropdown Menu */}
+              {collectionDropdownOpen && (
+                <>
+                  {/* Backdrop to close dropdown when clicking outside */}
+                  <div
+                    className="fixed inset-0 z-[99]"
+                    onClick={() => setCollectionDropdownOpen(false)}
+                  />
+                  <div className="absolute left-1/2 -translate-x-1/2 top-full mt-3 z-[100]">
+                    {/* Arrow pointer */}
+                    <div className="absolute -top-[6px] left-1/2 -translate-x-1/2 w-3 h-3 bg-black rotate-45" />
+                    <div className="bg-black text-white min-w-[200px] overflow-hidden shadow-2xl">
+                      <Link
+                        to="/collection/carpets"
+                        className="flex items-center justify-between px-6 py-4 text-[11px] font-medium uppercase tracking-[0.2em] hover:bg-white hover:text-black transition-all duration-300 border-b border-white/10"
+                        onClick={() => setCollectionDropdownOpen(false)}
+                      >
+                        <span>Carpets</span>
+                        <ArrowRight className="w-3 h-3" />
+                      </Link>
+                      <Link
+                        to="/collection/shawls"
+                        className="flex items-center justify-between px-6 py-4 text-[11px] font-medium uppercase tracking-[0.2em] hover:bg-white hover:text-black transition-all duration-300"
+                        onClick={() => setCollectionDropdownOpen(false)}
+                      >
+                        <span>Shawls</span>
+                        <ArrowRight className="w-3 h-3" />
+                      </Link>
+                    </div>
+                  </div>
+                </>
+              )}
+            </div>
           </div>
         </div>
       </section>

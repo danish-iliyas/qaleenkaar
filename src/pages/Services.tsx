@@ -60,6 +60,21 @@ const carpetServices = [
     videoSrc: "https://www.youtube.com/embed/zThfR7ecetw",
     layout: "video-left",
   },
+  {
+    id: "wall-hanging-care",
+    title: "Wall Hanging Care",
+    description: [
+      "Specialized care and maintenance for your precious wall hangings and tapestries. Our expert team ensures your decorative pieces remain vibrant and well-preserved for years to come.",
+    ],
+    bulletPoints: [
+      "Dust and debris removal",
+      "Gentle spot cleaning",
+      "Color preservation treatment",
+      "Proper mounting guidance",
+    ],
+    videoSrc: "https://www.youtube.com/embed/rslXOypyNx0",
+    layout: "video-right",
+  },
 ];
 
 const shawlServices = [
@@ -137,7 +152,7 @@ const ServiceSection = ({
             to="#"
             className="inline-flex items-center text-black uppercase tracking-[0.2em] text-base md:text-lg lg:text-xl font-medium group"
           >
-            <span className="border-b border-black font-bold pb-1 group-hover:border-b-2 transition-all">
+            <span className="border-b md:text-4xl border-black font-bold pb-1 group-hover:border-b-2 transition-all">
               {sectionTitle}
             </span>
             {/* <ArrowRight className="ml-3 w-5 h-5 group-hover:translate-x-1 transition-transform" /> */}
