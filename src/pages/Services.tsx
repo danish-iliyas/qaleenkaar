@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import SellExchangeModal from "../components/SellExchangeModal";
 import washingImg from "@/assets/service-washing.jpg";
 import repairImg from "@/assets/service-repair.jpg";
 import restorationImg from "@/assets/service-restoration.jpg";
@@ -118,12 +119,14 @@ const ServiceSection = ({
   bgColor,
   sectionRef,
   id,
+  onBookNow,
 }: {
   services: any[];
   sectionTitle: string;
   bgColor: string;
   sectionRef: React.RefObject<HTMLElement>;
   id: string;
+  onBookNow?: (serviceId: string) => void;
 }) => {
   return (
     <section ref={sectionRef} id={id}>
@@ -175,17 +178,29 @@ const ServiceSection = ({
                       {service.title}
                     </h3>
                     {/* Book Now Button - always below subheading */}
-                    <a
-                      href={`https://wa.me/917982698231?text=Hi, I'm interested in ${encodeURIComponent(service.title)} service. Please provide more details.`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center text-black uppercase tracking-[0.2em] text-xs font-medium group mb-4"
-                    >
-                      <span className="border-b border-black font-bold pb-0.5 group-hover:border-b-2 transition-all">
-                        Book Now
-                      </span>
-                      <ArrowRight className="ml-2 w-3 h-3 group-hover:translate-x-1 transition-transform" />
-                    </a>
+                    {service.id === "sell-exchange" && onBookNow ? (
+                      <button
+                        onClick={() => onBookNow(service.id)}
+                        className="inline-flex items-center text-black uppercase tracking-[0.2em] text-xs font-medium group mb-4"
+                      >
+                        <span className="border-b border-black font-bold pb-0.5 group-hover:border-b-2 transition-all">
+                          Book Now
+                        </span>
+                        <ArrowRight className="ml-2 w-3 h-3 group-hover:translate-x-1 transition-transform" />
+                      </button>
+                    ) : (
+                      <a
+                        href={`https://wa.me/917982698231?text=Hi, I'm interested in ${encodeURIComponent(service.title)} service. Please provide more details.`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center text-black uppercase tracking-[0.2em] text-xs font-medium group mb-4"
+                      >
+                        <span className="border-b border-black font-bold pb-0.5 group-hover:border-b-2 transition-all">
+                          Book Now
+                        </span>
+                        <ArrowRight className="ml-2 w-3 h-3 group-hover:translate-x-1 transition-transform" />
+                      </a>
+                    )}
 
                     {service.description.map((text: string, i: number) => (
                       <p
@@ -217,6 +232,7 @@ const Services = () => {
   const shawlRef = useRef<HTMLDivElement>(null);
   const otherRef = useRef<HTMLDivElement>(null);
   const { hash } = useLocation();
+  const [sellExchangeModalOpen, setSellExchangeModalOpen] = useState(false);
 
   useEffect(() => {
     // Handle hash navigation after page loads
@@ -230,6 +246,12 @@ const Services = () => {
       }, 100);
     }
   }, [hash]);
+
+  const handleBookNow = (serviceId: string) => {
+    if (serviceId === "sell-exchange") {
+      setSellExchangeModalOpen(true);
+    }
+  };
 
   return (
     <div className="bg-white">
@@ -265,6 +287,13 @@ const Services = () => {
         bgColor="bg-amber-5Other"
         sectionRef={otherRef}
         id="other"
+        onBookNow={handleBookNow}
+      />
+
+      {/* Sell & Exchange Modal */}
+      <SellExchangeModal
+        open={sellExchangeModalOpen}
+        onOpenChange={setSellExchangeModalOpen}
       />
 
       {/* Our Advantages Section - White */}
