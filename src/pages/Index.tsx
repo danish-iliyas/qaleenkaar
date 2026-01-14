@@ -192,7 +192,7 @@ const Index = () => {
   const shawlServices = [
     { title: "Delicate Shawl Washing", image: washingImg, linkTo: "/services#delicate-shawl-washing" },
     { title: "Shawl Restoration", image: restorationImg, linkTo: "/services#shawl-restoration" },
-    { title: "Premium Dry Cleaning", image: cleaningImg, linkTo: "/services#shawl" },
+    { title: "Premium Dry Cleaning", image: cleaningImg, linkTo: "/services#premium-dry-cleaning" },
     { title: "Sell & Exchange", image: exchangeImg, linkTo: "/services#sell-exchange" },
   ];
 

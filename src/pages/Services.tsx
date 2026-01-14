@@ -108,6 +108,21 @@ const shawlServices = [
     videoSrc: "https://www.youtube.com/embed/NnhLLxUr9zE",
     layout: "video-right",
   },
+  {
+    id: "premium-dry-cleaning",
+    title: "Premium Dry Cleaning",
+    description: [
+      "Our premium dry cleaning service uses eco-friendly solvents and advanced techniques to safely clean your delicate shawls without water damage. Perfect for heavily embroidered or embellished pieces that require extra care.",
+    ],
+    bulletPoints: [
+      "Eco-friendly solvents",
+      "Safe for embroidery & embellishments",
+      "Odor removal treatment",
+      "Professional pressing & finishing",
+    ],
+    videoSrc: "https://www.youtube.com/embed/NP_jXK0Kk9k",
+    layout: "video-left",
+  },
 ];
 
 const otherServices = [
