@@ -77,7 +77,7 @@ const MobileBottomNav = () => {
           "
         >
           {/* Title from Screenshot */}
-          <div className="px-3 pt-3 pb-1.5 text-center">
+          <div className="px-3 pt-3 pb-1 text-center">
             <p className="text-[11px] font-bold uppercase tracking-widest text-gray-400">
               Our Collection
             </p>

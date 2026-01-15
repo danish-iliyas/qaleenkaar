@@ -285,7 +285,7 @@ const Index = () => {
                     >
                       {/* Image Container - Clean, Sharp, slight gray bg for loading */}
                       <Link to={service.linkTo} className="block  w-full">
-                        <div className="relative w-full w-40 aspect-[4/5] overflow-hidden bg-[#f5f5f5] mb-4">
+                        <div className="relative w-full aspect-[4/5] overflow-hidden bg-[#f5f5f5] mb-4">
                           <img
                             src={service.image}
                             alt={service.title}
