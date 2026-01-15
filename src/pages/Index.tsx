@@ -245,7 +245,7 @@ const Index = () => {
 
       {/* --- CURATED SERVICES (DUAL CARE TABS) --- */}
       <section className="py-8 pb-4 md:py-8 bg-white">
-        <div className="container mx-auto px-2 sm:px-4 text-center">
+        <div className="container mx-auto px-4 sm:px-8 lg:px-16 text-center">
           <h2 className="font-serif text-2xl md:text-4xl font-bold text-black uppercase tracking-wider mb-4">
             OUR CURATED Services
           </h2>
@@ -271,7 +271,7 @@ const Index = () => {
               </button>
             </div>
           </div>
-          <div className="animate-in  fade-in slide-in-from-bottom-4 duration-500 grid grid-cols-2 lg:grid-cols-4 gap-x-[8px] gap-y-10 lg:gap-x-[4px]">
+          <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 grid grid-cols-2 lg:grid-cols-4 gap-2 lg:gap-2">
             {(activeTab === "carpet" ? carpetServices : shawlServices).map(
               (service, index) => (
                 <InView key={index} triggerOnce threshold={0.1}>
@@ -285,7 +285,7 @@ const Index = () => {
                     >
                       {/* Image Container - Clean, Sharp, slight gray bg for loading */}
                       <Link to={service.linkTo} className="block  w-full">
-                        <div className="relative w-full aspect-[4/5] overflow-hidden bg-[#f5f5f5] mb-4">
+                        <div className="relative w-full w-40 aspect-[4/5] overflow-hidden bg-[#f5f5f5] mb-4">
                           <img
                             src={service.image}
                             alt={service.title}
