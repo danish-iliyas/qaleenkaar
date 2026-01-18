@@ -8,7 +8,7 @@ export interface ServiceItem {
     created_at?: string;
 }
 
-const API_BASE =  "https://hotpink-tapir-344575.hostingersite.com";
+const API_BASE = "https://hotpink-tapir-344575.hostingersite.com";
 
 export const serviceApi = {
     // Fetch all services or filter by type
