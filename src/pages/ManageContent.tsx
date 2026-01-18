@@ -19,8 +19,10 @@ import {
 import { Edit, Trash } from "lucide-react";
 
 // Import both dialog components
-import BlogUploadDialog from "@/components/BlogUploadDialog"; 
+import BlogUploadDialog from "@/components/BlogUploadDialog";
 import CollectionUploadDialog from "@/components/CollectionUploadDialog";
+import ServiceUploadDialog from "@/components/ServiceUploadDialog";
+import { serviceApi, ServiceItem } from "@/services/serviceApi";
 
 const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost/adminPannel/api";
 
@@ -57,8 +59,9 @@ const ManageContent: React.FC = () => {
 
   const [collections, setCollections] = useState<Collection[]>([]);
   const [blogs, setBlogs] = useState<Blog[]>([]);
-  const [loading, setLoading] = useState({ collections: true, blogs: true });
-  
+  const [services, setServices] = useState<ServiceItem[]>([]);
+  const [loading, setLoading] = useState({ collections: true, blogs: true, services: true });
+
   // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
@@ -73,11 +76,17 @@ const ManageContent: React.FC = () => {
   const [selectedCollection, setSelectedCollection] = useState<Collection | undefined>(undefined);
   const [isCollectionEditMode, setIsCollectionEditMode] = useState(false);
 
+  // Service Dialog State
+  const [isServiceDialogOpen, setIsServiceDialogOpen] = useState(false);
+  const [selectedService, setSelectedService] = useState<ServiceItem | undefined>(undefined);
+  const [isServiceEditMode, setIsServiceEditMode] = useState(false);
+
   // --- Effects ---
 
   useEffect(() => {
     fetchCollections();
     fetchBlogs();
+    fetchServices();
   }, []);
 
   // --- Pagination Logic ---
@@ -129,6 +138,18 @@ const ManageContent: React.FC = () => {
       setBlogs([]);
     } finally {
       setLoading((prev) => ({ ...prev, blogs: false }));
+    }
+  };
+
+  const fetchServices = async () => {
+    setLoading((prev) => ({ ...prev, services: true }));
+    try {
+      const data = await serviceApi.getAll();
+      setServices(data);
+    } catch (error) {
+      console.error("Error fetching services:", error);
+    } finally {
+      setLoading((prev) => ({ ...prev, services: false }));
     }
   };
 
@@ -187,8 +208,8 @@ const ManageContent: React.FC = () => {
 
   const handleDeleteBlog = async (id: number | undefined) => {
     if (!id) {
-        alert("Cannot delete post: Missing ID.");
-        return;
+      alert("Cannot delete post: Missing ID.");
+      return;
     }
 
     if (!confirm("Are you sure you want to delete this blog post?")) return;
@@ -212,13 +233,44 @@ const ManageContent: React.FC = () => {
     }
   };
 
+  // --- Service Handlers ---
+
+  const handleOpenCreateService = () => {
+    setSelectedService(undefined);
+    setIsServiceEditMode(false);
+    setIsServiceDialogOpen(true);
+  };
+
+  const handleOpenServiceDialog = (service: ServiceItem) => {
+    setSelectedService(service);
+    setIsServiceEditMode(true);
+    setIsServiceDialogOpen(true);
+  };
+
+  const handleServiceSuccess = () => {
+    fetchServices();
+    setIsServiceDialogOpen(false);
+  };
+
+  const handleDeleteService = async (id: number) => {
+    if (!confirm("Are you sure you want to delete this service?")) return;
+    try {
+      const res = await serviceApi.delete(id);
+      if (res.status === 'success') {
+        alert("Service deleted successfully");
+        fetchServices();
+      } else {
+        alert("Failed to delete service");
+      }
+    } catch (error) {
+      console.error(error);
+      alert("Error deleting service");
+    }
+  };
+
   // --- Mock Data ---
 
-  const mockServices = [
-    { id: 1, title: "Professional Washing", type: "Carpet" },
-    { id: 2, title: "Expert Repairing", type: "Carpet" },
-    { id: 3, title: "Delicate Shawl Washing", type: "Shawl" },
-  ];
+
 
   // --- Render ---
 
@@ -241,7 +293,7 @@ const ManageContent: React.FC = () => {
             {/* ================= Collections ================= */}
             <TabsContent value="collections">
               <div className="text-right my-4">
-                <Button 
+                <Button
                   onClick={handleOpenCreateCollection}
                   className="bg-[#794299] hover:bg-[#62009b] text-white"
                 >
@@ -287,19 +339,18 @@ const ManageContent: React.FC = () => {
                           <TableCell className="hidden md:table-cell text-gray-600">{item.product_type}</TableCell>
                           <TableCell className="hidden md:table-cell">
                             <span
-                              className={`px-2 py-1 rounded-full text-xs font-medium ${
-                                item.stock_status === "1"
-                                  ? "bg-green-100 text-green-800"
-                                  : "bg-red-100 text-red-800"
-                              }`}
+                              className={`px-2 py-1 rounded-full text-xs font-medium ${item.stock_status === "1"
+                                ? "bg-green-100 text-green-800"
+                                : "bg-red-100 text-red-800"
+                                }`}
                             >
                               {item.stock_status === "1" ? "In Stock" : "Out of Stock"}
                             </span>
                           </TableCell>
                           <TableCell className="text-right space-x-1">
-                            <Button 
-                              variant="ghost" 
-                              size="icon" 
+                            <Button
+                              variant="ghost"
+                              size="icon"
                               className="text-blue-600 hover:text-blue-800"
                               onClick={() => handleOpenCollectionDialog(item)}
                             >
@@ -401,27 +452,26 @@ const ManageContent: React.FC = () => {
                           <TableCell className="hidden md:table-cell text-gray-600">{post.category}</TableCell>
                           <TableCell className="hidden md:table-cell">
                             <span
-                              className={`px-2 py-1 rounded-full text-xs font-medium ${
-                                post.status === "published"
-                                  ? "bg-green-100 text-green-800"
-                                  : "bg-gray-100 text-gray-800"
-                              }`}
+                              className={`px-2 py-1 rounded-full text-xs font-medium ${post.status === "published"
+                                ? "bg-green-100 text-green-800"
+                                : "bg-gray-100 text-gray-800"
+                                }`}
                             >
                               {post.status === "published" ? "Published" : "Draft"}
                             </span>
                           </TableCell>
                           <TableCell className="text-right space-x-1">
-                            <Button 
-                              variant="ghost" 
-                              size="icon" 
+                            <Button
+                              variant="ghost"
+                              size="icon"
                               className="text-blue-600 hover:text-blue-800"
                               onClick={() => handleOpenBlogDialog(post)}
                             >
                               <Edit className="w-4 h-4" />
                             </Button>
-                            <Button 
-                              variant="ghost" 
-                              size="icon" 
+                            <Button
+                              variant="ghost"
+                              size="icon"
                               className="text-destructive hover:text-destructive/80"
                               onClick={() => handleDeleteBlog(post.id)}
                             >
@@ -438,30 +488,56 @@ const ManageContent: React.FC = () => {
 
             {/* ================= Services ================= */}
             <TabsContent value="services">
+              <div className="text-right my-4">
+                <Button
+                  onClick={handleOpenCreateService}
+                  className="bg-[#794299] hover:bg-[#62009b] text-white"
+                >
+                  + Add New Service
+                </Button>
+              </div>
               <div className="mt-6 bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
                 <Table>
                   <TableHeader>
                     <TableRow className="bg-gray-100">
+                      <TableHead className="font-semibold text-gray-700">Image</TableHead>
                       <TableHead className="font-semibold text-gray-700">Title</TableHead>
                       <TableHead className="font-semibold text-gray-700 hidden md:table-cell">Type</TableHead>
                       <TableHead className="text-right font-semibold text-gray-700">Actions</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {mockServices.map((service) => (
-                      <TableRow key={service.id} className="hover:bg-gray-50 transition">
-                        <TableCell className="font-medium text-gray-800">{service.title}</TableCell>
-                        <TableCell className="hidden md:table-cell text-gray-600">{service.type}</TableCell>
-                        <TableCell className="text-right space-x-1">
-                          <Button variant="ghost" size="icon" className="text-blue-600 hover:text-blue-800">
-                            <Edit className="w-4 h-4" />
-                          </Button>
-                          <Button variant="ghost" size="icon" className="text-destructive hover:text-destructive/80">
-                            <Trash className="w-4 h-4" />
-                          </Button>
-                        </TableCell>
+                    {loading.services ? (
+                      <TableRow>
+                        <TableCell colSpan={4} className="text-center py-8">Loading...</TableCell>
                       </TableRow>
-                    ))}
+                    ) : services.length === 0 ? (
+                      <TableRow>
+                        <TableCell colSpan={4} className="text-center py-8 text-gray-500">No services found</TableCell>
+                      </TableRow>
+                    ) : (
+                      services.map((service) => (
+                        <TableRow key={service.id} className="hover:bg-gray-50 transition">
+                          <TableCell>
+                            <img
+                              src={service.image || "https://via.placeholder.com/60"}
+                              alt={service.title}
+                              className="w-16 h-16 object-cover rounded-md shadow-sm border"
+                            />
+                          </TableCell>
+                          <TableCell className="font-medium text-gray-800">{service.title}</TableCell>
+                          <TableCell className="hidden md:table-cell text-gray-600 capitalize">{service.type}</TableCell>
+                          <TableCell className="text-right space-x-1">
+                            <Button variant="ghost" size="icon" className="text-blue-600 hover:text-blue-800" onClick={() => handleOpenServiceDialog(service)}>
+                              <Edit className="w-4 h-4" />
+                            </Button>
+                            <Button variant="ghost" size="icon" className="text-destructive hover:text-destructive/80" onClick={() => service.id && handleDeleteService(service.id)}>
+                              <Trash className="w-4 h-4" />
+                            </Button>
+                          </TableCell>
+                        </TableRow>
+                      ))
+                    )}
                   </TableBody>
                 </Table>
               </div>
@@ -470,6 +546,17 @@ const ManageContent: React.FC = () => {
         </div>
       </main>
       <Footer />
+
+      {/* --- Dialogs --- */}
+
+      <ServiceUploadDialog
+        isOpen={isServiceDialogOpen}
+        onOpenChange={setIsServiceDialogOpen}
+        title={isServiceEditMode ? "Edit Service" : "Add New Service"}
+        editMode={isServiceEditMode}
+        serviceData={selectedService}
+        onSuccess={handleServiceSuccess}
+      />
 
       {/* --- Dialogs --- */}
 

@@ -30,6 +30,7 @@ import CustomerReviews from "@/components/customerReview";
 import ContactForm from "@/components/ContactForm";
 import { useState, useEffect } from "react";
 import TrustSection from "@/components/TrustSection";
+import { serviceApi } from "@/services/serviceApi";
 
 const API_BASE =
   import.meta.env.VITE_API_BASE ||
@@ -178,23 +179,23 @@ const Index = () => {
     },
   ];
 
-  const carpetServices = [
-    { title: "Professional Washing", image: washingImg, linkTo: "/services#professional-washing" },
-    { title: "Expert Repairing", image: repairImg, linkTo: "/services#expert-repairing" },
-    {
-      title: "Complete Restoration",
-      image: restorationImg,
-      linkTo: "/services#complete-restoration",
-    },
-    { title: "Wall Hanging Care", image: cleaningImg, linkTo: "/services#wall-hanging-care" },
-  ];
+  const [carpetServices, setCarpetServices] = useState<any[]>([]);
+  const [shawlServices, setShawlServices] = useState<any[]>([]);
 
-  const shawlServices = [
-    { title: "Delicate Shawl Washing", image: washingImg, linkTo: "/services#delicate-shawl-washing" },
-    { title: "Shawl Restoration", image: restorationImg, linkTo: "/services#shawl-restoration" },
-    { title: "Premium Dry Cleaning", image: cleaningImg, linkTo: "/services#premium-dry-cleaning" },
-    { title: "Sell & Exchange", image: exchangeImg, linkTo: "/services#sell-exchange" },
-  ];
+  // Fetch Services from API
+  useEffect(() => {
+    const getServices = async () => {
+      try {
+        const carpets = await serviceApi.getAll("carpet");
+        const shawls = await serviceApi.getAll("shawl");
+        setCarpetServices(carpets);
+        setShawlServices(shawls);
+      } catch (err) {
+        console.error("Failed to load services", err);
+      }
+    };
+    getServices();
+  }, []);
 
   const handlePrev = () =>
     setCurrentIndex((prev) => (prev === 0 ? workItems.length - 1 : prev - 1));
@@ -284,10 +285,10 @@ const Index = () => {
                         }`}
                     >
                       {/* Image Container - Clean, Sharp, slight gray bg for loading */}
-                      <Link to={service.linkTo} className="block  w-full">
+                      <Link to={service.link_to || "#"} className="block  w-full">
                         <div className="relative w-full aspect-[4/5] overflow-hidden bg-[#f5f5f5] mb-4">
                           <img
-                            src={service.image}
+                            src={service.image || "/placeholder.jpg"}
                             alt={service.title}
                             className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
                           />
