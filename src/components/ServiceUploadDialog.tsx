@@ -30,6 +30,8 @@ const ServiceUploadDialog: React.FC<ServiceUploadDialogProps> = ({
         type: "carpet",
         link_to: "#",
         description: "",
+        bullet_points: "",
+        video_src: "",
     });
     const [imageFile, setImageFile] = useState<File | null>(null);
     const [loading, setLoading] = useState(false);
@@ -41,6 +43,8 @@ const ServiceUploadDialog: React.FC<ServiceUploadDialogProps> = ({
                 type: serviceData.type || "carpet",
                 link_to: serviceData.link_to || "#",
                 description: serviceData.description || "",
+                bullet_points: serviceData.bullet_points || "",
+                video_src: serviceData.video_src || "",
             });
         } else {
             // Reset form for create mode
@@ -49,6 +53,8 @@ const ServiceUploadDialog: React.FC<ServiceUploadDialogProps> = ({
                 type: "carpet",
                 link_to: "#",
                 description: "",
+                bullet_points: "",
+                video_src: "",
             });
             setImageFile(null);
         }
@@ -79,6 +85,8 @@ const ServiceUploadDialog: React.FC<ServiceUploadDialogProps> = ({
             data.append("type", formData.type);
             data.append("link_to", formData.link_to);
             data.append("description", formData.description);
+            data.append("bullet_points", formData.bullet_points);
+            data.append("video_src", formData.video_src);
             if (imageFile) {
                 data.append("image", imageFile);
             }
@@ -161,6 +169,29 @@ const ServiceUploadDialog: React.FC<ServiceUploadDialogProps> = ({
                             value={formData.description}
                             onChange={handleChange}
                             placeholder="Brief description..."
+                        />
+                    </div>
+
+                    <div>
+                        <Label htmlFor="bullet_points">Bullet Points (comma-separated)</Label>
+                        <Textarea
+                            id="bullet_points"
+                            name="bullet_points"
+                            value={formData.bullet_points}
+                            onChange={handleChange}
+                            placeholder="Point 1, Point 2, Point 3..."
+                            rows={2}
+                        />
+                    </div>
+
+                    <div>
+                        <Label htmlFor="video_src">YouTube Video URL (embed link)</Label>
+                        <Input
+                            id="video_src"
+                            name="video_src"
+                            value={formData.video_src}
+                            onChange={handleChange}
+                            placeholder="https://www.youtube.com/embed/VIDEO_ID"
                         />
                     </div>
 

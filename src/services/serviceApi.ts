@@ -5,6 +5,8 @@ export interface ServiceItem {
     image?: string;
     link_to: string;
     description?: string;
+    bullet_points?: string;  // Comma-separated list of bullet points
+    video_src?: string;      // YouTube embed URL
     created_at?: string;
 }
 

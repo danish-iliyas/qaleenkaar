@@ -1,167 +1,134 @@
 import { useState, useRef, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Loader2 } from "lucide-react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import SellExchangeModal from "../components/SellExchangeModal";
-import washingImg from "@/assets/service-washing.jpg";
-import repairImg from "@/assets/service-repair.jpg";
-import restorationImg from "@/assets/service-restoration.jpg";
-import exchangeImg from "@/assets/service-exchange.jpg";
-import heroImage from "@/assets/hero-carpet.jpg";
 import processImage from "../assets/sales-service.jpg";
+import { serviceApi, ServiceItem } from "@/services/serviceApi";
 
-const carpetServices = [
-  {
-    id: "professional-washing",
-    title: "Professional Washing",
-    description: [
-      "Proper rug cleaning is vital for preserving the appearance and longevity of your precious rugs. The frequency of deep cleaning depends on factors like rug type, foot traffic, and the presence of pets or allergens. Generally, it's best to schedule a deep clean every 12 to 18 months.",
-      "When dealing with hand-knotted or hand-woven rugs, which are delicately crafted, a specialized approach is required.",
-    ],
-    bulletPoints: [
-      "Rug Inspection",
-      "Dust and Grit Removal",
-      "Pre-Treatment",
-      "Full Immersion Cleaning",
-      "Rug Drying",
-      "Inspection and Delivery",
-    ],
-    videoSrc: "https://www.youtube.com/embed/rslXOypyNx0",
-    layout: "video-left",
-  },
-  {
-    id: "expert-repairing",
-    title: "Expert Repairings",
-    description: [
-      "Expertise and skill are crucial when it to repairing damaged rugs, guaranteeing a successful restoration. Restoring a rug with minor damage is relatively easier compared to one with extensive damage. Our team of professional rug repair specialists possesses the necessary knowledge and experience to address various types of rug damage.",
-    ],
-    bulletPoints: [
-      "Fringe repair/replacement",
-      "Rug overcasting/Binding",
-      "Reweaving/Rafu",
-      "Color Restoration",
-      "Delamination on Tufted Rugs",
-    ],
-    videoSrc: "https://www.youtube.com/embed/xpsrgBVnC4I",
-    layout: "video-right",
-  },
-  {
-    id: "complete-restoration",
-    title: "Complete Restoration",
-    description: [
-      "It's always better to restore than replace. Our finest technicians will ensure your old rug matches your new interior. We bring vintage and antique carpets back to their former glory with our comprehensive service.",
-    ],
-    bulletPoints: [
-      "Fresh new look to old rugs",
-      "Match with your interior",
-      "Restoration is better than replacement.",
-    ],
-    videoSrc: "https://www.youtube.com/embed/zThfR7ecetw",
-    layout: "video-left",
-  },
-  {
-    id: "wall-hanging-care",
-    title: "Wall Hanging Care",
-    description: [
-      "Specialized care and maintenance for your precious wall hangings and tapestries. Our expert team ensures your decorative pieces remain vibrant and well-preserved for years to come.",
-    ],
-    bulletPoints: [
-      "Dust and debris removal",
-      "Gentle spot cleaning",
-      "Color preservation treatment",
-      "Proper mounting guidance",
-    ],
-    videoSrc: "https://www.youtube.com/embed/rslXOypyNx0",
-    layout: "video-right",
-  },
-];
+// Component to render each service section dynamically
+const ServiceCard = ({
+  service,
+  index,
+  onBookNow,
+}: {
+  service: ServiceItem;
+  index: number;
+  onBookNow?: (serviceId: number) => void;
+}) => {
+  // Parse bullet points from comma-separated string
+  const bulletPoints = service.bullet_points
+    ? service.bullet_points.split(",").map((point) => point.trim()).filter(Boolean)
+    : [];
 
-const shawlServices = [
-  {
-    id: "delicate-shawl-washing",
-    title: "Delicate Shawl Washing",
-    description: [
-      "Specialized hand-washing for precious Pashmina and Kashmiri shawls, using gentle techniques that preserve the delicate fibers and intricate embroidery of your treasured items.",
-    ],
-    bulletPoints: [
-      "Color-fastness testing",
-      "Gentle, PH-neutral hand-wash",
-      "Natural air drying",
-      "Soft steam finishing",
-    ],
-    videoSrc: "https://www.youtube.com/embed/NP_jXK0Kk9k",
-    layout: "video-left",
-  },
-  {
-    id: "shawl-restoration",
-    title: "Shawl Restoration",
-    description: [
-      "Expert restoration of vintage and heirloom shawls. Our artisans meticulously repair tears, re-weave holes, and revive faded colors using authentic materials and time-honored methods.",
-    ],
-    bulletPoints: [
-      "Thread-by-thread reweaving",
-      "Natural dye color matching",
-      "Tear and hole repair",
-      "Fringe and border restoration",
-    ],
-    videoSrc: "https://www.youtube.com/embed/NnhLLxUr9zE",
-    layout: "video-right",
-  },
-  {
-    id: "premium-dry-cleaning",
-    title: "Premium Dry Cleaning",
-    description: [
-      "Our premium dry cleaning service uses eco-friendly solvents and advanced techniques to safely clean your delicate shawls without water damage. Perfect for heavily embroidered or embellished pieces that require extra care.",
-    ],
-    bulletPoints: [
-      "Eco-friendly solvents",
-      "Safe for embroidery & embellishments",
-      "Odor removal treatment",
-      "Professional pressing & finishing",
-    ],
-    videoSrc: "https://www.youtube.com/embed/NP_jXK0Kk9k",
-    layout: "video-left",
-  },
-];
+  return (
+    <div
+      id={`service-${service.id}`}
+      className={`py-16 scroll-mt-20 ${index % 2 === 0
+          ? "bg-gradient-to-b from-secondary/30 to-background"
+          : "bg-white"
+        }`}
+    >
+      <div className="container mx-auto px-4">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start w-full">
+          {/* Video/Image Section */}
+          <div
+            className={`${index % 2 === 1 ? "lg:order-last" : ""
+              } flex items-center justify-center`}
+          >
+            <div className="rounded-lg w-full h-[16rem] lg:h-[20rem] overflow-hidden shadow-lg border border-black/5">
+              {service.video_src ? (
+                <iframe
+                  src={`${service.video_src}?autoplay=1&mute=1&loop=1&controls=1&showinfo=0`}
+                  title={service.title}
+                  frameBorder="0"
+                  allow="autoplay; encrypted-media"
+                  allowFullScreen
+                  className="w-full h-full object-cover"
+                ></iframe>
+              ) : (
+                <img
+                  src={service.image || "/placeholder.jpg"}
+                  alt={service.title}
+                  className="w-full h-full object-cover"
+                />
+              )}
+            </div>
+          </div>
 
-const otherServices = [
-  {
-    id: "sell-exchange",
-    title: "Sell & Exchange Program",
-    description: [
-      "Upgrade your collection with our exclusive sell and exchange program. We offer fair valuations for your quality pieces, allowing you to trade them for a new treasure from our curated collection.",
-    ],
-    bulletPoints: [
-      "Expert valuation",
-      "Trade-in for new items",
-      "Consignment options",
-      "Direct purchasing",
-    ],
-    videoSrc: "https://www.youtube.com/embed/M3HPNC3CLyk",
-    layout: "video-right",
-  },
-];
+          {/* Content Section */}
+          <div className="font-serif flex flex-col justify-start">
+            <h3 className="text-xl md:text-2xl font-medium text-gray-800 tracking-wider mb-2">
+              {service.title}
+            </h3>
+
+            {/* Book Now Button */}
+            {service.title?.toLowerCase().includes("sell") ||
+              service.title?.toLowerCase().includes("exchange") ? (
+              <button
+                onClick={() => service.id && onBookNow?.(service.id)}
+                className="inline-flex items-center text-black uppercase tracking-[0.2em] text-xs font-medium group mb-4"
+              >
+                <span className="border-b border-black font-bold pb-0.5 group-hover:border-b-2 transition-all">
+                  Book Now
+                </span>
+                <ArrowRight className="ml-2 w-3 h-3 group-hover:translate-x-1 transition-transform" />
+              </button>
+            ) : (
+              <a
+                href={`https://wa.me/917982698231?text=Hi, I'm interested in ${encodeURIComponent(
+                  service.title
+                )} service. Please provide more details.`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center text-black uppercase tracking-[0.2em] text-xs font-medium group mb-4"
+              >
+                <span className="border-b border-black font-bold pb-0.5 group-hover:border-b-2 transition-all">
+                  Book Now
+                </span>
+                <ArrowRight className="ml-2 w-3 h-3 group-hover:translate-x-1 transition-transform" />
+              </a>
+            )}
+
+            {/* Description */}
+            {service.description && (
+              <p className="text-base text-gray-600 mb-4 leading-relaxed">
+                {service.description}
+              </p>
+            )}
+
+            {/* Bullet Points */}
+            {bulletPoints.length > 0 && (
+              <ul className="list-disc list-inside space-y-2 mt-4 text-base text-gray-600">
+                {bulletPoints.map((point, i) => (
+                  <li key={i}>{point}</li>
+                ))}
+              </ul>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 const ServiceSection = ({
   services,
   sectionTitle,
-  bgColor,
+  sectionId,
   sectionRef,
-  id,
   onBookNow,
 }: {
-  services: any[];
+  services: ServiceItem[];
   sectionTitle: string;
-  bgColor: string;
+  sectionId: string;
   sectionRef: React.RefObject<HTMLElement>;
-  id: string;
-  onBookNow?: (serviceId: string) => void;
+  onBookNow?: (serviceId: number) => void;
 }) => {
   return (
-    <section ref={sectionRef} id={id}>
+    <section ref={sectionRef} id={sectionId}>
       <div className="container mx-auto px-4">
-        {/* Main section heading - larger */}
         <div className="text-center pt-4 mb-6">
           <Link
             to="#"
@@ -170,86 +137,17 @@ const ServiceSection = ({
             <span className="border-b md:text-4xl border-black font-bold pb-1 group-hover:border-b-2 transition-all">
               {sectionTitle}
             </span>
-            {/* <ArrowRight className="ml-3 w-5 h-5 group-hover:translate-x-1 transition-transform" /> */}
           </Link>
         </div>
 
         <div className="space-y-0">
           {services.map((service, index) => (
-            <div
-              key={index}
-              id={service.id}
-              className={`py-16 scroll-mt-20 ${index % 2 === 0
-                ? "bg-gradient-to-b from-secondary/30 to-background"
-                : "bg-white"
-                }`}
-            >
-              <div className="container mx-auto px-4">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start w-full">
-                  <div
-                    className={`${index % 2 === 1 ? "lg:order-last" : ""
-                      } flex items-center justify-center`}
-                  >
-                    <div className="rounded-lg w-full h-[16rem] lg:h-[20rem] overflow-hidden shadow-lg border border-black/5">
-                      <iframe
-                        src={`${service.videoSrc}?autoplay=1&mute=1&loop=1&controls=1&showinfo=0`}
-                        title={service.title}
-                        frameBorder="0"
-                        allow="autoplay; encrypted-media"
-                        allowFullScreen
-                        className="w-full h-full object-cover"
-                      ></iframe>
-                    </div>
-                  </div>
-
-                  <div className="font-serif flex flex-col justify-start">
-                    {/* Subheading */}
-                    <h3 className="text-xl md:text-2xl font-medium text-gray-800 tracking-wider mb-2">
-                      {service.title}
-                    </h3>
-                    {/* Book Now Button - always below subheading */}
-                    {service.id === "sell-exchange" && onBookNow ? (
-                      <button
-                        onClick={() => onBookNow(service.id)}
-                        className="inline-flex items-center text-black uppercase tracking-[0.2em] text-xs font-medium group mb-4"
-                      >
-                        <span className="border-b border-black font-bold pb-0.5 group-hover:border-b-2 transition-all">
-                          Book Now
-                        </span>
-                        <ArrowRight className="ml-2 w-3 h-3 group-hover:translate-x-1 transition-transform" />
-                      </button>
-                    ) : (
-                      <a
-                        href={`https://wa.me/917982698231?text=Hi, I'm interested in ${encodeURIComponent(service.title)} service. Please provide more details.`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center text-black uppercase tracking-[0.2em] text-xs font-medium group mb-4"
-                      >
-                        <span className="border-b border-black font-bold pb-0.5 group-hover:border-b-2 transition-all">
-                          Book Now
-                        </span>
-                        <ArrowRight className="ml-2 w-3 h-3 group-hover:translate-x-1 transition-transform" />
-                      </a>
-                    )}
-
-                    {service.description.map((text: string, i: number) => (
-                      <p
-                        key={i}
-                        className="text-base text-gray-600 mb-4 leading-relaxed"
-                      >
-                        {text}
-                      </p>
-                    ))}
-
-                    <ul className="list-disc list-inside space-y-2 mt-4 text-base text-gray-600">
-                      {service.bulletPoints.map((point: string, i: number) => (
-                        <li key={i}>{point}</li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <ServiceCard
+              key={service.id}
+              service={service}
+              index={index}
+              onBookNow={onBookNow}
+            />
           ))}
         </div>
       </div>
@@ -260,14 +158,37 @@ const ServiceSection = ({
 const Services = () => {
   const carpetRef = useRef<HTMLDivElement>(null);
   const shawlRef = useRef<HTMLDivElement>(null);
-  const otherRef = useRef<HTMLDivElement>(null);
   const { hash } = useLocation();
   const [sellExchangeModalOpen, setSellExchangeModalOpen] = useState(false);
 
+  // Dynamic service state
+  const [carpetServices, setCarpetServices] = useState<ServiceItem[]>([]);
+  const [shawlServices, setShawlServices] = useState<ServiceItem[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  // Fetch services from API
   useEffect(() => {
-    // Handle hash navigation after page loads
-    if (hash) {
-      // Small delay to ensure DOM is ready
+    const fetchServices = async () => {
+      setLoading(true);
+      try {
+        const [carpets, shawls] = await Promise.all([
+          serviceApi.getAll("carpet"),
+          serviceApi.getAll("shawl"),
+        ]);
+        setCarpetServices(carpets);
+        setShawlServices(shawls);
+      } catch (err) {
+        console.error("Failed to load services:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchServices();
+  }, []);
+
+  // Handle hash navigation after page loads and services are fetched
+  useEffect(() => {
+    if (hash && !loading) {
       setTimeout(() => {
         const element = document.querySelector(hash);
         if (element) {
@@ -275,10 +196,16 @@ const Services = () => {
         }
       }, 100);
     }
-  }, [hash]);
+  }, [hash, loading]);
 
-  const handleBookNow = (serviceId: string) => {
-    if (serviceId === "sell-exchange") {
+  const handleBookNow = (serviceId: number) => {
+    // Check if the service is sell/exchange type
+    const allServices = [...carpetServices, ...shawlServices];
+    const service = allServices.find((s) => s.id === serviceId);
+    if (
+      service?.title?.toLowerCase().includes("sell") ||
+      service?.title?.toLowerCase().includes("exchange")
+    ) {
       setSellExchangeModalOpen(true);
     }
   };
@@ -292,33 +219,43 @@ const Services = () => {
         className="rounded-lg shadow-lg"
       />
 
-      {/* Carpet Services Section */}
-      <ServiceSection
-        services={carpetServices}
-        sectionTitle="Carpet Services"
-        bgColor="bg-amber-50"
-        sectionRef={carpetRef}
-        id="carpet"
-      />
+      {loading ? (
+        <div className="flex justify-center items-center py-20">
+          <Loader2 className="w-10 h-10 animate-spin text-black" />
+          <span className="ml-3 text-gray-600">Loading services...</span>
+        </div>
+      ) : (
+        <>
+          {/* Carpet Services Section */}
+          {carpetServices.length > 0 && (
+            <ServiceSection
+              services={carpetServices}
+              sectionTitle="Carpet Services"
+              sectionId="carpet"
+              sectionRef={carpetRef}
+              onBookNow={handleBookNow}
+            />
+          )}
 
-      {/* Shawl Services Section */}
-      <ServiceSection
-        services={shawlServices}
-        sectionTitle="Shawl Services"
-        bgColor="bg-white"
-        sectionRef={shawlRef}
-        id="shawl"
-      />
+          {/* Shawl Services Section */}
+          {shawlServices.length > 0 && (
+            <ServiceSection
+              services={shawlServices}
+              sectionTitle="Shawl Services"
+              sectionId="shawl"
+              sectionRef={shawlRef}
+              onBookNow={handleBookNow}
+            />
+          )}
 
-      {/* Other Services Section */}
-      <ServiceSection
-        services={otherServices}
-        sectionTitle="Other Services"
-        bgColor="bg-amber-5Other"
-        sectionRef={otherRef}
-        id="other"
-        onBookNow={handleBookNow}
-      />
+          {/* Empty State */}
+          {carpetServices.length === 0 && shawlServices.length === 0 && (
+            <div className="text-center py-20">
+              <p className="text-gray-500 text-lg">No services available yet.</p>
+            </div>
+          )}
+        </>
+      )}
 
       {/* Sell & Exchange Modal */}
       <SellExchangeModal
@@ -326,7 +263,7 @@ const Services = () => {
         onOpenChange={setSellExchangeModalOpen}
       />
 
-      {/* Our Advantages Section - White */}
+      {/* Our Advantages Section */}
       <section className="py-4 bg-white border-t border-black/5">
         <div className="container mx-auto px-4">
           <div className="flex flex-col lg:flex-row items-center justify-between gap-12">
