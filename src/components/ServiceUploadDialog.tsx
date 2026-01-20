@@ -115,7 +115,7 @@ const ServiceUploadDialog: React.FC<ServiceUploadDialogProps> = ({
 
     return (
         <Dialog open={isOpen} onOpenChange={onOpenChange}>
-            <DialogContent className="sm:max-w-md bg-white">
+            <DialogContent className="sm:max-w-lg bg-white max-h-[90vh] overflow-y-auto w-[95vw] rounded-xl">
                 <DialogHeader>
                     <DialogTitle>{title}</DialogTitle>
                 </DialogHeader>
