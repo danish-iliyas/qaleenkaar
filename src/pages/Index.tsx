@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   ArrowRight,
   Sparkles,
@@ -6,6 +6,11 @@ import {
   ChevronRight,
   Loader2,
 } from "lucide-react";
+
+// Helper function to convert service title to a URL-friendly slug
+const titleToSlug = (title: string): string => {
+  return title.toLowerCase().replace(/\s+/g, "-").replace(/[^a-z0-9-]/g, "");
+};
 import { Button } from "@/components/ui/button";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -285,7 +290,10 @@ const Index = () => {
                         }`}
                     >
                       {/* Image Container - Clean, Sharp, slight gray bg for loading */}
-                      <Link to={service.link_to || "#"} className="block  w-full">
+                      <Link
+                        to={`/services#${activeTab === "carpet" ? "carpet" : "shawl"}`}
+                        className="block  w-full"
+                      >
                         <div className="relative w-full aspect-[4/5] overflow-hidden bg-[#f5f5f5] mb-4">
                           <img
                             src={service.image || "/placeholder.jpg"}
