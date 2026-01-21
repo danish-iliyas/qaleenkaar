@@ -291,7 +291,7 @@ const Index = () => {
                     >
                       {/* Image Container - Clean, Sharp, slight gray bg for loading */}
                       <Link
-                        to={`/services#${activeTab === "carpet" ? "carpet" : "shawl"}`}
+                        to={`/services#service-${service.id}`}
                         className="block  w-full"
                       >
                         <div className="relative w-full aspect-[4/5] overflow-hidden bg-[#f5f5f5] mb-4">

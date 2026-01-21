@@ -150,16 +150,8 @@ const ServiceUploadDialog: React.FC<ServiceUploadDialogProps> = ({
                         <Input id="image" type="file" onChange={handleImageChange} accept="image/*" />
                     </div>
 
-                    <div>
-                        <Label htmlFor="link_to">Link URL</Label>
-                        <Input
-                            id="link_to"
-                            name="link_to"
-                            value={formData.link_to}
-                            onChange={handleChange}
-                            placeholder="/services#section-id"
-                        />
-                    </div>
+
+                    {/* Link URL removed - navigation now uses service ID automatically */}
 
                     <div>
                         <Label htmlFor="description">Description (Optional)</Label>
