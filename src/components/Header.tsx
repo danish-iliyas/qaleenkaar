@@ -153,7 +153,7 @@ const Header = () => {
               {/* MOBILE: Hamburger Menu (moved from right) */}
               <button
                 onClick={() => setIsOpen(true)}
-                className={`lg:hidden p-2 -ml-2 focus:outline-none transition-colors duration-300 ${iconColorClass}`}
+                className={`lg:hidden p-1 focus:outline-none transition-colors duration-300 ${iconColorClass}`}
               >
                 <Menu className="w-6 h-6 stroke-[1.2px]" />
               </button>
@@ -178,7 +178,7 @@ const Header = () => {
             <div className="flex justify-center items-center relative">
               <Link to="/" className="mx-auto px-2 block relative z-50">
                 <h1
-                  className={`font-medium tracking-[0.2em] sm:tracking-[0.3em] whitespace-nowrap uppercase transition-colors duration-300 ${textColorClass} hidden md:block`}
+                  className={`font-medium tracking-[0.15em] sm:tracking-[0.2em] mr-[-0.2em] whitespace-nowrap uppercase transition-colors duration-300 ${textColorClass} hidden md:block`}
                   style={{
                     transform: `translateY(${desktopTranslateY}px) scale(${desktopScale})`,
                     transformOrigin: "center top",
@@ -210,7 +210,7 @@ const Header = () => {
                 href="https://wa.me/917982698231"
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`lg:hidden p-2 -mr-2 focus:outline-none transition-colors duration-300 ${iconColorClass}`}
+                className={`lg:hidden p-1 focus:outline-none transition-colors duration-300 ${iconColorClass}`}
               >
                 <Phone className="w-5 h-5 stroke-[1.2px]" />
               </a>
@@ -220,13 +220,24 @@ const Header = () => {
                 <button
                   onClick={() =>
                     isAuthenticated
-                      ? navigate("/admin")
+                      ? navigate("/admin/dashboard")
                       : setIsLoginDialogOpen(true)
                   }
                   className={`transition-colors duration-300 ${iconColorClass}`}
+                  title={isAuthenticated ? "Admin Dashboard" : "Login"}
                 >
                   <User className="w-5 h-5 stroke-[1.2px]" />
                 </button>
+                {/* Desktop Logout Button - Only show when authenticated */}
+                {isAuthenticated && (
+                  <button
+                    onClick={handleLogout}
+                    className={`transition-colors duration-300 hover:text-red-500 ${iconColorClass}`}
+                    title="Logout"
+                  >
+                    <LogOut className="w-5 h-5 stroke-[1.2px]" />
+                  </button>
+                )}
                 {/* Menu Button */}
                 <button
                   onClick={() => setIsOpen(true)}
@@ -236,19 +247,6 @@ const Header = () => {
                     className={`w-6 h-6 stroke-[1.2px] transition-colors duration-300 ${iconColorClass}`}
                   />
                 </button>
-                {/* Contact Button */}
-                {/* <a
-                  href="https://wa.me/917982698231"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center space-x-2 group focus:outline-none"
-                >
-                  <span
-                    className={`font-serif text-[11px] uppercase tracking-widest font-bold transition-colors duration-300 ${textColorClass}`}
-                  >
-                    Contact
-                  </span>
-                </a> */}
               </div>
             </div>
           </div>
@@ -283,28 +281,36 @@ const Header = () => {
           {/* ✅ UPDATED MOBILE LOGIN/LOGOUT SECTION */}
           <div className="lg:hidden mb-10 pb-6 border-b border-gray-100">
             {isAuthenticated ? (
-              <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-4">
-                  <div className="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center">
-                    <User className="w-5 h-5 text-[#794299]" />
+              <div className="flex flex-col space-y-3">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-4">
+                    <div className="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center">
+                      <User className="w-5 h-5 text-[#794299]" />
+                    </div>
+                    <div className="text-left">
+                      <p className="font-serif text-lg font-bold text-gray-900">
+                        Hello, {user?.name || "Admin"}
+                      </p>
+                    </div>
                   </div>
-                  <div className="text-left">
-                    {/* <p className="font-serif text-[10px] uppercase tracking-[0.2em] text-gray-400">
-                      Account
-                    </p> */}
-                    <p className="font-serif text-lg font-bold text-gray-900">
-                      Hello, {user?.name || "Admin"}
-                    </p>
-                  </div>
+                  {/* Logout Button */}
+                  <button
+                    onClick={handleLogout}
+                    className="p-2 text-gray-400 hover:text-red-500 transition-colors"
+                    aria-label="Logout"
+                  >
+                    <LogOut className="w-5 h-5" />
+                  </button>
                 </div>
-                {/* Logout Button */}
-                <button
-                  onClick={handleLogout}
-                  className="p-2 text-gray-400 hover:text-red-500 transition-colors"
-                  aria-label="Logout"
+
+                {/* Mobile Admin Link */}
+                <Link
+                  to="/admin/dashboard"
+                  onClick={() => setIsOpen(false)}
+                  className="block w-full py-2.5 px-4 bg-gray-900 text-white text-center text-sm font-medium uppercase tracking-wider rounded-lg hover:bg-gray-800 transition-colors"
                 >
-                  <LogOut className="w-5 h-5" />
-                </button>
+                  Admin Dashboard
+                </Link>
               </div>
             ) : (
               <button

@@ -26,8 +26,8 @@ const ServiceCard = ({
     <div
       id={`service-${service.id}`}
       className={`py-16 scroll-mt-20 ${index % 2 === 0
-          ? "bg-gradient-to-b from-secondary/30 to-background"
-          : "bg-white"
+        ? "bg-gradient-to-b from-secondary/30 to-background"
+        : "bg-white"
         }`}
     >
       <div className="container mx-auto px-4">
@@ -38,16 +38,35 @@ const ServiceCard = ({
               } flex items-center justify-center`}
           >
             <div className="rounded-lg w-full h-[16rem] lg:h-[20rem] overflow-hidden shadow-lg border border-black/5">
-              {service.video_src ? (
-                <iframe
-                  src={`${service.video_src}?autoplay=1&mute=1&loop=1&controls=1&showinfo=0`}
-                  title={service.title}
-                  frameBorder="0"
-                  allow="autoplay; encrypted-media"
-                  allowFullScreen
-                  className="w-full h-full object-cover"
-                ></iframe>
-              ) : (
+              {service.video_src ? (() => {
+                // Extract video ID from various YouTube URL formats
+                const getYouTubeVideoId = (url: string): string | null => {
+                  const patterns = [
+                    /(?:youtube\.com\/embed\/)([a-zA-Z0-9_-]{11})/,
+                    /(?:youtube\.com\/watch\?v=)([a-zA-Z0-9_-]{11})/,
+                    /(?:youtu\.be\/)([a-zA-Z0-9_-]{11})/,
+                  ];
+                  for (const pattern of patterns) {
+                    const match = url.match(pattern);
+                    if (match) return match[1];
+                  }
+                  return null;
+                };
+                const videoId = getYouTubeVideoId(service.video_src);
+                const embedUrl = videoId
+                  ? `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&loop=1&playlist=${videoId}&controls=0&showinfo=0&rel=0&modestbranding=1`
+                  : service.video_src;
+                return (
+                  <iframe
+                    src={embedUrl}
+                    title={service.title}
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                    className="w-full h-full object-cover"
+                  ></iframe>
+                );
+              })() : (
                 <img
                   src={service.image || "/placeholder.jpg"}
                   alt={service.title}
